@@ -1,0 +1,173 @@
+from django.shortcuts import get_object_or_404, render
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from service.models import Category, Product
+from rest_framework import status, permissions, viewsets
+from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer
+from rest_framework import mixins
+from rest_framework.generics import GenericAPIView
+
+class ProductViewSet(viewsets.ViewSet):
+    permission_classes=[permissions.IsAuthenticated]
+
+    def list(self, request):
+        if not hasattr(request.user, 'shop_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+
+        queryset = request.user.shop_profile.product_set.all()
+        serializer = ProductSerializer(queryset, many=True)
+        return Response(status= status.HTTP_200_OK, data= serializer.data)
+
+    def retrieve(self, request, pk=None):
+        if not hasattr(request.user, 'shop_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        queryset = request.user.shop_profile.product_set.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = ProductSerializer(user)        
+        return Response(status= status.HTTP_200_OK, data= serializer.data)
+
+
+class CreateNewProduct(APIView):
+    serializer_class = ProductSerializer
+    permission_classes=[permissions.IsAuthenticated]    
+
+    def post(self, request):
+        data = request.data
+        serializer = self.serializer_class(data=data)
+
+        if not hasattr(request.user, 'shop_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+
+        if serializer.is_valid():
+            categ = Category.objects.filter(category_name = serializer.data['category_name'])[:1].get()
+            if not categ:
+                return Response(data={'message': 'FAILED TO FIND THE CATEGORY'}, status=status.HTTP_400_BAD_REQUEST)
+
+            product = Product.objects.create(category = categ, shop = request.user.shop_profile, 
+                                            product_name= serializer.data['product_name'], 
+                                            quantity_per_unit=serializer.data['quantity_per_unit'],
+                                            units_in_stock=serializer.data['units_in_stock'],   
+                                            units_on_order=serializer.data['units_on_order'],
+                                            discontinued=serializer.data['discontinued'])
+            
+            if not product:
+                return Response(data={'message': 'FAILED TO CREATE THE PRODUCT'}, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response(data={'message': 'PRODUCT WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)
+        
+        return Response(data={"message": "INVALID DATA"}, status=status.HTTP_400_BAD_REQUEST)
+
+class UpdateProduct(APIView):
+    serializer_class = ProductSerializer
+    permission_classes=[permissions.IsAuthenticated]
+
+    def post(self, request):
+        data = request.data
+        serializer = self.serializer_class(data=data)
+
+        if not hasattr(request.user, 'shop_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+
+        if serializer.is_valid():
+            categ = Category.objects.filter(category_name = serializer.data['category_name'])[:1].get()
+
+            if not categ:
+                return Response(data={'message': 'FAILED TO FIND THE CATEGORY'}, status=status.HTTP_400_BAD_REQUEST)
+
+            product = Product.objects.filter(id = serializer.data['id'], shop = request.user.shop_profile)[:1].get()
+            
+            if not product:
+                return Response(data={'message': 'FAILED TO UPDATE THE PRODUCT (PROBABLY YOU HAVE NO ACCESS TO IT)'}, status=status.HTTP_400_BAD_REQUEST)
+
+            product.product_name = serializer.data['product_name']
+            product.quantity_per_unit = serializer.data['quantity_per_unit']
+            product.units_in_stock = serializer.data['units_in_stock']
+            product.units_on_order = serializer.data['units_on_order']
+            product.discontinued = serializer.data['discontinued']
+            product.category = categ
+
+            product.save()
+
+
+            return Response(data={'message': 'PRODUCT WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)
+        
+        return Response(data={"message": "INVALID DATA"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateShopProfile(APIView):
+    serializer_class = ShopProfileSerializer
+    permission_classes=[permissions.IsAuthenticated]
+
+    def post(self, request):
+        data = request.data
+        serializer = self.serializer_class(data=data)
+
+        if not hasattr(request.user, 'shop_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+
+        if serializer.is_valid():
+            if (request.user.shop_profile.address == serializer.data['address'] or request.user.shop_profile.company == serializer.data['company']):
+                return Response(data={'message': 'YOU CANNOT ENTER THE SAME DATA FOR YOUR SHOP PROFILE', 'data':serializer.data}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+            request.user.shop_profile.address = serializer.data['address']
+            request.user.shop_profile.company = serializer.data['company']
+            request.user.shop_profile.save()
+
+            return Response(data={'message': 'SHOP PROFILE WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)
+        
+        return Response(data={"message": "INVALID DATA", 'error' : serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateCustomerProfile(APIView):
+    serializer_class = CustomerProfileSerializer
+    permission_classes=[permissions.IsAuthenticated]
+
+    def post(self, request):
+        data = request.data
+        serializer = self.serializer_class(data=data)
+
+        if not hasattr(request.user, 'customer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
+
+        if serializer.is_valid():
+            if (request.user.customer_profile.address == serializer.data['address']):
+                return Response(data={'message': 'YOU CANNOT ENTER THE SAME DATA FOR YOUR CUSTOMER PROFILE', 'data':serializer.data}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+            request.user.customer_profile.address = serializer.data['address']
+            request.user.customer_profile.save()
+            
+            return Response(data={'message': 'CUSTOMER PROFILE WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)
+        
+        return Response(data={"message": "INVALID DATA", 'error' : serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
+class UpdateVolunteerProfile(APIView):
+    serializer_class = VolunteerProfileSerializer
+    permission_classes=[permissions.IsAuthenticated]
+
+    def post(self, request):
+        data = request.data
+        serializer = self.serializer_class(data=data)
+
+        if not hasattr(request.user, 'volunteer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+
+        if serializer.is_valid():
+            if (request.user.volunteer_profile.orgnanization == serializer.data['organization']):
+                return Response(data={'message': 'YOU CANNOT ENTER THE SAME DATA FOR YOUR VOLUNTEER PROFILE', 'data':serializer.data}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+            request.user.volunteer_profile.orgnanization = serializer.data['organization']
+            request.user.volunteer_profile.save()
+            
+            return Response(data={'message': 'VOLUNTEER PROFILE WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)
+        
+        return Response(data={"message": "INVALID DATA", 'error' : serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+class GetProfile(APIView):
+    def get(self, request):
+        if hasattr(request.user, 'shop_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={})
+        elif hasattr(request.user, 'customer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+        elif hasattr(request.user, 'volunteer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
