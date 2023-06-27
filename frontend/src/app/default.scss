@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html {
+	scroll-behavior: smooth;
+}
+body {
+	width: 100vw;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+label {
+	cursor: default;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+}
+button {
+	border: none;
+	outline: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+input {
+	border: none;
+	outline: none;
+}
+ul,
+ol {
+	list-style: none;
+}
