@@ -16,7 +16,7 @@ const Stats = () => {
             {stats.map(item => (
               <div
                 key={item.id}
-                className="flex flex-col space-y-4 justify-center items-center rounded-lg border border-gray-100 px-4 py-8 text-center">
+                className="shadow-md hover:-translate-y-3 hover:shadow-lg ease-in flex flex-col space-y-4 justify-center items-center rounded-3xl border border-gray-100 px-4 py-8 text-center ">
                 <Image
                   alt="item"
                   width={100}
