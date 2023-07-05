@@ -1,9 +1,9 @@
 'use client';
 
 import Navbar from '@root/components/Header/Navbar';
+import Footer from '@root/components/Footer/Footer';
 import Community from '../components/Community/Community'
 import Phone from '../components/Phone/Phone'
-import styles from '@root/style';
 import styles from '@root/style';
 import Hero from '@root/components/Hero/Hero';
 import Stats from '@root/components/Stats/Stats';
@@ -25,6 +25,7 @@ export default function Home() {
           <Community />
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
