@@ -10,12 +10,16 @@ import { useState } from 'react'
 const pjs = Plus_Jakarta_Sans({ subsets: ["latin"] });
 export default function Shop() {
   const [page, setPage] = useState(2)
+
+  function changePage(newPage: number) {
+    setPage(newPage)
+  }
+
   return (
     <>
       <Navbar />
-      {/**хвала тому кто придумал калк */}
       <div className={"flex h-[calc(100vh-80px)]" + pjs.className}>
-        <Menu />
+        <Menu setPage={changePage} />
         {
           page === 1 ? <Profile /> :
           page === 2 ? <Statistics /> :
