@@ -1,15 +1,15 @@
-export default function Menu () {
+export default function Menu ({ setPage } : any) {
   return (
     <div className="flex justify-between flex-col w-[280px] h-[calc(100vh-80px)]">
       <div className="flex flex-col pt-11 w-[280px]">
-        <button className="flex gap-2 pl-11 pt-5 pb-5">
+        <button className="flex gap-2 pl-11 pt-5 pb-5" onClick={()=>{setPage(1)}}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             <path opacity="0.4" d="M20.5901 22C20.5901 18.13 16.7402 15 12.0002 15C7.26015 15 3.41016 18.13 3.41016 22" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <div className="">Профиль</div>
         </button>
-        <button className="flex gap-2 pl-11 pt-5 pb-5">
+        <button className="flex gap-2 pl-11 pt-5 pb-5" onClick={()=>{setPage(2)}}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.5 18.9585H2.5C2.15833 18.9585 1.875 18.6752 1.875 18.3335C1.875 17.9918 2.15833 17.7085 2.5 17.7085H17.5C17.8417 17.7085 18.125 17.9918 18.125 18.3335C18.125 18.6752 17.8417 18.9585 17.5 18.9585Z" fill="#696C70"/>
             <path d="M4.66665 16.4584H3.33333C2.53333 16.4584 1.875 15.8001 1.875 15.0001V7.81673C1.875 7.01673 2.53333 6.3584 3.33333 6.3584H4.66665C5.46665 6.3584 6.12498 7.01673 6.12498 7.81673V15.0001C6.12498 15.8001 5.46665 16.4584 4.66665 16.4584ZM3.33333 7.60006C3.21667 7.60006 3.125 7.69172 3.125 7.80839V15.0001C3.125 15.1167 3.21667 15.2084 3.33333 15.2084H4.66665C4.78331 15.2084 4.87498 15.1167 4.87498 15.0001V7.81673C4.87498 7.70007 4.78331 7.6084 4.66665 7.6084H3.33333V7.60006Z" fill="#696C70"/>
@@ -18,7 +18,7 @@ export default function Menu () {
           </svg>
           <div className="">Статистика</div>
         </button>
-        <button className="flex gap-2 pl-11 pt-5 pb-5">
+        <button className="flex gap-2 pl-11 pt-5 pb-5" onClick={()=>{setPage(3)}}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M21.5 10.9V4.1C21.5 2.6 20.86 2 19.27 2H15.23C13.64 2 13 2.6 13 4.1V10.9C13 12.4 13.64 13 15.23 13H19.27C20.86 13 21.5 12.4 21.5 10.9Z" fill="#696C70"/>
             <path d="M11 13.1V19.9C11 21.4 10.36 22 8.77 22H4.73C3.14 22 2.5 21.4 2.5 19.9V13.1C2.5 11.6 3.14 11 4.73 11H8.77C10.36 11 11 11.6 11 13.1Z" fill="#696C70"/>
