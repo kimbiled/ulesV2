@@ -2,8 +2,8 @@
 
 import Navbar from '@root/components/Header/Navbar';
 import Footer from '@root/components/Footer/Footer';
-import Community from '../components/Community/Community'
-import Phone from '../components/Phone/Phone'
+import Community from '../components/Community/Community';
+import Phone from '../components/Phone/Phone';
 import styles from '@root/style';
 import Hero from '@root/components/Hero/Hero';
 import Stats from '@root/components/Stats/Stats';
@@ -16,7 +16,7 @@ export default function Home() {
           <Navbar></Navbar>
         </div>
       </div>
-      <div className={`bg-primary ${styles.flexStart}`}>
+      <div className={`bg-primary ${styles.flexStart} `}>
         <div className={`${styles.boxWidth}`}>
           <Hero></Hero>
           <Ranks></Ranks>

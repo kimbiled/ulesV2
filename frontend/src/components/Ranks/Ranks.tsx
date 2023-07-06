@@ -9,7 +9,7 @@ const Ranks = () => {
       </h2>
 
       <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2">
-        <blockquote className="rounded-lg bg-gradient-to-r from-[#5C97CD] to-[#0D2435]  p-8   ">
+        <blockquote className="rounded-lg bg-[#D6EAF8]  p-8   ">
           <div className="flex items-center gap-4">
             <Image
               src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
@@ -20,19 +20,19 @@ const Ranks = () => {
             />
 
             <div>
-              <p className="mt-1 text-lg font-medium text-white">
+              <p className="mt-1 text-lg font-medium text-ulsDark">
                 Санжар Кыдырбеков
               </p>
             </div>
           </div>
 
-          <p className="line-clamp-2 sm:line-clamp-none mt-4 text-white">
+          <p className="line-clamp-2 sm:line-clamp-none mt-4 text-ulsDark">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
             voluptatem alias ut provident sapiente repellendus.
           </p>
         </blockquote>
 
-        <blockquote className="rounded-lg bg-gradient-to-l from-[#5C97CD] to-[#0D2435]  p-8 ">
+        <blockquote className="rounded-lg bg-[#D6EAF8]  p-8 ">
           <div className="flex items-center gap-4">
             <Image
               alt="mockup"
@@ -43,11 +43,11 @@ const Ranks = () => {
             />
 
             <div>
-              <p className="mt-1 text-lg font-medium text-white">Magnum</p>
+              <p className="mt-1 text-lg font-medium text-ulsDark">Magnum</p>
             </div>
           </div>
 
-          <p className="line-clamp-2 sm:line-clamp-none mt-4 text-white">
+          <p className="line-clamp-2 sm:line-clamp-none mt-4 text-ulsDark">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
             voluptatem alias ut provident sapiente repellendus.
           </p>

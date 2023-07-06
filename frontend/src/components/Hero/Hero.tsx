@@ -10,11 +10,13 @@ const Hero = () => {
       <div className="flex  w-full justify-center items-center  py-8  ">
         <div>
           <h1 className="max-w-2xl mb-4 text-3xl font-extrabold tracking-tight leading-none md:text-4xl xl:text-5xl text-ulsDark">
-            Úles – платформа сбалансированного распределения
+            Úles – платформа сбалансированного распределения гуманитарной
+            помощи.
           </h1>
           <p className="max-w-2xl mb-6 font-light lg:mb-8 md:text-lg lg:text-xl text-ulsDark">
-            From checkout to global sales tax compliance, companies around the
-            world use Flowbite to simplify their payment stack.
+            Веб-сайт по автоматическому распределению пожертвования для
+            поддержки социально-уязвимых категорий населения, используя
+            алгоритмы для эффективного сбора и распределения прямой помощи.
           </p>
           <a
             href="#"
