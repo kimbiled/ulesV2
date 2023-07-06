@@ -31,7 +31,7 @@ import budget from './budget.svg';
 import food from './food.svg';
 import experience from './experience.svg';
 import volunteers from './volunteers.svg';
-import magnum from './magnum.svg';
+import magnum from './magnum.jpg';
 export {
   airbnb,
   bill,
