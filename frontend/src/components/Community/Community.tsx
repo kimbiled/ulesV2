@@ -1,7 +1,6 @@
-import { template, quote } from '../../app/assets/index';
 import Image from 'next/image';
 import Layout from '../Layout/Layout';
-import { magnum } from '@public/assets';
+import { magnum, quote, quote01, quote02 } from '@public/assets';
 
 export default function Community() {
   return (
@@ -20,7 +19,7 @@ export default function Community() {
               height={50}
             />{' '}
             <Image
-              src={template}
+              src={quote01}
               width={445}
               height={267}
               className="rounded-3xl"
@@ -48,7 +47,7 @@ export default function Community() {
               height={50}
             />
             <Image
-              src={template}
+              src={quote02}
               width={445}
               height={267}
               className="rounded-3xl"

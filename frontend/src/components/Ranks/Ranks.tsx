@@ -27,8 +27,11 @@ const Ranks = () => {
           </div>
 
           <p className="line-clamp-2 sm:line-clamp-none mt-4 text-ulsDark">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-            voluptatem alias ut provident sapiente repellendus.
+            Санжар является активным участником сообщества Ules и внес
+            значительный вклад в поддержку социально-уязвимых категорий
+            населения. Его щедрые пожертвования и непрерывное участие в
+            волонтерских активностях помогли улучшить жизнь многих людей. Санжар
+            - вдохновение для всех нас!
           </p>
         </blockquote>
 
@@ -48,8 +51,10 @@ const Ranks = () => {
           </div>
 
           <p className="line-clamp-2 sm:line-clamp-none mt-4 text-ulsDark">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-            voluptatem alias ut provident sapiente repellendus.
+            Magnum - еще один важный участник сообщества Ules, который проявляет
+            постоянную активность в поддержке нуждающихся. Его щедрость и
+            энергия привносят надежду в жизни тех, кто нуждается в помощи.
+            Спасибо, Magnum, за ваше самоотверженное участие!
           </p>
         </blockquote>
       </div>
