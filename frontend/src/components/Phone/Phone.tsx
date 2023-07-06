@@ -1,7 +1,8 @@
 import React from 'react';
-import { ulesphone } from '../../app/assets/index';
+
 import styles, { layout } from '../../style';
 import Image from 'next/image';
+import { ulesphone } from '@public/assets';
 const Phone = () => {
   return (
     <section id="product" className={`${layout.sectionReverse}`}>

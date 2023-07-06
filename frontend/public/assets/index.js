@@ -31,7 +31,18 @@ import budget from './budget.svg';
 import food from './food.svg';
 import experience from './experience.svg';
 import volunteers from './volunteers.svg';
+
+import template from './template.jpg';
+import quote from './quote.svg';
+import time from './time.svg';
+import timer from './timer.svg';
+import map from './map.svg';
+import bin from './bin.svg';
+
 import magnum from './magnum.jpg';
+import quote01 from './quote01.jpg';
+import quote02 from './quote02.jpg';
+
 export {
   airbnb,
   bill,
@@ -59,12 +70,20 @@ export {
   people02,
   people03,
   uleslogo,
-  volunteer,
+  magnum,
+  template,
+  quote,
+  time,
+  map,
+  bin,
+  timer,
   ulesphone,
+  volunteer,
   profilePhoto,
   budget,
   food,
   experience,
   volunteers,
-  magnum,
+  quote01,
+  quote02,
 };
