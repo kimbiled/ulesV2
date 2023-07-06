@@ -9,7 +9,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import { useState } from 'react'
 const pjs = Plus_Jakarta_Sans({ subsets: ["latin"] });
 export default function Shop() {
-  const [page, setPage] = useState(2)
+  const [page, setPage] = useState(1)
 
   function changePage(newPage: number) {
     setPage(newPage)
