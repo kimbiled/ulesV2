@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { useAuth } from "@context/Auth/useAuth";
 import { redirect } from "next/navigation";
 
-export default function Home() {
+export default function Login() {
 	const { signIn, user } = useAuth();
 
 	const emailRef = useRef<HTMLInputElement>(null);

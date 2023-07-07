@@ -1,10 +1,9 @@
 "use client";
 import Header from "@components/Header/Header";
-import Header from "@components/Header/Header";
-import Menu from "./menu.tsx";
-import Profile from "./profile.tsx";
-import Statistics from "./statistics.tsx";
-import Orders from "./orders.tsx";
+import Menu from "./menu";
+import Profile from "./profile";
+import Statistics from "./statistics";
+import Orders from "./orders";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { useState } from "react";
 const pjs = Plus_Jakarta_Sans({ subsets: ["latin"] });
