@@ -31,12 +31,14 @@ class ShopProfileSerializer(serializers.ModelSerializer):
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
+    name = serializers.CharField(required = True)
     class Meta:
         model = CustomerProfile
         fields = ('address', 'name')
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     organization = serializers.CharField(required = True)
+    name = serializers.CharField(required = True)
     rating = serializers.IntegerField(required = True)
     class Meta:
         model = VolunteerProfile
