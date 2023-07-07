@@ -24,9 +24,10 @@ class ShopProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     company = serializers.CharField(required = True)
     rating = serializers.IntegerField(required = True)
+    name = serializers.CharField(required = True)
     class Meta:
         model = ShopProfile 
-        fields = ('address','company','rating')
+        fields = ('address','company','rating','name')
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
