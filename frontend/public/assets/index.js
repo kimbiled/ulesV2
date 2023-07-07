@@ -38,7 +38,7 @@ import time from './time.svg';
 import timer from './timer.svg';
 import map from './map.svg';
 import bin from './bin.svg';
-
+import exitForm from './exit_form.svg';
 import magnum from './magnum.jpg';
 import quote01 from './quote01.jpg';
 import quote02 from './quote02.jpg';
@@ -55,6 +55,7 @@ export {
   robot,
   send,
   shield,
+  exitForm,
   star,
   menu,
   close,

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Head from 'next/head';
 import styles from '../../style';
 import Navbar from '@components/Header/Navbar';
@@ -10,23 +10,24 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [userType, setUserType] = useState('');
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
     await axios
-    .post('http://127.0.0.1:8000/auth/login/', {
-      email: email,
-      password: password,
-    })
-    .then(response => {
-      const refresh_token = response.data.refresh;
-      const access_token = response.data.access;
-      console.log('refresh', refresh_token);
-      console.log('access', access_token);
-      localStorage.setItem('refres_token', refresh_token);
-      localStorage.setItem('access_token', access_token);
-    });
+      .post('http://127.0.0.1:8000/auth/login/', {
+        email: email,
+        password: password,
+      })
+      .then(response => {
+        const refresh_token = response.data.refresh;
+        const access_token = response.data.access;
+        console.log('refresh', refresh_token);
+        console.log('access', access_token);
+        localStorage.setItem('refres_token', refresh_token);
+        localStorage.setItem('access_token', access_token);
+      });
 
     await router.push('/login');
   };
@@ -70,6 +71,22 @@ export default function Home() {
                         onChange={e => setEmail(e.target.value)}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="name@email.com"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-900">
+                        Ваш номер
+                      </label>
+                      <input
+                        type="phone"
+                        name="phone"
+                        id="phone"
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        placeholder="+77"
                       />
                     </div>
                     <div>
