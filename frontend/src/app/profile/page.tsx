@@ -1,17 +1,18 @@
 "use client";
 import { useEffect } from "react";
 import { useAuth } from "@context/Auth/useAuth";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Profile() {
 	const { user } = useAuth();
+	const { push } = useRouter();
 
 	useEffect(() => {
-		if (!user) return redirect("/login");
+		if (!user) return push("/login");
 
-		if (user.user_type === 2) redirect("/volunteer");
-		if (user.user_type === 3) redirect("/shop");
-		if (user.user_type === 4) redirect("/customer");
+		if (user.user_type === 2) push("/volunteer");
+		if (user.user_type === 3) push("/shop");
+		if (user.user_type === 4) push("/customer");
 	}, []);
 
 	return <></>;

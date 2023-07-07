@@ -5,16 +5,18 @@ import Header from "@components/Header/Header";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useAuth } from "@context/Auth/useAuth";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
 	const { signIn, user } = useAuth();
+
+	const { push } = useRouter();
 
 	const emailRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		if (user) redirect("/");
+		if (user) push("/");
 	}, [user]);
 
 	return (
@@ -48,7 +50,7 @@ export default function Login() {
 											email: emailRef.current.value,
 											password: passwordRef.current.value,
 										}).then(() => {
-											redirect("/");
+											push("/");
 										});
 									}}
 								>
