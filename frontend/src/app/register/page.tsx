@@ -1,16 +1,15 @@
-
 "use client";
 import styles from "../../style";
 import Header from "@components/Header/Header";
 
-
 import Link from "next/link";
 import { useAuth } from "@context/Auth/useAuth";
 import { useEffect, useRef } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 export default function Home() {
-
 	const { user, signUp } = useAuth();
+
+	const { push } = useRouter();
 
 	const emailRef = useRef<HTMLInputElement>(null);
 	const nameRef = useRef<HTMLInputElement>(null);
@@ -19,9 +18,8 @@ export default function Home() {
 	const passwordRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		if (user) return redirect("/");
-	}, []);
-
+		if (user) return push("/");
+	}, [user]);
 
 	return (
 		<div className="bg-primary h-screen w-full overflow-hidden">
