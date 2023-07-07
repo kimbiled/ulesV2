@@ -56,7 +56,7 @@ const Header = () => {
 			</div>
 			<div className="flex items-center space-x-4" style={{ display: user ? "flex" : "none" }}>
 				<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full" />
-				<p className="font-poppins text-white ml-2">Андрей Братан</p>
+				<p className="font-poppins text-white ml-2">{user && user.name}</p>
 			</div>
 
 			<div className="sm:hidden flex flex-1 justify-end items-center">

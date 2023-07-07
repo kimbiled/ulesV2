@@ -93,12 +93,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		Promise.all([getUser(access || "")])
 			.then(([user]) => {
 				setUser(user);
+				setIsLoading(false);
 			})
 			.catch((error) => {
 				console.log(error);
+				setIsLoading(false);
 			});
 
-		setIsLoading(false);
 		return () => {
 			setUser(null);
 		};
