@@ -10,12 +10,13 @@ export default function Home() {
 	const { user, signUp } = useAuth();
 
 	const emailRef = useRef<HTMLInputElement>(null);
+	const nameRef = useRef<HTMLInputElement>(null);
 	const roleRef = useRef<HTMLSelectElement>(null);
 	const phoneRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		// if (user) return redirect("/");
+		if (user) return redirect("/");
 	}, []);
 
 	return (
@@ -42,12 +43,14 @@ export default function Home() {
 											!emailRef.current ||
 											!passwordRef.current ||
 											!roleRef.current ||
-											!phoneRef.current
+											!phoneRef.current ||
+											!nameRef.current
 										)
 											return;
 
 										await signUp({
 											email: emailRef.current.value,
+											name: nameRef.current.value,
 											user_type: Number(roleRef.current.value),
 											password: passwordRef.current.value,
 											phone: phoneRef.current.value,
@@ -65,6 +68,19 @@ export default function Home() {
 											className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
 											placeholder="name@email.com"
 											ref={emailRef}
+										/>
+									</div>
+									<div>
+										<label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+											Ваша имя
+										</label>
+										<input
+											type="text"
+											name="name"
+											id="name"
+											className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+											placeholder="name@email.com"
+											ref={nameRef}
 										/>
 									</div>
 									<div>

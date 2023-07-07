@@ -10,6 +10,7 @@ export type TUser = {
 
 export interface ISignUp {
 	email: string;
+	name: string;
 	user_type: number;
 	password: string;
 	phone: string;

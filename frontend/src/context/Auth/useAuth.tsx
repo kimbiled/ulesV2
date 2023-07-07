@@ -7,7 +7,7 @@ import config from "@root/config";
 
 interface AuthContextProps {
 	user: TUser | null;
-	signUp: ({ email, user_type, phone, password }: ISignUp) => Promise<void>;
+	signUp: ({ email, name, user_type, phone, password }: ISignUp) => Promise<void>;
 	signIn: ({ email, password }: ISignIn) => Promise<void>;
 	logOut: () => void;
 }
@@ -22,12 +22,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [user, setUser] = useState<TUser | null>(null);
 
-	async function signUp({ email, user_type, password, phone }: ISignUp) {
+	async function signUp({ email, name, user_type, password, phone }: ISignUp) {
 		return await axios({
 			method: "POST",
 			url: `${config.BACKEND_HOST}/auth/register/`,
 			data: {
 				email,
+				name,
 				user_type,
 				password,
 				phone,
