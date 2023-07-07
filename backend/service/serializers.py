@@ -2,7 +2,8 @@ from django.forms import ValidationError
 from rest_framework import serializers
 
 from service.models import Category, CustomerProfile, Product, ShopProfile, VolunteerProfile
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 class ProductSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     category_name = serializers.CharField(source='category') 
@@ -26,7 +27,7 @@ class ShopProfileSerializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(required = True)
     class Meta:
         model = ShopProfile 
-        fields = ('address','company')
+        fields = ('address','company','rank','rating')
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
@@ -37,6 +38,18 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     organization = serializers.CharField(required = True)
+    rank = serializers.IntegerField(required = True)
+    rating = serializers.IntegerField(required = True)
     class Meta:
         model = VolunteerProfile
-        fields = ('organization')
+        fields = ('organization','rank','rating')
+
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(required = True)
+    user_type = serializers.IntegerField(required = True)
+    phone = serializers.CharField(required = True)
+
+
+    class Meta:
+        model = User
+        fields = ['email', 'user_type', 'phone']
