@@ -1,7 +1,11 @@
 export type TUser = {
+	name: string;
 	email: string;
 	user_type: number;
 	phone: string;
+	address: string;
+	company: string;
+	rating: number;
 };
 
 export interface ISignUp {
@@ -16,14 +20,7 @@ export interface ISignIn {
 	password: string;
 }
 
-export interface ISignUpResponse {
-	message: string;
-	data: TUser;
-}
-
 export type TTokens = {
 	access?: string;
 	refresh?: string;
 };
-
-export interface IGetUser {}

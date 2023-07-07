@@ -8,6 +8,7 @@ class ShopProfile(models.Model):
     company = models.CharField(max_length=255, default='')
     rating = models.PositiveIntegerField(default=0)
     help_count = models.PositiveIntegerField(default=0)
+    name = models.CharField(max_length=255, default='')
 
     def __str__(self):
         return str(self.user.email)
