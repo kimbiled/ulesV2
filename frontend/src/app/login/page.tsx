@@ -1,35 +1,27 @@
 "use client";
 import styles from "../../style";
-import Navbar from "@components/Header/Navbar";
+import Header from "@components/Header/Header";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
+import { useAuth } from "@context/Auth/useAuth";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const { signIn, user } = useAuth();
 
-	// const handleSubmit = async (event: SyntheticEvent) => {
-	// 	event.preventDefault();
-	// 	await axios
-	// 		.post("http://127.0.0.1:8000/auth/login/", {
-	// email: email,
-	// password: password,
-	// })
-	// .then((response) => {
-	// const token = response.data.data;
-	// console.log(token);
-	// localStorage.setItem('token', token);
-	// });
+	const emailRef = useRef<HTMLInputElement>(null);
+	const passwordRef = useRef<HTMLInputElement>(null);
 
-	// await router.push("/main");
-	// };
+	useEffect(() => {
+		if (user) redirect("/");
+	}, [user]);
 
 	return (
 		<div className="bg-primary h-screen w-full overflow-hidden">
 			<div className={`${styles.flexCenter}`}>
 				<div className={`${styles.boxWidth}`}>
-					<Navbar />
+					<Header />
 				</div>
 			</div>
 			<div className={`${styles.flexStart}`}>
@@ -44,7 +36,22 @@ export default function Home() {
 									Войти
 								</h2>
 
-								<form className="space-y-4 md:space-y-6" action="#">
+								<form
+									className="space-y-4 md:space-y-6"
+									action="#"
+									onSubmit={async (event) => {
+										event.preventDefault();
+										if (!emailRef.current) return;
+										if (!passwordRef.current) return;
+
+										await signIn({
+											email: emailRef.current.value,
+											password: passwordRef.current.value,
+										}).then(() => {
+											redirect("/");
+										});
+									}}
+								>
 									<div>
 										<label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
 											Ваша эл-почта
@@ -53,10 +60,9 @@ export default function Home() {
 											type="text"
 											name="email"
 											id="email"
-											value={email}
-											onChange={(e) => setEmail(e.target.value)}
 											className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
 											placeholder=""
+											ref={emailRef}
 										/>
 									</div>
 									<div>
@@ -70,10 +76,9 @@ export default function Home() {
 											type="password"
 											name="password"
 											id="password"
-											value={password}
-											onChange={(e) => setPassword(e.target.value)}
 											placeholder="••••••••"
 											className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+											ref={passwordRef}
 										/>
 									</div>
 

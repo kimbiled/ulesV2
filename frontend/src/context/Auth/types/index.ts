@@ -1,18 +1,12 @@
 export type TUser = {
 	email: string;
-	user_type: EUserType;
+	user_type: number;
 	phone: string;
 };
 
-export const enum EUserType {
-	volunteer = 2,
-	shop = 3,
-	recipient = 4,
-}
-
 export interface ISignUp {
 	email: string;
-	user_type: EUserType;
+	user_type: number;
 	password: string;
 	phone: string;
 }
@@ -27,9 +21,9 @@ export interface ISignUpResponse {
 	data: TUser;
 }
 
-export interface ISignInResponse {
+export type TTokens = {
 	access?: string;
 	refresh?: string;
-}
+};
 
 export interface IGetUser {}

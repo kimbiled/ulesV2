@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@root/components/Header/Navbar";
+import Header from "@components/Header/Header";
 import Footer from "@root/components/Footer/Footer";
 import Community from "../components/Community/Community";
 import Phone from "../components/Phone/Phone";
@@ -13,7 +13,7 @@ export default function Home() {
 		<div className=" w-full overflow-hidden">
 			<div className={` ${styles.flexCenter}`}>
 				<div className={`${styles.boxWidth}`}>
-					<Navbar />
+					<Header />
 				</div>
 			</div>
 			<div className={`bg-primary ${styles.flexStart} `}>

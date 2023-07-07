@@ -21,7 +21,7 @@ export default function Volunteer() {
 
 	return (
 		<Layout>
-			<div className={"flex flex-col gap-[30px]"}>
+			<div className={"flex flex-col gap-[30px] my-[30px]"}>
 				<div className={"flex flex-row gap-[30px]"}>
 					<Cart />
 					<Cart />
@@ -41,7 +41,7 @@ export default function Volunteer() {
 								<p className={"font-semibold text-[24px]"}>Вы (123 место)</p>
 								<p className={"text-gray-400"}>men@kazakh.kz</p>
 							</div>
-							<p className={"font-semibold text-[24px] ml-auto"}>10 поездок</p>
+							<p className={"font-semibold text-[24px] ml-auto items-center"}>10 поездок</p>
 						</div>
 
 						<div className={"flex flex-row podium first"}>
@@ -50,7 +50,7 @@ export default function Volunteer() {
 								<p className={"font-semibold text-[24px]"}>Вы (123 место)</p>
 								<p className={"text-gray-400"}>men@kazakh.kz</p>
 							</div>
-							<p className={"font-semibold text-[24px] ml-auto"}>10 поездок</p>
+							<p className={"font-semibold text-[24px] ml-auto items-center"}>10 поездок</p>
 						</div>
 
 						<div className={"flex flex-row podium second"}>
@@ -59,7 +59,7 @@ export default function Volunteer() {
 								<p className={"font-semibold text-[24px]"}>Вы (123 место)</p>
 								<p className={"text-gray-400"}>men@kazakh.kz</p>
 							</div>
-							<p className={"font-semibold text-[24px] ml-auto"}>10 поездок</p>
+							<p className={"font-semibold text-[24px] ml-auto items-center"}>10 поездок</p>
 						</div>
 
 						<div className={"flex flex-row podium third"}>
@@ -68,7 +68,7 @@ export default function Volunteer() {
 								<p className={"font-semibold text-[24px]"}>Вы (123 место)</p>
 								<p className={"text-gray-400"}>men@kazakh.kz</p>
 							</div>
-							<p className={"font-semibold text-[24px] ml-auto"}>10 поездок</p>
+							<p className={"font-semibold text-[24px] ml-auto items-center"}>10 поездок</p>
 						</div>
 					</div>
 				</div>
