@@ -47,5 +47,6 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
     objects = UserManager()
     
-    phone = models.CharField(max_length=20,default='asd')
+    phone = models.CharField(max_length=20,default='')
+    name = models.CharField(max_length=20,default='')
     user_type = models.PositiveSmallIntegerField(choices=constants.USER_TYPE_CHOICES , default=constants.SUPERUSER)
