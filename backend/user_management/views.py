@@ -22,6 +22,6 @@ class RegisterView(APIView):
 
             response = {"message": "USER REGISTERED SUCCESSFULLY", "data": serializer.data}
 
-            return Response(data=response, status=status.HTTP_200_OK)
+            return Response(data=response, status=status.HTTP_201_CREATED)
 
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
