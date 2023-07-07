@@ -24,15 +24,13 @@ class ShopProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     company = serializers.CharField(required = True)
     rating = serializers.IntegerField(required = True)
-    name = serializers.CharField(required = True)
     class Meta:
         model = ShopProfile 
-        fields = ('address','company','rating','name')
+        fields = ('address','company','rating')
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
-    name = serializers.CharField(required = True)
     class Meta:
         model = CustomerProfile
         fields = ('address')
@@ -41,7 +39,6 @@ class VolunteerProfileSerializer(serializers.ModelSerializer):
     organization = serializers.CharField(required = True)
     name = serializers.CharField(required = True)
     rating = serializers.IntegerField(required = True)
-    name = serializers.CharField(required = True)
     class Meta:
         model = VolunteerProfile
         fields = ('organization','rating')
