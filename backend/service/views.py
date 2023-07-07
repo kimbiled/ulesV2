@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from service.models import Category, Product
 from rest_framework import status, permissions, viewsets
-from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer
+from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 
@@ -164,10 +164,28 @@ class UpdateVolunteerProfile(APIView):
         return Response(data={"message": "INVALID DATA", 'error' : serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class GetProfile(APIView):
+    permission_classes=[permissions.IsAuthenticated]
+
     def get(self, request):
+        serializer_user = UserSerializer(request.user)
+        
         if hasattr(request.user, 'shop_profile'):
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={})
+            serializer = ShopProfileSerializer(request.user.shop_profile)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
         elif hasattr(request.user, 'customer_profile'):
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+            serializer = CustomerProfileSerializer(request.user.customer_profile)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
         elif hasattr(request.user, 'volunteer_profile'):
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+            serializer = VolunteerProfileSerializer(request.user.volunteer_profile)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
+        
+        return Response(status=status.HTTP_400_BAD_REQUEST, data={})
+
+
+class GetUser(APIView):
+    permission_classes=[permissions.IsAuthenticated]
+
+    def get(self, request):
+        serializer_user = UserSerializer(request.user)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer_user.data)

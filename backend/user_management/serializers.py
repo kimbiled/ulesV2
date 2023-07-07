@@ -20,7 +20,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         fields = ["email", "password",'user_type','phone']
 
     def create(self, validated_data):
-        user = User.objects.create(email=validated_data['email'], user_type = validated_data['user_type'])
+        user = User.objects.create(email=validated_data['email'], user_type = validated_data['user_type'], phone=validated_data['phone'] )
         user.set_password(validated_data['password'])
         user.save()
         return user
