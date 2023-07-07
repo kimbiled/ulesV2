@@ -1,111 +1,112 @@
-'use client'
-import Head from 'next/head';
-import styles from '../../style';
-import Navbar from '@components/Header/Navbar';
+"use client";
+import styles from "../../style";
+import Header from "@components/Header/Header";
 
-import Link from 'next/link';
-import { SyntheticEvent, useState } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { useAuth } from "@context/Auth/useAuth";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const handleSubmit = async (event: SyntheticEvent) => {
-    event.preventDefault();
-    await axios
-      .post('http://127.0.0.1:8000/auth/login/', {
-        // email: email,
-        // password: password,
-      })
-      .then(response => {
-        // const token = response.data.data;
-        // console.log(token);
-        // localStorage.setItem('token', token);
-      });
+export default function Login() {
+	const { signIn, user } = useAuth();
 
-    await router.push('/main');
-  };
-  return (
-    <>
-      <div className="bg-primary h-screen w-full overflow-hidden">
-        <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-          <div className={`${styles.boxWidth}`}>
-            <Navbar></Navbar>
-          </div>
-        </div>
-        <div className={`${styles.flexStart}`}>
-          <div className={`${styles.boxWidth}`}>
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-              <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                  <h2
-                    className="text-xl font-bold leading-tight tracking-tight 
-                              text-gray-900 md:text-2xl text-center">
-                    Войти
-                  </h2>
+	const emailRef = useRef<HTMLInputElement>(null);
+	const passwordRef = useRef<HTMLInputElement>(null);
 
-                  <form
-                    className="space-y-4 md:space-y-6"
-                    action="#"
-                    onSubmit={handleSubmit}>
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block mb-2 text-sm font-medium text-gray-900">
-                        Ваша эл-почта
-                      </label>
-                      <input
-                        type="text"
-                        name="email"
-                        id="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder=""
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="password"
-                        className="block mb-2 text-sm font-medium text-gray-900">
-                        Пароль
-                      </label>
-                      <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        placeholder="••••••••"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      />
-                    </div>
+	useEffect(() => {
+		if (user) redirect("/");
+	}, [user]);
 
-                    <button
-                      type="submit"
-                      className="w-full text-white bg-gray-600 
+	return (
+		<div className="bg-primary h-screen w-full overflow-hidden">
+			<div className={`${styles.flexCenter}`}>
+				<div className={`${styles.boxWidth}`}>
+					<Header />
+				</div>
+			</div>
+			<div className={`${styles.flexStart}`}>
+				<div className={`${styles.boxWidth}`}>
+					<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+						<div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+							<div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+								<h2
+									className="text-xl font-bold leading-tight tracking-tight 
+                              text-gray-900 md:text-2xl text-center"
+								>
+									Войти
+								</h2>
+
+								<form
+									className="space-y-4 md:space-y-6"
+									action="#"
+									onSubmit={async (event) => {
+										event.preventDefault();
+										if (!emailRef.current) return;
+										if (!passwordRef.current) return;
+
+										await signIn({
+											email: emailRef.current.value,
+											password: passwordRef.current.value,
+										}).then(() => {
+											redirect("/");
+										});
+									}}
+								>
+									<div>
+										<label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+											Ваша эл-почта
+										</label>
+										<input
+											type="text"
+											name="email"
+											id="email"
+											className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+											placeholder=""
+											ref={emailRef}
+										/>
+									</div>
+									<div>
+										<label
+											htmlFor="password"
+											className="block mb-2 text-sm font-medium text-gray-900"
+										>
+											Пароль
+										</label>
+										<input
+											type="password"
+											name="password"
+											id="password"
+											placeholder="••••••••"
+											className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+											ref={passwordRef}
+										/>
+									</div>
+
+									<button
+										type="submit"
+										className="w-full text-white bg-gray-600 
                                  hover:bg-primary-700 focus:ring-4 focus:outline-none 
                                  focus:ring-primary-300 font-medium rounded-lg 
                                  text-sm px-5 py-2.5 
-                                 text-center">
-                      Войти
-                    </button>
-                    <p className="text-sm font-light text-gray-500">
-                      Нет аккаунта?{' '}
-                      <Link
-                        href="/register"
-                        className="font-medium text-primary-600 hover:underline">
-                        Зарегистрироватся
-                      </Link>
-                    </p>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+                                 text-center"
+									>
+										Войти
+									</button>
+									<p className="text-sm font-light text-gray-500">
+										Нет аккаунта?{" "}
+										<Link
+											href={"/register"}
+											className="font-medium text-primary-600 hover:underline"
+										>
+											Зарегистрироватся
+										</Link>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }

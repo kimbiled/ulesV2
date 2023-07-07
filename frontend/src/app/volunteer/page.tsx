@@ -1,31 +1,77 @@
+"use client";
+import { useMemo, useState } from "react";
+
+import "./styles/index.scss";
+
 import Layout from "@components/Layout/Layout";
+import Cart from "@components/Card/Card";
+
+import { IVolunteerRating } from "@root/types/Volunteer";
 
 export default function Volunteer() {
+	const [volRating, setVolRating] = useState<IVolunteerRating[]>([]);
+
+	useMemo(() => {
+		// Data fetching
+
+		return () => {
+			setVolRating([]);
+		};
+	}, []);
+
 	return (
 		<Layout>
-			<div className={"bg-[#0D2435] rounded-[2rem] px-[1.5rem] py-[2rem] h-fit text-white flex flex-col gap-6"}>
-				<div className={"flex justify-between items-center min-w-[550px]"}>
-					<p className={"font-semibold text-[24px]"}>Доставленные корзины</p>
-					<p className={"text-[#0D89AF]"}>Просмотреть все</p>
+			<div className={"flex flex-col gap-[30px] my-[30px]"}>
+				<div className={"flex flex-row gap-[30px]"}>
+					<Cart />
+					<Cart />
 				</div>
-				<table className={"table-auto w-[100%] text-left"}>
-					<thead
-						className={
-							"relative before:absolute before:w-[100%] before:h-[100%] before:bg-[#C0C0C0] before:rounded-t-[15px] before:border-b-white before:border-b-[3px]"
-						}
-					>
-						<tr className={"z-1 relative text-[#0D2435] text-[18px]"}>
-							<th className={"w-3/4 p-3.5"}>Заказы</th>
-							<th>Даты</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td className={"text-[17px] font-medium p-3"}>Заказ достален для Линель Месси</td>
-							<td className={"text-[#8D8D8D] text-[14px]"}>Июн 18, 2023</td>
-						</tr>
-					</tbody>
-				</table>
+
+				<div
+					className={"bg-[#0D2435] rounded-[2rem] px-[1.5rem] py-[2rem] h-fit text-white flex flex-col gap-6"}
+				>
+					<div className={"flex justify-between items-center w-[100%]"}>
+						<p className={"font-semibold text-[24px]"}>Рейтинг волонтеров</p>
+						<p className={"text-[#0D89AF] cursor-pointer"}>Просмотреть все</p>
+					</div>
+					<div className={"flex flex-col gap-[0px]"}>
+						<div className={"flex flex-row"}>
+							<img src="" alt="" width={48} height={48} />
+							<div className={"flex flex-col gap-[5px]"}>
+								<p className={"font-semibold text-[24px]"}>Вы (123 место)</p>
+								<p className={"text-gray-400"}>men@kazakh.kz</p>
+							</div>
+							<p className={"font-semibold text-[24px] ml-auto items-center"}>10 поездок</p>
+						</div>
+
+						<div className={"flex flex-row podium first"}>
+							<img src="" alt="" width={48} height={48} />
+							<div className={"flex flex-col gap-[5px]"}>
+								<p className={"font-semibold text-[24px]"}>Вы (123 место)</p>
+								<p className={"text-gray-400"}>men@kazakh.kz</p>
+							</div>
+							<p className={"font-semibold text-[24px] ml-auto items-center"}>10 поездок</p>
+						</div>
+
+						<div className={"flex flex-row podium second"}>
+							<img src="" alt="" width={48} height={48} />
+							<div className={"flex flex-col gap-[5px]"}>
+								<p className={"font-semibold text-[24px]"}>Вы (123 место)</p>
+								<p className={"text-gray-400"}>men@kazakh.kz</p>
+							</div>
+							<p className={"font-semibold text-[24px] ml-auto items-center"}>10 поездок</p>
+						</div>
+
+						<div className={"flex flex-row podium third"}>
+							<img src="" alt="" width={48} height={48} />
+							<div className={"flex flex-col gap-[5px]"}>
+								<p className={"font-semibold text-[24px]"}>Вы (123 место)</p>
+								<p className={"text-gray-400"}>men@kazakh.kz</p>
+							</div>
+							<p className={"font-semibold text-[24px] ml-auto items-center"}>10 поездок</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</Layout>
 	);

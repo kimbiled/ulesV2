@@ -10,9 +10,12 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+.editorconfig
 *.lock
 node_modules
 .next
+.editorconfig
+package-lock.json
 
 # Runtime data
 pids

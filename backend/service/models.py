@@ -7,8 +7,8 @@ class ShopProfile(models.Model):
     address = models.CharField(max_length=255, default='')
     company = models.CharField(max_length=255, default='')
     rating = models.PositiveIntegerField(default=0)
-    rank = models.PositiveIntegerField(default=1)
     help_count = models.PositiveIntegerField(default=0)
+    name = models.CharField(max_length=255, default='')
 
     def __str__(self):
         return str(self.user.email)
@@ -17,8 +17,8 @@ class VolunteerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name="volunteer_profile")
     organization = models.CharField(max_length=255, default='')
     rating = models.PositiveIntegerField(default=0)
-    rank = models.PositiveIntegerField(default=1)
     order_count = models.PositiveIntegerField(default=0)
+    name = models.CharField(max_length=50, default='')
 
 
 
@@ -32,6 +32,7 @@ class Norm(models.Model):
 class CustomerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name="customer_profile")
     address = models.CharField(max_length=255, default='')
+    name = models.CharField(max_length=50, default='')
     norm = models.ForeignKey(Norm,on_delete=models.CASCADE, null=True)
 
     
