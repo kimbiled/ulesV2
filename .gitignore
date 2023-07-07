@@ -14,6 +14,8 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 *.lock
 node_modules
 .next
+.editorconfig
+package-lock.json
 
 # Runtime data
 pids
