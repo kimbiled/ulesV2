@@ -1,15 +1,12 @@
-
 "use client";
 import styles from "../../style";
 import Header from "@components/Header/Header";
-
 
 import Link from "next/link";
 import { useAuth } from "@context/Auth/useAuth";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 export default function Home() {
-
 	const { user, signUp } = useAuth();
 
 	const { push } = useRouter();
@@ -22,8 +19,8 @@ export default function Home() {
 
 	useEffect(() => {
 		if (user) return push("/");
-	}, []);
 
+	}, [user]);
 
 	return (
 		<div className="bg-primary h-screen w-full overflow-hidden">
