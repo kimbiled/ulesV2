@@ -37,7 +37,6 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     organization = serializers.CharField(required = True)
-    name = serializers.CharField(required = True)
     rating = serializers.IntegerField(required = True)
     class Meta:
         model = VolunteerProfile
