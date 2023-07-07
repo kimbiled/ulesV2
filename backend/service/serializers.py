@@ -23,26 +23,24 @@ class CategorySerializer(serializers.ModelSerializer):
 class ShopProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     company = serializers.CharField(required = True)
-    rank = serializers.IntegerField(required = True)
     rating = serializers.IntegerField(required = True)
     class Meta:
         model = ShopProfile 
-        fields = ('address','company','rank','rating')
+        fields = ('address','company','rating')
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     class Meta:
         model = CustomerProfile
-        fields = ('address')
+        fields = ('address', 'name')
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     organization = serializers.CharField(required = True)
-    rank = serializers.IntegerField(required = True)
     rating = serializers.IntegerField(required = True)
     class Meta:
         model = VolunteerProfile
-        fields = ('organization','rank','rating')
+        fields = ('organization','rating','name')
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required = True)
