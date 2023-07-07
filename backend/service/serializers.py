@@ -27,7 +27,7 @@ class ShopProfileSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required = True)
     class Meta:
         model = ShopProfile 
-        fields = ('address','company','rating','name')
+        fields = ('address','company','rating')
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
