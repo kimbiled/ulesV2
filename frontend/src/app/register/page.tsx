@@ -19,7 +19,6 @@ export default function Home() {
 
 	useEffect(() => {
 		if (user) return push("/");
-
 	}, [user]);
 
 	return (

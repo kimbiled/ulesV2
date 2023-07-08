@@ -21,7 +21,7 @@ export default function Volunteer() {
 
 	return (
 		<Layout>
-			<div className={"flex flex-col gap-[30px] my-[30px]"}>
+			<div className={"flex flex-col gap-[30px] my-[30px] justify-center w-[100%]"}>
 				<div className={"flex flex-row gap-[30px]"}>
 					<Cart />
 					<Cart />
