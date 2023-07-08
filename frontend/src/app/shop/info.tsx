@@ -1,73 +1,65 @@
-import { SyntheticEvent, useState } from "react";
+import { useRef } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 export default function Info() {
-	
 	const router = useRouter();
 
-	const [shopAddress, setShopAddress] = useState("");
-	const [shopCompany, setShopCompany] = useState("");
+	// const [shopAddress, setShopAddress] = useState("");
+	// const [shopCompany, setShopCompany] = useState("");
 
-    return (
-        <div className="flex justify-center items-center py-6 absolute z-10 top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-screen h-screen scrollHide drop-shadow-2xl">
-            <div className="w-4/12 h-5/12 rounded-xl bg-white shadow-lg flex justify-center p-6 ">
-                <div className="relative w-full max-w-md max-h-full">
-                    <div className="relative bg-white rounded-lg  ">
-                        <div className="px-6 py-6 lg:px-8">
-                            <h3 className="mb-4 text-xl font-medium text-gray-900 ">
-                                Заполните форму для добавление товара
-                            </h3>
-                            <form 
-                            className="space-y-6" 
-                            action="#"
-                            onSubmit={async (event) => {
-                                event.preventDefault();
-                                if (
-                                    !shopAddress ||
-                                    !shopCompany
-                                )
-                                    return;
+	const addressRef = useRef<HTMLInputElement>(null);
+	const companyRef = useRef<HTMLInputElement>(null);
 
-                                await updateShopProfile({
-                                    address: shopAddress,
-                                    company: shopCompany,
-                                });
-                            }}>
-                                <div>
-                                    <label className="block mb-2 text-sm font-medium text-gray-900">
-                                        Адрес магазина
-                                    </label>
-                                    <input
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Мәңгілік Ел 16"
-                                        onChange={(event) => setShopAddress(event.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                                        Название организации
-                                    </label>
-                                    <input
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Magnum"
-                                        onChange={(event) => setShopCompany(event.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    
-                                    className="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                >
-                                    Сохранить
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>	
-            </div>
-        </div>
-    )
+	return (
+		<div className="px-6 py-6 lg:px-8 flex justify-center items-center w-[100%] flex-col">
+			<div className="bg-white rounded-lg shadow-lg p-6">
+				<h3 className="mb-4 text-xl font-medium text-gray-900 ">Заполните форму для добавление товара</h3>
+				<form
+					className="space-y-6"
+					action="#"
+					onSubmit={async (event) => {
+						event.preventDefault();
+						// if (!shopAddress || !shopCompany) return;
+
+						// await updateShopProfile({
+						//     address: shopAddress,
+						//     company: shopCompany,
+						// });
+					}}
+				>
+					<div>
+						<label className="block mb-2 text-sm font-medium text-gray-900">Адрес магазина</label>
+						<input
+							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+							placeholder="Мәңгілік Ел 16"
+							required
+						/>
+					</div>
+					<div>
+						<label className="block mb-2 text-sm font-medium text-gray-900 ">Название организации</label>
+						<input
+							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+							placeholder="Magnum"
+							required
+						/>
+					</div>
+					<button
+						type="submit"
+						className="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+					>
+						Сохранить
+					</button>
+				</form>
+			</div>
+		</div>
+
+		// <div className="flex justify-center items-center py-6 absolute z-1 top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-screen h-screen scrollHide drop-shadow-2xl">
+		// 	<div className="w-4/12 h-5/12 rounded-xl bg-white shadow-lg flex justify-center p-6 ">
+		// 		<div className="relative w-full max-w-md max-h-full">
+		// 			<div className="relative bg-white rounded-lg  ">
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// </div>
+	);
 }

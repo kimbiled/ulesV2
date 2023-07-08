@@ -1,87 +1,42 @@
 "use client";
-
-import { SyntheticEvent, useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-
+import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
+
 import { exitForm } from "@public/assets";
 
+import { TProduct } from "@context/Shop/types";
+import { useShop } from "@context/Shop/useShop";
+
 export default function Profile() {
-	const Products = [
-		{
-			name: "Milk 3.2%",
-			info: "Milk from company 'Zenchenko', 1 liter",
-			alt: "Milk",
-			type: "Drink",
-			quantity: "50",
-			edit: "Edit",
-			delete: "Delete",
-		},
-		{
-			name: "Milk 3.2%",
-			info: "Milk from company 'Zenchenko', 1 liter",
-			alt: "Milk",
-			type: "Drink",
-			quantity: "50",
-			edit: "Edit",
-			delete: "Delete",
-		},
-		{
-			name: "Milk 3.2%",
-			info: "Milk from company 'Zenchenko', 1 liter ",
-			alt: "Milk",
-			type: "Drink",
-			quantity: "50",
-			edit: "Edit",
-			delete: "Delete",
-		},
-		{
-			name: "Milk 3.2%",
-			info: "Milk from company 'Zenchenko', 1 liter ",
-			alt: "Milk",
-			type: "Drink",
-			quantity: "50",
-			edit: "Edit",
-			delete: "Delete",
-		},
-	];
-	const router = useRouter();
-
-	const handleGetProduct = async (event: SyntheticEvent) => {
-		event.preventDefault();
-		await axios.get("http://127.0.0.1:8000/service/get-products/", {}).then((response) => {
-			console.log(response);
-			console.log("Work");
-		});
-
-		await router.push("/service/get-products/");
-	};
-
-	const handlePostProduct = async (event: SyntheticEvent) => {
-		event.preventDefault();
-		await axios.post("http://127.0.0.1:8000/service/create-new-product/", {}).then((response) => {
-			console.log(response);
-			console.log("Work");
-		});
-
-		await router.push("/service/create-new-product/");
-	};
+	const { getProducts, createProduct } = useShop();
 
 	const [showModal, setShowModal] = useState(false);
-	const [productName, setProductName] = useState("");
-	const [productCategory, setProductCategory] = useState("");
-	const [productAmount, setProductAmount] = useState("");
-	const [quantityPerUnit, setQuantityPerUnit] = useState("");
+	const [products, setProducts] = useState<TProduct[]>([]);
+
+	const nameRef = useRef<HTMLInputElement>(null);
+	const categoryRef = useRef<HTMLInputElement>(null);
+	const unitsInStockRef = useRef<HTMLInputElement>(null);
+	const quantityPerUnitRef = useRef<HTMLInputElement>(null);
+
+	useMemo(() => {
+		Promise.all([getProducts()])
+			.then(([res]) => {
+				if (!res) return;
+				setProducts(res);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 
 	return showModal ? (
 		<div className="flex justify-center items-center py-6 absolute z-10 top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-screen h-screen scrollHide drop-shadow-2xl">
-			<div className="w-4/12 h-5/12 rounded-xl bg-white shadow-lg flex justify-center p-6 ">
+			<div className="relative w-4/12 h-5/12 rounded-xl bg-white shadow-lg flex justify-center p-6 ">
 				<div className="relative w-full max-w-md max-h-full">
 					<div className="relative bg-white rounded-lg  ">
 						<div className="px-6 py-6 lg:px-8">
 							<h3 className="mb-4 text-xl font-medium text-gray-900 ">
-								Заполните форму для добавление товара
+								Заполните форму для добавления товара
 							</h3>
 							<form className="space-y-6" action="#">
 								<div>
@@ -90,9 +45,9 @@ export default function Profile() {
 									</label>
 									<input
 										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-										placeholder="Черный хлеб"
-										onChange={(event) => setProductName(event.target.value)}
+										placeholder="Хлеб"
 										required
+										ref={nameRef}
 									/>
 								</div>
 								<div>
@@ -102,8 +57,8 @@ export default function Profile() {
 									<input
 										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 										placeholder="Продукты питания"
-										onChange={(event) => setProductCategory(event.target.value)}
 										required
+										ref={categoryRef}
 									/>
 								</div>
 								<div>
@@ -113,8 +68,8 @@ export default function Profile() {
 									<input
 										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 										placeholder="10"
-										onChange={(event) => setProductAmount(event.target.value)}
 										required
+										ref={unitsInStockRef}
 									/>
 								</div>
 								<div>
@@ -124,8 +79,8 @@ export default function Profile() {
 									<input
 										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 										placeholder="5"
-										onChange={(event) => setQuantityPerUnit(event.target.value)}
 										required
+										ref={quantityPerUnitRef}
 									/>
 								</div>
 								<button
@@ -138,14 +93,13 @@ export default function Profile() {
 						</div>
 					</div>
 				</div>
-				<div className="flex justify-between align-center">
-					<Image
-						src={exitForm}
-						className="w-[14px] h-[14px]"
-						alt="close_form"
-						onClick={() => setShowModal(!showModal)}
-					/>
-				</div>
+				<button
+					type={"button"}
+					onClick={() => setShowModal(!showModal)}
+					className="absolute right-8 top-8 flex justify-between align-center cursor-pointer"
+				>
+					<Image src={exitForm} className="w-[14px] h-[14px]" alt="close_form" />
+				</button>
 			</div>
 		</div>
 	) : (
@@ -192,16 +146,18 @@ export default function Profile() {
 						</tr>
 					</thead>
 					<tbody>
-						{Products.map((product, index) => (
-							<tr key={index} className={"bg-white border-b"}>
-								<td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-									{product.name}
-								</td>
-								<td className="px-6 py-4">{product.quantity}</td>
-								<td className="px-6 py-4">{product.info}</td>
-								<td className="px-6 py-4">{product.type}</td>
-							</tr>
-						))}
+						{products.map((product) => {
+							return (
+								<tr key={product.id} className={"bg-white border-b"}>
+									<td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+										{product.product_name}
+									</td>
+									<td className="px-6 py-4">{product.units_in_stock}</td>
+									<td className="px-6 py-4">{product.quantity_per_unit}</td>
+									<td className="px-6 py-4">{product.category_name}</td>
+								</tr>
+							);
+						})}
 					</tbody>
 				</table>
 			</div>

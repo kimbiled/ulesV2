@@ -2,10 +2,10 @@ export default function Cart() {
 	return (
 		<div
 			className={
-				"bg-[#0D2435] rounded-[2rem] px-[1.5rem] py-[2rem] h-fit text-white flex flex-col gap-6 max-h-[500px] overflow-auto"
+				"bg-[#0D2435] rounded-[2rem] px-[1.5rem] py-[2rem] h-fit text-white flex flex-col gap-6 max-h-[500px] overflow-auto w-[100%] min-w-[550px]"
 			}
 		>
-			<div className={"flex justify-between items-center min-w-[550px]"}>
+			<div className={"flex justify-between items-center"}>
 				<p className={"font-semibold text-[24px]"}>Доставленные корзины</p>
 				<p className={"text-[#0D89AF] cursor-pointer"}>Просмотреть все</p>
 			</div>

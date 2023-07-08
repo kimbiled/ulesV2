@@ -39,10 +39,10 @@ const Header = () => {
 				</Link>
 				<ul className="list-none sm:flex hidden justify-end items-center flex-1">
 					{navLinks.map((nav, index) => {
-						if (user !== null && (nav.id === "register" || nav.id === "login")) return <></>;
+						if (user !== null && (nav.id === "register" || nav.id === "login")) return;
 						return (
 							<li
-								key={index}
+								key={nav.id}
 								className={`font-poppins font-normal cursor-pointer text-[16px] ${
 									active === nav.title ? "text-gray-200" : "text-white"
 								} ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
@@ -54,10 +54,10 @@ const Header = () => {
 					})}
 				</ul>
 			</div>
-			<div className="flex items-center space-x-4" style={{ display: user ? "flex" : "none" }}>
+			<Link href={"/profile"} className="flex items-center space-x-4" style={{ display: user ? "flex" : "none" }}>
 				<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full" />
 				<p className="font-poppins text-white ml-2">{user && user.name}</p>
-			</div>
+			</Link>
 
 			<div className="sm:hidden flex flex-1 justify-end items-center">
 				<Image
@@ -74,7 +74,7 @@ const Header = () => {
 				>
 					<ul className="list-none flex justify-end items-start flex-1 flex-col">
 						{navLinks.map((nav, index) => {
-							if (user !== null && (nav.id === "register" || nav.id === "login")) return <></>;
+							if (user !== null && (nav.id === "register" || nav.id === "login")) return;
 							return (
 								<li
 									key={nav.id}
