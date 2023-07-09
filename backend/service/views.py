@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from service.models import Category, Product, ShopProfile, VolunteerProfile
+from service.models import Category, Product, ShopProfile, VolunteerProfile, Order
 from rest_framework import status, permissions, viewsets
-from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer
+from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 
@@ -208,3 +208,9 @@ class GetTop(APIView):
         response_data['shops'] = shop_data
 
         return Response(status=status.HTTP_200_OK, data=response_data)
+
+class GetOrders(APIView):
+    def get(self, request):
+        orders = Order.objects.filter(volunteer__isnull=True)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(status=status.HTTP_200_OK,data=serializer.data)
