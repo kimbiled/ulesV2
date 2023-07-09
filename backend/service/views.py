@@ -210,7 +210,50 @@ class GetTop(APIView):
         return Response(status=status.HTTP_200_OK, data=response_data)
 
 class GetOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request):
+        if not hasattr(request.user, 'volunteer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+
         orders = Order.objects.filter(volunteer__isnull=True)
         serializer = OrderSerializer(orders, many=True)
         return Response(status=status.HTTP_200_OK,data=serializer.data)
+
+class AssignVolunteer(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request, order_id):
+        try:
+            if not hasattr(request.user, 'volunteer_profile'):
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+
+            order = Order.objects.get(id=order_id)
+            order.volunteer_id = request.user.id
+            order.save()
+            serializer = OrderSerializer(order)
+            return Response(serializer.data)
+        except Order.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+class GetVolunteerOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        if not hasattr(request.user, 'volunteer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+            
+        orders = Order.objects.filter(volunteer_id=request.user.id)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+class GetCustomerOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        if not hasattr(request.user, 'customer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+            
+        orders = Order.objects.filter(customer_id=request.user.id)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)

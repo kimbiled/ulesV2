@@ -26,7 +26,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     order_details = OrderDetailSerializer(many=True, read_only=True)
-
+    
     class Meta:
         model = Order
         fields = ('id', 'customer', 'volunteer', 'order_date', 'order_details')
