@@ -234,7 +234,7 @@ class AssignVolunteer(APIView):
             serializer = OrderSerializer(order)
             return Response(serializer.data)
         except Order.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO ORDERS'})
 
 class GetVolunteerOrders(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -252,7 +252,7 @@ class GetCustomerOrders(APIView):
 
     def get(self, request):
         if not hasattr(request.user, 'customer_profile'):
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
             
         orders = Order.objects.filter(customer_id=request.user.id)
         serializer = OrderSerializer(orders, many=True)
