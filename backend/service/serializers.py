@@ -33,7 +33,7 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     class Meta:
         model = CustomerProfile
-        fields = ('address')
+        fields = ('address',)
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     organization = serializers.CharField(required = True)
