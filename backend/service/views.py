@@ -153,10 +153,10 @@ class UpdateVolunteerProfile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
 
         if serializer.is_valid():
-            if (request.user.volunteer_profile.orgnanization == serializer.data['organization']):
+            if (request.user.volunteer_profile.company == serializer.data['company']):
                 return Response(data={'message': 'YOU CANNOT ENTER THE SAME DATA FOR YOUR VOLUNTEER PROFILE', 'data':serializer.data}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
-            request.user.volunteer_profile.orgnanization = serializer.data['organization']
+            request.user.volunteer_profile.company = serializer.data['company']
             request.user.volunteer_profile.save()
             
             return Response(data={'message': 'VOLUNTEER PROFILE WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)

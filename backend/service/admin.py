@@ -19,8 +19,8 @@ admin.site.register(CustomerProfile, CustomerProfileAdmin)
 
 
 class VolunteerProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'organization',)
-    list_filter = ('user', 'organization',)
+    list_display = ('user', 'company',)
+    list_filter = ('user', 'company',)
 
 admin.site.register(VolunteerProfile, VolunteerProfileAdmin)
 
