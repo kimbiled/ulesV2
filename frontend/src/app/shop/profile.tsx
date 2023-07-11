@@ -1,14 +1,19 @@
 "use client";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import { exitForm } from "@public/assets";
 
 import { TProduct } from "@context/Shop/types";
 import { useShop } from "@context/Shop/useShop";
+import { useAuth } from "@context/Auth/useAuth";
+import { event } from "next/dist/build/output/log";
 
 export default function Profile() {
 	const { getProducts, createProduct } = useShop();
+	const { user } = useAuth();
+	const { push } = useRouter();
 
 	const [showModal, setShowModal] = useState(false);
 	const [products, setProducts] = useState<TProduct[]>([]);
@@ -17,6 +22,10 @@ export default function Profile() {
 	const categoryRef = useRef<HTMLInputElement>(null);
 	const unitsInStockRef = useRef<HTMLInputElement>(null);
 	const quantityPerUnitRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (!user) return push("/");
+	}, [user]);
 
 	useMemo(() => {
 		Promise.all([getProducts()])
@@ -38,7 +47,28 @@ export default function Profile() {
 							<h3 className="mb-4 text-xl font-medium text-gray-900 ">
 								Заполните форму для добавления товара
 							</h3>
-							<form className="space-y-6" action="#">
+							<form
+								className="space-y-6"
+								action="#"
+								onSubmit={async () => {
+									if (
+										!nameRef.current ||
+										!categoryRef.current ||
+										!unitsInStockRef.current ||
+										!quantityPerUnitRef.current
+									)
+										return;
+
+									await createProduct({
+										product_name: nameRef.current.value,
+										category_name: categoryRef.current.value,
+										units_in_stock: Number(unitsInStockRef.current.value),
+										quantity_per_unit: Number(quantityPerUnitRef.current.value),
+										units_on_order: 0,
+										discontinued: false,
+									});
+								}}
+							>
 								<div>
 									<label className="block mb-2 text-sm font-medium text-gray-900">
 										Наименование товара
@@ -106,17 +136,17 @@ export default function Profile() {
 		<div className="bg-[#F7F7FB] w-[calc(100vw-280px)] p-9 h-[calc(100vh-80px)]">
 			<div className="bg-white p-4 rounded-lg shadow-md">
 				<h2 className="text-xl font-bold mb-2">Address</h2>
-				<p className="mb-4">123 Example Street, City, State, ZIP</p>
+				<p className="mb-4">{user && user.address}</p>
 
 				<h2 className="text-xl font-bold mb-2">Company</h2>
-				<p className="mb-4">Example Company</p>
+				<p className="mb-4">{user && user.company}</p>
 
 				<h2 className="text-xl font-bold mb-2">Rating</h2>
 				<div className="flex items-center">
 					<svg className="w-6 h-6 fill-current text-yellow-500 mr-2" viewBox="0 0 20 20">
 						<path d="M10 1l2.356 6.824h7.616l-5.832 4.25 2.28 6.942-5.824-4.214-5.824 4.214 2.28-6.942-5.832-4.25h7.616z"></path>
 					</svg>
-					<p className="font-bold">1000 points</p>
+					<p className="font-bold">{(user && user.rating) || "-"} points</p>
 				</div>
 
 				<button

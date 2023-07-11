@@ -9,6 +9,7 @@ interface AuthContextProps {
 	user: TUser | null;
 	signUp: ({ email, name, user_type, phone, password }: ISignUp) => Promise<void>;
 	signIn: ({ email, password }: ISignIn) => Promise<void>;
+	refreshUser: (access: string) => Promise<void>;
 	logOut: () => void;
 }
 
@@ -90,6 +91,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				return null;
 			});
 	}
+	async function refreshUser(access: string) {
+		const [user] = await Promise.all([getUser(access)]);
+		setUser(user);
+	}
 	useEffect(() => {
 		const access = localStorage.getItem("access");
 		if (!access) return setIsLoading(false);
@@ -123,6 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		user,
 		signUp,
 		signIn,
+		refreshUser,
 		logOut,
 	};
 

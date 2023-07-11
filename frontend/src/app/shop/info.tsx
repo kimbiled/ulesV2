@@ -1,11 +1,13 @@
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Info() {
-	const router = useRouter();
+import { useShop } from "@context/Shop/useShop";
+import { useAuth } from "@context/Auth/useAuth";
 
-	// const [shopAddress, setShopAddress] = useState("");
-	// const [shopCompany, setShopCompany] = useState("");
+export default function Info() {
+	const { push } = useRouter();
+	const { updateProfile } = useShop();
+	const { refreshUser } = useAuth();
 
 	const addressRef = useRef<HTMLInputElement>(null);
 	const companyRef = useRef<HTMLInputElement>(null);
@@ -16,15 +18,20 @@ export default function Info() {
 				<h3 className="mb-4 text-xl font-medium text-gray-900 ">Заполните форму для добавление товара</h3>
 				<form
 					className="space-y-6"
-					action="#"
 					onSubmit={async (event) => {
 						event.preventDefault();
-						// if (!shopAddress || !shopCompany) return;
+						if (!addressRef.current || !companyRef.current) return;
 
-						// await updateShopProfile({
-						//     address: shopAddress,
-						//     company: shopCompany,
-						// });
+						await updateProfile({
+							address: addressRef.current.value,
+							company: companyRef.current.value,
+							rating: 0,
+						}).then(() => {
+							const access = localStorage.getItem("access");
+							if (!access) return;
+							refreshUser(access);
+							push("/profile");
+						});
 					}}
 				>
 					<div>
@@ -33,6 +40,7 @@ export default function Info() {
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 							placeholder="Мәңгілік Ел 16"
 							required
+							ref={addressRef}
 						/>
 					</div>
 					<div>
@@ -41,6 +49,7 @@ export default function Info() {
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 							placeholder="Magnum"
 							required
+							ref={companyRef}
 						/>
 					</div>
 					<button

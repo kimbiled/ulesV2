@@ -9,3 +9,11 @@ export type TProduct = {
 };
 
 export interface ICreateProduct extends Omit<TProduct, "id"> {}
+
+export interface IUpdateProfile {
+	address: string;
+	company: string;
+	rating: number;
+}
+
+export interface IUpdateProduct extends TProduct {}
