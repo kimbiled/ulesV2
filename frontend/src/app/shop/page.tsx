@@ -1,6 +1,7 @@
 "use client";
 import Header from "@components/Header/Header";
 import Menu from "./menu";
+import Info from "./info";
 import Profile from "./profile";
 import Statistics from "./statistics";
 import Orders from "./orders";
@@ -19,7 +20,7 @@ export default function Shop() {
 			<Header />
 			<div className={"flex h-[calc(100vh-80px)]" + pjs.className}>
 				<Menu setPage={changePage} />
-				{page === 1 ? <Profile /> : page === 2 ? <Statistics /> : page === 3 ? <Orders /> : null}
+				{page === 1 ? <Profile /> : page === 2 ? <Statistics /> : page === 3 ? <Orders /> : page === 4 ? <Info /> : null}
 			</div>
 		</>
 	);

@@ -14,7 +14,7 @@ class ShopProfile(models.Model):
 
 class VolunteerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name="volunteer_profile")
-    organization = models.CharField(max_length=255, default='')
+    company = models.CharField(max_length=255, default='')
     rating = models.PositiveIntegerField(default=0)
     order_count = models.PositiveIntegerField(default=0)
 
@@ -66,9 +66,8 @@ class Product(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
-    volunteer = models.ForeignKey(VolunteerProfile, on_delete=models.CASCADE, null=True)
+    volunteer = models.ForeignKey(VolunteerProfile, on_delete=models.CASCADE, null=True, blank=True)
     order_date = models.DateField(auto_now=True)
-
 
 class OrderDetail(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

@@ -66,6 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}).then((response: AxiosResponse<TTokens>) => {
 			if (!response.data.refresh || !response.data.access) return;
 
+			console.log(response.data);
 			localStorage.setItem("access", response.data.access);
 			localStorage.setItem("refresh", response.data.refresh);
 		});
@@ -91,10 +92,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	}
 	useEffect(() => {
 		const access = localStorage.getItem("access");
-		Promise.all([getUser(access || "")])
+		if (!access) return setIsLoading(false);
+
+		Promise.all([getUser(access)])
 			.then(([user]) => {
 				setUser(user);
 				setIsLoading(false);
+				console.log(user);
 			})
 			.catch((error) => {
 				console.log(error);

@@ -1,7 +1,7 @@
 from django.forms import ValidationError
 from rest_framework import serializers
 
-from service.models import Category, CustomerProfile, Product, ShopProfile, VolunteerProfile
+from service.models import Category, CustomerProfile, Product, ShopProfile, VolunteerProfile, Order, OrderDetail
 from django.contrib.auth import get_user_model
 User = get_user_model()
 class ProductSerializer(serializers.ModelSerializer):
@@ -19,6 +19,17 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields= ('category_name','description', 'product_set')
 
+class OrderDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderDetail
+        fields = ('id', 'product', 'quantity')
+
+class OrderSerializer(serializers.ModelSerializer):
+    order_details = OrderDetailSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Order
+        fields = ('id', 'customer', 'volunteer', 'order_date', 'order_details')
 
 class ShopProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
@@ -36,12 +47,11 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
         fields = ('address',)
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
-    organization = serializers.CharField(required = True)
-    name = serializers.CharField(required = True)
+    company = serializers.CharField(required = True)
     rating = serializers.IntegerField(required = True)
     class Meta:
         model = VolunteerProfile
-        fields = ('organization','rating')
+        fields = ('company','rating')
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required = True)
