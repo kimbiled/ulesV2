@@ -47,11 +47,11 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
         fields = ('address')
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
-    organization = serializers.CharField(required = True)
+    company = serializers.CharField(required = True)
     rating = serializers.IntegerField(required = True)
     class Meta:
         model = VolunteerProfile
-        fields = ('organization','rating')
+        fields = ('company','rating')
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required = True)

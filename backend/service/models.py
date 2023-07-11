@@ -14,7 +14,7 @@ class ShopProfile(models.Model):
 
 class VolunteerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name="volunteer_profile")
-    organization = models.CharField(max_length=255, default='')
+    company = models.CharField(max_length=255, default='')
     rating = models.PositiveIntegerField(default=0)
     order_count = models.PositiveIntegerField(default=0)
 
