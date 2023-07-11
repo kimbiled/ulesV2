@@ -37,14 +37,14 @@ class ShopProfileSerializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(required = True)
     class Meta:
         model = ShopProfile 
-        fields = ('address','company','rating')
+        fields = ('address','company','rating',)
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     class Meta:
         model = CustomerProfile
-        fields = ('address')
+        fields = ('address',)
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     company = serializers.CharField(required = True)
