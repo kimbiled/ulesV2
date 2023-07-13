@@ -265,6 +265,6 @@ class GetShopOrders(APIView):
         if not hasattr(request.user, 'shop_profile'):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
 
-        orders = Order.objects.filter(order_details__product__shop=request.user.shop_profile)
+        orders = Order.objects.filter(orderdetail__product__shop=request.user.shop_profile)
         serializer = OrderSerializer(orders, many=True)
         return Response(status=status.HTTP_200_OK, data=serializer.data)
