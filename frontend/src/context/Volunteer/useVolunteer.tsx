@@ -3,11 +3,12 @@ import { createContext, ReactNode, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
 import config from "@root/config";
-import { TOrder } from "@context/Volunteer/types";
+import { IUpdateProfile, TOrder } from "@context/Volunteer/types";
 
 interface VolunteerContextProps {
 	getOrders: () => Promise<TOrder[] | void>;
 	assignOrder: (id: string) => Promise<void>;
+	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
 }
 
 const VolunteerContext = createContext({} as VolunteerContextProps);
@@ -52,13 +53,16 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 				console.log(error);
 			});
 	}
-	async function updateProfile() {
+	async function updateProfile({ company, rating }: IUpdateProfile) {
 		if (!access) return;
 
 		await axios({
 			method: "POST",
 			url: `${config.BACKEND_HOST}/service/update-volunteer-profile/`,
-			data: {},
+			data: {
+				company,
+				rating,
+			} satisfies IUpdateProfile,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
@@ -68,6 +72,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	const values: VolunteerContextProps = {
 		getOrders,
 		assignOrder,
+		updateProfile,
 	};
 	return <VolunteerContext.Provider value={values}>{children}</VolunteerContext.Provider>;
 }

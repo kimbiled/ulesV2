@@ -4,3 +4,8 @@ export type TOrder = {
 	volunteer: number;
 	order_date: string;
 };
+
+export interface IUpdateProfile {
+	company: string;
+	rating?: number;
+}

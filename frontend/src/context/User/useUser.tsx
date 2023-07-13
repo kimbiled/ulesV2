@@ -2,13 +2,14 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 
-import { TUser } from "@context/User/types";
+import { IGetTopResponse, TUser } from "@context/User/types";
 
 import config from "@root/config";
 
 interface UserContextProps {
 	user: TUser | null;
 	refreshUser: (access: string) => Promise<void>;
+	getTop: () => Promise<IGetTopResponse>;
 }
 
 const UserContext = createContext({} as UserContextProps);
@@ -41,6 +42,15 @@ export function UserProvider({ children }: { children: ReactNode }) {
 		setUser(user);
 	}
 
+	async function getTop() {
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-top/`,
+		}).then((response: AxiosResponse<IGetTopResponse>) => {
+			return response.data;
+		});
+	}
+
 	useEffect(() => {
 		const access = localStorage.getItem("access");
 		if (!access) return setIsLoading(false);
@@ -64,6 +74,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 	const values: UserContextProps = {
 		user,
 		refreshUser,
+		getTop,
 	};
 	return <UserContext.Provider value={values}>{!isLoading && children}</UserContext.Provider>;
 }
