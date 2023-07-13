@@ -49,7 +49,7 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     company = serializers.CharField(required = True)
-    rating = serializers.IntegerField(required = True)
+    rating = serializers.IntegerField(default=0)
     class Meta:
         model = VolunteerProfile
         fields = ('company','rating')
