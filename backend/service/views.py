@@ -257,3 +257,14 @@ class GetCustomerOrders(APIView):
         orders = Order.objects.filter(customer_id=request.user.id)
         serializer = OrderSerializer(orders, many=True)
         return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+class GetShopOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        if not hasattr(request.user, 'shop_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+
+        orders = Order.objects.filter(order_details__product__shop=request.user.shop_profile)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
