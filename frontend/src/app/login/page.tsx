@@ -5,10 +5,12 @@ import Header from "@components/Header/Header";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useAuth } from "@context/Auth/useAuth";
+import { useUser } from "@context/User/useUser";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
-	const { signIn, user } = useAuth();
+	const { signIn } = useAuth();
+	const { user } = useUser();
 
 	const { push, refresh } = useRouter();
 
