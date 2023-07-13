@@ -34,10 +34,11 @@ class OrderSerializer(serializers.ModelSerializer):
 class ShopProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     company = serializers.CharField(required = True)
-    rating = serializers.IntegerField(required = True)
+    rating = serializers.IntegerField(default=0)
+    orders = OrderSerializer(many=True, read_only=True, source='order_set')
     class Meta:
         model = ShopProfile 
-        fields = ('address','company','rating',)
+        fields = ('address','company','rating','orders')
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
