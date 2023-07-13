@@ -93,6 +93,29 @@ export const stats = [
   },
 ];
 
+
+export const steps = [
+  {
+    id: 'step-1',
+    title: 'Зарегистрируйтесь',
+    value: 'Посетите наш вебсайт',
+    num:'1'
+  },
+  {
+    id: 'step-2',
+    title: 'Найдите нужный продукт',
+    value: 'На нашем сайте',
+    num:'2'
+  },
+  {
+    id: 'step-3',
+    title: 'Получите продукт',
+    value: 'После этого ты сможешь это',
+    num:'3'
+  },
+];
+
+
 export const footerLinks = [
   {
     title: 'Useful Links',

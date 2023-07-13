@@ -34,10 +34,11 @@ class OrderSerializer(serializers.ModelSerializer):
 class ShopProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     company = serializers.CharField(required = True)
-    rating = serializers.IntegerField(required = True)
+    rating = serializers.IntegerField(default=0)
+    orders = OrderSerializer(many=True, read_only=True, source='order_set')
     class Meta:
         model = ShopProfile 
-        fields = ('address','company','rating',)
+        fields = ('address','company','rating','orders')
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
@@ -48,7 +49,7 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     company = serializers.CharField(required = True)
-    rating = serializers.IntegerField(required = True)
+    rating = serializers.IntegerField(default=0)
     class Meta:
         model = VolunteerProfile
         fields = ('company','rating')
@@ -57,8 +58,8 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required = True)
     user_type = serializers.IntegerField(required = True)
     phone = serializers.CharField(required = True)
-
+    name = serializers.CharField(required = True)
 
     class Meta:
         model = User
-        fields = ['email', 'user_type', 'phone']
+        fields = ['email', 'user_type', 'phone', 'name']

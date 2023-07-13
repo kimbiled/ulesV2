@@ -5,6 +5,7 @@ import Phone from "@components/Phone/Phone";
 import Hero from "@components/Hero/Hero";
 import Stats from "@components/Stats/Stats";
 import Ranks from "@components/Ranks/Ranks";
+import System from "@components/System/System";
 
 import styles from "@root/style";
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
 					<Hero />
 					<Ranks />
 					<Stats />
+					<System />
 					<Phone />
 					<Community />
 				</div>
