@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { close, menu, profilePhoto, uleslogo } from "public/assets/index";
-import { useAuth } from "@context/Auth/useAuth";
+import { useUser } from "@context/User/useUser";
 
 const Header = () => {
-	const { user } = useAuth();
+	const { user } = useUser();
 
 	const [active, setActive] = useState("Home");
 	const [toggle, setToggle] = useState(false);
