@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from service.models import Category, Product
+from service.models import Category, Product, ShopProfile, VolunteerProfile, Order
 from rest_framework import status, permissions, viewsets
-from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer
+from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 
@@ -153,10 +153,10 @@ class UpdateVolunteerProfile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
 
         if serializer.is_valid():
-            if (request.user.volunteer_profile.orgnanization == serializer.data['organization']):
+            if (request.user.volunteer_profile.company == serializer.data['company']):
                 return Response(data={'message': 'YOU CANNOT ENTER THE SAME DATA FOR YOUR VOLUNTEER PROFILE', 'data':serializer.data}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
-            request.user.volunteer_profile.orgnanization = serializer.data['organization']
+            request.user.volunteer_profile.company = serializer.data['company']
             request.user.volunteer_profile.save()
             
             return Response(data={'message': 'VOLUNTEER PROFILE WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)
@@ -164,10 +164,107 @@ class UpdateVolunteerProfile(APIView):
         return Response(data={"message": "INVALID DATA", 'error' : serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class GetProfile(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request):
+        user_serializer = UserSerializer(request.user)
+        profile_data = {}
+
         if hasattr(request.user, 'shop_profile'):
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={})
+            profile_serializer = ShopProfileSerializer(request.user.shop_profile)
+            profile_data = profile_serializer.data
         elif hasattr(request.user, 'customer_profile'):
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+            profile_serializer = CustomerProfileSerializer(request.user.customer_profile)
+            profile_data = profile_serializer.data
         elif hasattr(request.user, 'volunteer_profile'):
+            profile_serializer = VolunteerProfileSerializer(request.user.volunteer_profile)
+            profile_data = profile_serializer.data
+
+        response_data = user_serializer.data
+        response_data.update(profile_data)
+
+        return Response(status=status.HTTP_200_OK, data=response_data)
+
+class GetTop(APIView):
+
+    def get(self, request):
+        volunteer_profiles = VolunteerProfile.objects.order_by('-rating')[:3]
+
+        shop_profiles = ShopProfile.objects.order_by('-rating')[:3]
+
+        volunteer_data = [
+            VolunteerProfileSerializer(profile).data
+            for profile in volunteer_profiles
+        ]
+
+        shop_data = [
+            ShopProfileSerializer(profile).data
+            for profile in shop_profiles
+        ]
+
+
+        response_data = {}
+        response_data['volunteers'] = volunteer_data 
+        response_data['shops'] = shop_data
+
+        return Response(status=status.HTTP_200_OK, data=response_data)
+
+class GetOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        if not hasattr(request.user, 'volunteer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+
+        orders = Order.objects.filter(volunteer__isnull=True)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(status=status.HTTP_200_OK,data=serializer.data)
+
+class AssignVolunteer(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request, order_id):
+        try:
+            if not hasattr(request.user, 'volunteer_profile'):
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+
+            order = Order.objects.get(id=order_id)
+            order.volunteer_id = request.user.id
+            order.save()
+            serializer = OrderSerializer(order)
+            return Response(serializer.data)
+        except Order.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO ORDERS'})
+
+class GetVolunteerOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        if not hasattr(request.user, 'volunteer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+            
+        orders = Order.objects.filter(volunteer_id=request.user.id)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+class GetCustomerOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        if not hasattr(request.user, 'customer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
+            
+        orders = Order.objects.filter(customer_id=request.user.id)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+class GetShopOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        if not hasattr(request.user, 'shop_profile'):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
+
+        orders = Order.objects.filter(orderdetail__product__shop=request.user.shop_profile)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)

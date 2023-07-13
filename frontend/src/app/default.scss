@@ -3,7 +3,6 @@
 @tailwind utilities;
 @tailwind variants;
 
-
 * {
   margin: 0;
   padding: 0;
@@ -13,9 +12,9 @@ html {
   scroll-behavior: smooth;
 }
 body {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 h1,
 h2,
@@ -47,15 +46,9 @@ ol {
   list-style: none;
 }
 
-.positionImage{
-	position: absolute;
-	left:40%;
-	top: -15%;
-}
-
 mark {
-	border-radius: 20px;
-	padding: .3rem;
-	background-color: #0D163A;
-	color:white;
-  }
+  border-radius: 20px;
+  padding: 0.3rem;
+  background-color: #0d163a;
+  color: white;
+}

@@ -12,11 +12,11 @@ const Stats = () => {
         </div>
 
         <div className="mt-8 sm:mt-12">
-          <dl className="grid grid-cols-1 gap-4 sm:grid-cols-4">
+          <dl className="grid grid-cols-1 gap-8 sm:grid-cols-4">
             {stats.map(item => (
               <div
                 key={item.id}
-                className="shadow-md hover:-translate-y-3 hover:shadow-lg ease-in flex flex-col space-y-4 justify-center items-center rounded-3xl border border-gray-100 px-4 py-8 text-center ">
+                className="shadow-md transform transition-all hover:scale-105 hover:shadow-xl flex flex-col space-y-4 justify-center items-center rounded-3xl border border-gray-100 px-4 py-8 text-center ">
                 <Image
                   alt="item"
                   width={100}
