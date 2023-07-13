@@ -2,12 +2,12 @@ import { useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { useShop } from "@context/Shop/useShop";
-import { useAuth } from "@context/Auth/useAuth";
+import { useUser } from "@context/User/useUser";
 
 export default function Info() {
 	const { push } = useRouter();
 	const { updateProfile } = useShop();
-	const { refreshUser } = useAuth();
+	const { refreshUser } = useUser();
 
 	const addressRef = useRef<HTMLInputElement>(null);
 	const companyRef = useRef<HTMLInputElement>(null);

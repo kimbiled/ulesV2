@@ -52,6 +52,18 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 				console.log(error);
 			});
 	}
+	async function updateProfile() {
+		if (!access) return;
+
+		await axios({
+			method: "POST",
+			url: `${config.BACKEND_HOST}/service/update-volunteer-profile/`,
+			data: {},
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		});
+	}
 
 	const values: VolunteerContextProps = {
 		getOrders,

@@ -110,6 +110,19 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 			},
 		});
 	}
+	async function getOrders() {
+		if (!access) return [];
+
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-shop-orders/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		}).then((response: AxiosResponse) => {
+			return response.data;
+		});
+	}
 
 	const values: ShopContextProps = {
 		getProducts,
