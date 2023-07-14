@@ -1,55 +1,186 @@
 import Layout from "@components/Layout/Layout";
-import { bin, time, map, timer } from "../../../public/assets/index";
 import Image from "next/image";
+import {downarrow} from '../../../public/assets/index'
 
 export default function Customer() {
+	const products = [
+		{
+			id:1,
+			productType:"Молочная продукция",
+			productName:"Молоко 6% Зенченко"
+		},
+		{
+			id:2,
+			productType:"Молочная продукция",
+			productName:"Молоко 6% Зенченко"
+		},
+		{
+			id:3,
+			productType:"Молочная продукция",
+			productName:"Молоко 6% Зенченко"
+		},
+		{
+			id:4,
+			productType:"Молочная продукция",
+			productName:"Молоко 6% Зенченко"
+		},
+		{
+			id:5,
+			productType:"Молочная продукция",
+			productName:"Молоко 6% Зенченко"
+		},{
+			id:6,
+			productType:"Молочная продукция",
+			productName:"Молоко 6% Зенченко"
+		}
+		,{
+			id:7,
+			productType:"Молочная продукция",
+			productName:"Молоко 6% Зенченко"
+		},
+		{
+			id:8,
+			productType:"Молочная продукция",
+			productName:"Молоко 6% Зенченко"
+		}
+	]
+
+	const volunteerInfo = [
+		{
+			id:1,
+			fullName: "Мейрамбеков Нурсултан",
+			deliveryDate: "21.07.2023",
+			provider:"Magnum",
+			destination: "Кабанбай Батыра 51/1"
+		}
+	]
+
+	const wanterProducts =[
+		{
+			id:1,
+			product:"Хлеб"
+		},
+		{
+			id:2,
+			product:"Молоко"
+		},
+		{
+			id:3,
+			product:"Сметана"
+		},
+		{
+			id:4,
+			product:"Яйца"
+		},
+		{
+			id:5,
+			product:"Мясо"
+		},
+		{
+			id:6,
+			product:"Сыр"
+		},
+		{
+			id:7,
+			product:"Хлопья"
+		},
+		{
+			id:8,
+			product:"Курица"
+		},
+		{
+			id:9,
+			product:"Яблоко"
+		},
+	]
 	return (
 		<Layout>
-			<div className="flex flex-row gap-8 mt-12">
-				<div className="w-[680px] font-medium text-[33px] flex items-center">
-					<p>
-						Здравствуйте, Андрей! Магазин Magnum предоставит вам товары. Пожалуйста,{" "}
-						<mark>подтвердите</mark> возможность получения
-					</p>
+			<div className="flex flex-row justify-between w-screen mt-16 mb-16">
+				<div className="w-[845px] h-auto bg-gradient-linear rounded-3xl flex flex-row justify-between p-8">
+					<div className="h-auto">
+						<div className="bg-volunteerColor w-[465px] h-auto py-4 gap-4 rounded-3xl border-[1px] border-white flex flex-wrap items-center justify-evenly">
+							{products.map(item=>(
+								<div key={item.id} className="w-44 h-14 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-2">
+									<p className="text-[10px]">{item.productType}</p>
+									<p className="text-sm">{item.productName}</p>
+								</div>
+							))}
+							<div className="w-full">
+								<Image src={downarrow} alt="DownArrow"  className="m-auto py-2 cursor-pointer"/>
+							</div>
+						</div>
+						<div className="flex w-full justify-end mt-4">
+							<button className="hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm ">Подтвердить</button>
+						</div>
+					</div>
+
+					<div className="w-64 h-[450px] bg-volunteerColor rounded-3xl border-[1px] border-white">
+						<div className="flex flex-col items-center gap-3 mt-4">
+							<div className="w-52 h-44 rounded-2xl bg-white">
+								<p className="text-center">Здесь будет фотка</p>
+							</div>
+						{volunteerInfo.map(item=>(
+							<>
+							<div key={item.id} className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+								<p className="text-[10px]">Волонтер</p>
+								<p className="text-sm">{item.fullName}</p>
+							</div>
+							<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+								<p className="text-[10px]">Дата доставки</p>
+								<p className="text-sm">{item.deliveryDate}</p>
+							</div>
+							<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+								<p className="text-[10px]">Поставщик</p>
+								<p className="text-sm">{item.provider}</p>
+							</div>
+							<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+								<p className="text-[10px]">Адрес доставки</p>
+								<p className="text-sm">{item.destination}</p>
+							</div>
+							</>
+						))}
+						</div>
+					</div>
 				</div>
 
-				<div className="flex flex-col items-center gap-2">
-					<Image src={time} alt="time" />
-					<div className="border-l-2 h-48 border-dashed border-[#5C97CD]"></div>
-					<Image src={map} alt="time" />
-					<div className="border-l-2 h-48 border-dashed border-[#5C97CD]"></div>
-					<Image src={bin} alt="time" />
-				</div>
-
-				<div className="flex flex-col justify-center ml-6">
-					<div className="flex flex-col ">
-						<p>Товары подготовлены</p>
-						<div className="flex flex-row gap-2">
-							<Image src={timer} alt="timer" />
-							<p>8:40, Май 2023</p>
+				<div className="w-[336px] h-auto bg-gradient-linear rounded-3xl text-white p-4">
+					<div className="flex flex-col gap-4 justify-center w-[280px] justify-center m-auto">
+						<div className="flex flex-row  justify-around items-center">
+							<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
+							<div>
+								<p className="text-lg">Ертаев Уалихан</p>
+								<p className="text-xs">Данные вашего аккаунта</p>
+							</div>
+						</div>
+						<div className="w-auto h-auto rounded-xl border-[1px] border-white p-4">
+							<p className="text-xs">Список желаемых продуктов</p>
+							<div className="">
+								<ul className="flex flex-wrap text-sm font-medium list-disc list-inside">
+									{wanterProducts.map(item=>(
+										<>
+											<li className="w-20 " key={item.id}>{item.product}</li>
+										</>
+									))}
+								</ul>
+							</div>
+						</div>
+						<div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+							<p className="text-[10px]">Ваше имя</p>
+							<p className="text-sm">Искаков Даниал Аспандиярович</p>
+						</div>
+						<div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+							<p className="text-[10px]">Возраст</p>
+							<p className="text-sm">56 лет</p>
+						</div>
+						<div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+							<p className="text-[10px]">Частота доставки</p>
+							<p className="text-sm">1-2 раза в неделю</p>
+						</div>
+						<div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+							<p className="text-[10px]">Ваш адрес</p>
+							<p className="text-sm">Кабанбай Батыра 51/1</p>
 						</div>
 					</div>
-					<div className="border-l-2 h-52 border-white"></div>
-					<div className="flex flex-col">
-						<p>В дороге</p>
-						<div className="flex flex-row gap-2">
-							<Image src={timer} alt="timer" />
-							<p>8:40, Май 2023</p>
-						</div>
-						<button className="w-44 h-9 rounded-3xl text-white bg-[#0D163A]">Следить</button>
-					</div>
-					<div className="border-l-2 h-44 border-white"></div>
-					<div className="flex flex-col">
-						<p>Доставлено</p>
-						<div className="flex flex-row gap-2">
-							<Image src={timer} alt="timer" />
-							<p>8:40, Май 2023</p>
-						</div>
-					</div>
-
-					<button className="w-[400px] h-16 rounded-[40px] text-white bg-[#0D163A] mt-12 font-medium text-[27px]">
-						Подтвердить
-					</button>
 				</div>
 			</div>
 		</Layout>

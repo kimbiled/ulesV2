@@ -4,7 +4,7 @@ import {
   food,
   experience,
   volunteers,
-} from '../app/assets/index';
+} from '../../public/assets/index';
 
 export const feedback = [
   {
