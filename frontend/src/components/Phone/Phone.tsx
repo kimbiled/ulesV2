@@ -5,15 +5,16 @@ import Image from 'next/image';
 import { ulesphone } from '@public/assets';
 const Phone = () => {
   return (
-    <section id="product" className={`${layout.sectionReverse}`}>
-      <div className={layout.sectionImgReverse}>
-        <Image
-          src={ulesphone}
-          alt="billing"
-          className="w-[80%] h-[80%] relative z-[5]"></Image>
+    <section id="product" className="flex flex-row items-center mt-16 mb-16">
+      
+      <div className='w-3/6 h-[545px] '>
+        <Image src={ulesphone}
+               alt='Phone'
+        />
       </div>
-      <div className={`${layout.sectionInfo} gap-4 `}>
-        <h2 className="font-bold  text-3xl text-ulsDark">
+
+      <div className="flex flex-col w-3/6 ">
+        <h2 className="font-bold  text-5xl text-ulsDark">
           Мы за легкость и удобство
         </h2>
         <p className="text-lg font-normal text-gray-500 ">

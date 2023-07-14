@@ -1,48 +1,10 @@
 import {
-  people01,
-  people02,
-  people03,
-  facebook,
-  instagram,
-  linkedin,
-  twitter,
-  airbnb,
-  binance,
-  coinbase,
-  dropbox,
-  send,
-  shield,
-  star,
   uleslogo,
   budget,
   food,
   experience,
   volunteers,
-} from '../../public/assets';
-
-export const features = [
-  {
-    id: 'feature-1',
-    icon: star,
-    title: 'Устойчивость в ЧС    ',
-    content:
-      'Во время экстренных ситуаций благодаря своей мобильности платформа будет способна оказывать помощь всем нуждающимся ',
-  },
-  {
-    id: 'feature-2',
-    icon: shield,
-    title: '100% Сбалансированность помощи',
-    content:
-      'Благодаря "индексу уязвимости" для каждого нуждающегося будут составлены индивидуальный список нужд исходя из реальных потребностей',
-  },
-  {
-    id: 'feature-3',
-    icon: send,
-    title: '100% Эффективность потребления товаров',
-    content:
-      'Значительно снизится уровень неэффективного потребления товаров, так как благодаря тесному сотрудничеству, сетевые маркеты будут предоставлять нам продукты, которые в скором были бы утилизировны',
-  },
-];
+} from '../app/assets/index';
 
 export const feedback = [
   {
@@ -92,6 +54,29 @@ export const stats = [
     img: experience,
   },
 ];
+
+
+export const steps = [
+  {
+    id: 'step-1',
+    title: 'Зарегистрируйтесь',
+    value: 'Посетите наш вебсайт',
+    num:'1'
+  },
+  {
+    id: 'step-2',
+    title: 'Найдите нужный продукт',
+    value: 'На нашем сайте',
+    num:'2'
+  },
+  {
+    id: 'step-3',
+    title: 'Получите продукт',
+    value: 'После этого ты сможешь это',
+    num:'3'
+  },
+];
+
 
 export const footerLinks = [
   {
@@ -156,47 +141,5 @@ export const footerLinks = [
         link: 'https://www.hoobank.com/become-a-partner/',
       },
     ],
-  },
-];
-
-export const socialMedia = [
-  {
-    id: 'social-media-1',
-    icon: instagram,
-    link: 'https://www.instagram.com/',
-  },
-  {
-    id: 'social-media-2',
-    icon: facebook,
-    link: 'https://www.facebook.com/',
-  },
-  {
-    id: 'social-media-3',
-    icon: twitter,
-    link: 'https://www.twitter.com/',
-  },
-  {
-    id: 'social-media-4',
-    icon: linkedin,
-    link: 'https://www.linkedin.com/',
-  },
-];
-
-export const clients = [
-  {
-    id: 'client-1',
-    logo: airbnb,
-  },
-  {
-    id: 'client-2',
-    logo: binance,
-  },
-  {
-    id: 'client-3',
-    logo: coinbase,
-  },
-  {
-    id: 'client-4',
-    logo: dropbox,
   },
 ];
