@@ -40,7 +40,7 @@ const Header = () => {
 				</Link>
 
 				<ul className="list-none sm:flex hidden justify-end items-center gap-6">
-					{navLinks.map((nav, index) => {
+					{navLinks.map((nav) => {
 						if (user !== null && (nav.id === "register" || nav.id === "login")) return;
 						return (
 							<li
