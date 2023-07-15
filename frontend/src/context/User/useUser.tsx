@@ -59,7 +59,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
 			.then(([user]) => {
 				setUser(user);
 				setIsLoading(false);
-				console.log(user);
 			})
 			.catch((error) => {
 				console.log(error);
