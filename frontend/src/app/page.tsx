@@ -1,13 +1,13 @@
-"use client";
-
 import Header from "@components/Header/Header";
-import Footer from "@root/components/Footer/Footer";
-import Community from "../components/Community/Community";
-import Phone from "../components/Phone/Phone";
+import Footer from "@components/Footer/Footer";
+import Community from "@components/Community/Community";
+import Phone from "@components/Phone/Phone";
+import Hero from "@components/Hero/Hero";
+import Stats from "@components/Stats/Stats";
+import Ranks from "@components/Ranks/Ranks";
+import System from "@components/System/System";
+
 import styles from "@root/style";
-import Hero from "@root/components/Hero/Hero";
-import Stats from "@root/components/Stats/Stats";
-import Ranks from "@root/components/Ranks/Ranks";
 export default function Home() {
 	return (
 		<div className=" w-full overflow-hidden">
@@ -21,6 +21,7 @@ export default function Home() {
 					<Hero />
 					<Ranks />
 					<Stats />
+					<System />
 					<Phone />
 					<Community />
 				</div>

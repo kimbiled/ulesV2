@@ -1,12 +1,11 @@
 "use client";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect } from "react";
 
-import { ISignIn, ISignUp, TTokens, TUser } from "./types";
+import { ISignIn, ISignUp, TTokens } from "@context/Auth/types";
 import axios, { AxiosResponse } from "axios";
 import config from "@root/config";
 
 interface AuthContextProps {
-	user: TUser | null;
 	signUp: ({ email, name, user_type, phone, password }: ISignUp) => Promise<void>;
 	signIn: ({ email, password }: ISignIn) => Promise<void>;
 	logOut: () => void;
@@ -19,9 +18,6 @@ export function useAuth(): AuthContextProps {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [user, setUser] = useState<TUser | null>(null);
-
 	async function signUp({ email, name, user_type, password, phone }: ISignUp) {
 		return await axios({
 			method: "POST",
@@ -66,6 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}).then((response: AxiosResponse<TTokens>) => {
 			if (!response.data.refresh || !response.data.access) return;
 
+			console.log(response.data);
 			localStorage.setItem("access", response.data.access);
 			localStorage.setItem("refresh", response.data.refresh);
 		});
@@ -74,37 +71,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		localStorage.removeItem("access");
 		localStorage.removeItem("refresh");
 	}
-	async function getUser(access: string) {
-		return await axios({
-			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-profile/`,
-			headers: {
-				Authorization: `Bearer ${access}`,
-			},
-		})
-			.then((response: AxiosResponse<TUser | null>) => {
-				return response.data;
-			})
-			.catch(() => {
-				return null;
-			});
-	}
-	useEffect(() => {
-		const access = localStorage.getItem("access");
-		Promise.all([getUser(access || "")])
-			.then(([user]) => {
-				setUser(user);
-				setIsLoading(false);
-			})
-			.catch((error) => {
-				console.log(error);
-				setIsLoading(false);
-			});
-
-		return () => {
-			setUser(null);
-		};
-	}, []);
 
 	useEffect(() => {
 		const refresh = localStorage.getItem("refresh");
@@ -116,11 +82,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const values: AuthContextProps = {
-		user,
 		signUp,
 		signIn,
 		logOut,
 	};
 
-	return <AuthContext.Provider value={values}>{!isLoading && children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }

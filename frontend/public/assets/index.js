@@ -1,4 +1,4 @@
-import airbnb from './airbnb.png';
+
 import bill from './bill.png';
 import binance from './binance.png';
 import card from './card.png';
@@ -42,9 +42,10 @@ import exitForm from './exit_form.svg';
 import magnum from './magnum.jpg';
 import quote01 from './quote01.jpg';
 import quote02 from './quote02.jpg';
+import downarrow from './downarrow.svg'
 
 export {
-  airbnb,
+  downarrow,
   bill,
   binance,
   card,
@@ -87,4 +88,5 @@ export {
   volunteers,
   quote01,
   quote02,
+
 };

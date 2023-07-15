@@ -1,12 +1,13 @@
+"use client";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { close, menu, profilePhoto, uleslogo } from "public/assets/index";
-import { useAuth } from "@context/Auth/useAuth";
+import { useUser } from "@context/User/useUser";
 
 const Header = () => {
-	const { user } = useAuth();
+	const { user } = useUser();
 
 	const [active, setActive] = useState("Home");
 	const [toggle, setToggle] = useState(false);
@@ -31,33 +32,38 @@ const Header = () => {
 	];
 
 	return (
-		<nav className="w-full bg-[#5C97CD] px-16 flex py-2 justify-between items-center navbar">
-			<div className="flex space-x-24">
-				<Link href="/" className="flex justify-center space-x-4 items-center cursor-pointer">
-					<Image src={uleslogo} alt="ules" className=" h-[60px] " />
-					<p className=" font-poppins font-semibold text-[20px]  text-white ">Úles</p>
-				</Link>
-				<ul className="list-none sm:flex hidden justify-end items-center flex-1">
-					{navLinks.map((nav, index) => {
-						if (user !== null && (nav.id === "register" || nav.id === "login")) return <></>;
-						return (
-							<li
-								key={index}
-								className={`font-poppins font-normal cursor-pointer text-[16px] ${
-									active === nav.title ? "text-gray-200" : "text-white"
-								} ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
-								onClick={() => setActive(nav.title)}
-							>
-								<Link href={`${nav.id}`}>{nav.title}</Link>
-							</li>
-						);
-					})}
-				</ul>
+		<nav className="w-full bg-gradient-linear px-16 flex py-2 justify-between items-center navbar">
+			<div className="flex bg-gradientBlueBlack">
+					<Link href="/" className="flex justify-center space-x-4 items-center cursor-pointer ">
+						<Image src={uleslogo} alt="ules" className=" h-[60px] " />
+						<p className=" font-poppins font-semibold text-[20px]  text-white ">Úles</p>
+					</Link>
+					
+					<ul className="list-none sm:flex hidden justify-end items-center ">
+						{navLinks.map((nav, index) => {
+							if (user !== null && (nav.id === "register" || nav.id === "login")) return;
+							return (
+								<li
+									key={nav.id}
+									className={`font-poppins font-normal cursor-pointer text-[16px] ${
+										active === nav.title ? "text-gray-200" : "text-white"
+									} ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
+									onClick={() => setActive(nav.title)}
+								>
+									<Link href={`${nav.id}`}>{nav.title}</Link>
+								</li>
+							);
+						})}
+					</ul>
 			</div>
-			<div className="flex items-center space-x-4" style={{ display: user ? "flex" : "none" }}>
+
+			<Link href={"/profile"} className="flex items-center space-x-4" style={{ display: user ? "flex" : "none" }}>
 				<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full" />
 				<p className="font-poppins text-white ml-2">{user && user.name}</p>
-			</div>
+				<div className="border-r-[1px] h-8 border-white"></div>
+				{/* <button className="w-24 h-8 rounded-3xl bg-white">Войти</button> */}
+				<Image src={menu} alt="MenuPhoto" />
+			</Link>
 
 			<div className="sm:hidden flex flex-1 justify-end items-center">
 				<Image
@@ -74,7 +80,7 @@ const Header = () => {
 				>
 					<ul className="list-none flex justify-end items-start flex-1 flex-col">
 						{navLinks.map((nav, index) => {
-							if (user !== null && (nav.id === "register" || nav.id === "login")) return <></>;
+							if (user !== null && (nav.id === "register" || nav.id === "login")) return;
 							return (
 								<li
 									key={nav.id}

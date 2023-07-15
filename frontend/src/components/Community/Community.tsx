@@ -14,7 +14,7 @@ export default function Community() {
             <Image
               src={magnum}
               alt="magnumLogo"
-              className="absolute left-[200px] rounded-full object-cover overflow-hidden"
+              className="absolute left-[200px] rounded-full border-4 border-white object-cover overflow-hidden"
               width={50}
               height={50}
             />{' '}
@@ -42,7 +42,7 @@ export default function Community() {
             <Image
               src={magnum}
               alt="magnumLogo"
-              className="absolute left-[200px] rounded-full object-cover overflow-hidden"
+              className="absolute left-[200px] rounded-full  border-4 border-white object-cover overflow-hidden"
               width={50}
               height={50}
             />
