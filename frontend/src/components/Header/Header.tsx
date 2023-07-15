@@ -60,6 +60,9 @@ const Header = () => {
 			<Link href={"/profile"} className="flex items-center space-x-4" style={{ display: user ? "flex" : "none" }}>
 				<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full" />
 				<p className="font-poppins text-white ml-2">{user && user.name}</p>
+				<div className="border-r-[1px] h-8 border-white"></div>
+				{/* <button className="w-24 h-8 rounded-3xl bg-white">Войти</button> */}
+				<Image src={menu} alt="MenuPhoto" />
 			</Link>
 
 			<div className="sm:hidden flex flex-1 justify-end items-center">
