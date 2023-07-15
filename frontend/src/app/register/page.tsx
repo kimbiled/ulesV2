@@ -108,7 +108,7 @@ export default function Home() {
 											Номер телефона
 										</label>
 										<input
-											type="tel"
+											type="text"
 											name="phone"
 											id="phone"
 											placeholder="+7 333 222 11 00"
