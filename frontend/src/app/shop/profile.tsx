@@ -7,12 +7,11 @@ import { exitForm } from "@public/assets";
 
 import { TProduct } from "@context/Shop/types";
 import { useShop } from "@context/Shop/useShop";
-import { useAuth } from "@context/Auth/useAuth";
-import { event } from "next/dist/build/output/log";
+import { useUser } from "@context/User/useUser";
 
 export default function Profile() {
 	const { getProducts, createProduct } = useShop();
-	const { user } = useAuth();
+	const { user } = useUser();
 	const { push } = useRouter();
 
 	const [showModal, setShowModal] = useState(false);

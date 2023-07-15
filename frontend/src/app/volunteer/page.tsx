@@ -1,22 +1,24 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
+import { useUser } from "@context/User/useUser";
 import { useVolunteer } from "@context/Volunteer/useVolunteer";
-import { IVolunteerRating } from "@root/types/Volunteer";
+import { TOrder } from "@context/Volunteer/types";
 
 import { downarrow } from "@public/assets";
 
 import Layout from "@components/Layout/Layout";
-import { TOrder } from "@context/Volunteer/types";
 
 export default function Volunteer() {
 	const { getOrders } = useVolunteer();
+	const { user } = useUser();
+	const { push } = useRouter();
 
-	const [volRating, setVolRating] = useState<IVolunteerRating[]>([]);
 	const [orders, setOrders] = useState<TOrder[]>([]);
 
-	useMemo(() => {
+	useEffect(() => {
 		// Data fetching
 		Promise.all([getOrders()]).then(([fetchedOrders]) => {
 			if (!fetchedOrders) return;
@@ -24,10 +26,13 @@ export default function Volunteer() {
 		});
 
 		return () => {
-			setVolRating([]);
 			setOrders([]);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (!user) return push("/login");
+	}, [user]);
 
 	const ratings = [
 		{
