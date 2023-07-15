@@ -70,6 +70,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	function logOut() {
 		localStorage.removeItem("access");
 		localStorage.removeItem("refresh");
+
+		window.location.reload();
 	}
 
 	useEffect(() => {
