@@ -25,7 +25,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 		return await axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-volunteer/orders/`,
+			url: `${config.BACKEND_HOST}/service/get-volunteer-orders/`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
