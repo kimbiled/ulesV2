@@ -1,6 +1,6 @@
 import Layout from "@components/Layout/Layout";
 import Image from "next/image";
-import {downarrow} from '../../../public/assets/index'
+import {downarrow, userImg} from '../../../public/assets/index'
 
 export default function Customer() {
 	const products = [
@@ -95,7 +95,7 @@ export default function Customer() {
 	]
 	return (
 		<Layout>
-			<div className="flex flex-row justify-between w-screen mt-16 mb-16">
+			<div className="flex flex-row justify-between w-screen mt-16 mb-16 fontRaleway">
 				<div className="w-[845px] h-auto bg-gradient-linear rounded-3xl flex flex-row justify-between p-8">
 					<div className="h-auto">
 						<div className="bg-volunteerColor w-[465px] h-auto py-4 gap-4 rounded-3xl border-[1px] border-white flex flex-wrap items-center justify-evenly">
@@ -110,14 +110,14 @@ export default function Customer() {
 							</div>
 						</div>
 						<div className="flex w-full justify-end mt-4">
-							<button className="hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm ">Подтвердить</button>
+							<button className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm ">Подтвердить</button>
 						</div>
 					</div>
 
 					<div className="w-64 h-[450px] bg-volunteerColor rounded-3xl border-[1px] border-white">
 						<div className="flex flex-col items-center gap-3 mt-4">
-							<div className="w-52 h-44 rounded-2xl bg-white">
-								<p className="text-center">Здесь будет фотка</p>
+							<div className="w-52 h-44 rounded-2xl bg-white flex justify-center items-center">
+								<Image src={userImg} alt="userImg"  className="m-auto py-2 cursor-pointer"/>
 							</div>
 						{volunteerInfo.map(item=>(
 							<>
@@ -145,7 +145,7 @@ export default function Customer() {
 
 				<div className="w-[336px] h-auto bg-gradient-linear rounded-3xl text-white p-4">
 					<div className="flex flex-col gap-4 justify-center w-[280px] justify-center m-auto">
-						<div className="flex flex-row  justify-around items-center">
+						<div className="flex flex-row  justify-start gap-4 items-center">
 							<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
 							<div>
 								<p className="text-lg">Ертаев Уалихан</p>

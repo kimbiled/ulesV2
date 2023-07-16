@@ -6,7 +6,7 @@ import GetStarted from './GetStarted';
 
 const Hero = () => {
   return (
-    <section className=" bg-[#D6EAF8] overflow-hidden">
+    <section className="fontRaleway bg-[#D6EAF8] overflow-hidden ">
       <div className="flex  w-full justify-center items-center  py-8  ">
         <div>
           <h1 className="max-w-2xl mb-4 text-3xl font-extrabold tracking-tight leading-none md:text-4xl xl:text-5xl text-ulsDark">
@@ -20,7 +20,7 @@ const Hero = () => {
           </p>
           <a
             href="#"
-            className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-ulsDark  focus:ring-4  focus:ring-primary-900">
+            className="hover:bg-gray-600 ease-in-out inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-ulsDark  focus:ring-4  focus:ring-primary-900">
             Помочь
             <svg
               className="w-5 h-5 ml-2 -mr-1"
