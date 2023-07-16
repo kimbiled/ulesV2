@@ -76,6 +76,7 @@ export default function Profile() {
 										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 										placeholder="Хлеб"
 										required
+										type="text"
 										ref={nameRef}
 									/>
 								</div>
@@ -86,6 +87,7 @@ export default function Profile() {
 									<input
 										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 										placeholder="Продукты питания"
+										type="text"
 										required
 										ref={categoryRef}
 									/>
@@ -98,6 +100,7 @@ export default function Profile() {
 										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 										placeholder="10"
 										required
+										type="number"
 										ref={unitsInStockRef}
 									/>
 								</div>
@@ -109,6 +112,7 @@ export default function Profile() {
 										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 										placeholder="5 г/мл/шт"
 										required
+										type="number"
 										ref={quantityPerUnitRef}
 									/>
 								</div>
