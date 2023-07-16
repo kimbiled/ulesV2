@@ -1,5 +1,5 @@
 from django.urls import path
-from service.views import ProductViewSet, UpdateProduct, CreateNewProduct,  UpdateProduct, UpdateShopProfile, UpdateVolunteerProfile, UpdateCustomerProfile, GetProfile, GetTop, GetOrders, AssignVolunteer, GetVolunteerOrders, GetCustomerOrders, GetShopOrders
+from service.views import ProductViewSet, UpdateProduct, CreateNewProduct,  UpdateProduct, UpdateShopProfile, UpdateVolunteerProfile, UpdateCustomerProfile, GetProfile, GetTop, GetOrders, AssignVolunteer
 
 urlpatterns = [
     path('get-products/', ProductViewSet.as_view({'get':'list'}), name='view_products'),
@@ -8,9 +8,6 @@ urlpatterns = [
     path('get-profile/', GetProfile.as_view(), name= 'get-profile'),
     path('get-top/', GetTop.as_view(), name= 'get-top'),
     path('get-orders/', GetOrders.as_view(), name= 'get-orders'),
-    path('get-volunteer-orders/', GetVolunteerOrders.as_view(), name= 'get-volunteers-orders'),
-    path('get-customer-orders/', GetCustomerOrders.as_view(), name= 'get-customer-orders'),
-    path('get-shop-orders/', GetShopOrders.as_view(), name= 'get-shop-orders'),
     path('orders/<int:order_id>/assign', AssignVolunteer.as_view(), name='assign-volunteer'),
     path('update-shop-profile/', UpdateShopProfile.as_view(), name= 'update-shop-profile'),
     path('update-customer-profile/', UpdateCustomerProfile.as_view(), name= 'update-customer-profile'),
