@@ -115,7 +115,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
 		return await axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-shop-orders/`,
+			url: `${config.BACKEND_HOST}/service/get-orders/`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
