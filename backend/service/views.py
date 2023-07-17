@@ -224,22 +224,31 @@ class GetOrders(APIView):
         user = request.user
 
         if hasattr(user, 'customer_profile'):  
-            orders = user.customer_profile.order_set
+            orders = user.customer_profile.order_set.all()
             serializer = OrderSerializer(orders, many=True)
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         
         elif  hasattr(user, 'volunteer_profile'):
-            orders = user.volunteer_profile.order_set
+            orders = user.volunteer_profile.order_set.all()
             serializer = OrderSerializer(orders, many=True)
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         
-        # elif  hasattr(user, 'shop_profile'):  # NOT RECOMMENDED FOR USE
-        #     orders = user.shop_profile.product_set.orderdetail_set.order
-        #     serializer = OrderSerializer(orders, many=True)
-        #     return Response(status=status.HTTP_200_OK, data=serializer.data)
-        
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.data)
+
+class GetAvailableOrders(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        
+        if hasattr(user, 'volunteer_profile'):
+            orders = Order.objects.filter(volunteer__isnull=True)
+            serializer = OrderSerializer(orders, many=True)
+            return Response(status=status.HTTP_200_OK,data=serializer.data)
+        
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.data, message="YOU ARE NO VOLUNTEER")
 
 class AssignVolunteer(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -253,8 +262,26 @@ class AssignVolunteer(APIView):
             order.volunteer_id = request.user.id
             order.save()
             serializer = OrderSerializer(order)
-            return Response(serializer.data)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
         except Order.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO ORDERS'})
 
+class GetNorm(APIView):
 
+    def get(self, request, norm_id):
+        
+        try:
+            if not hasattr(request.user, 'customer_profile'):
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
+            norm = Norm.objects.get(id=norm_id)
+            category_norms = CategoryNorm.objects.filter(norm=norm)
+            product_ids = [cn.category.product.id for cn in category_norms]
+            products = Product.objects.filter(id__in=product_ids)
+            serializer = ProductSerializer(products, many=True)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+        except Norm.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO NORM'})
+
+
+        return Response(status=status.HTTP_200_OK, data=response_data)

@@ -25,11 +25,18 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         fields = ('id', 'product', 'quantity')
 
 class OrderSerializer(serializers.ModelSerializer):
-    order_details = OrderDetailSerializer(many=True, read_only=True)
+    order_details = serializers.SerializerMethodField()
     
+    def get_order_details(self, order):
+            order_details = order.orderdetail_set.all()
+            serializer = OrderDetailSerializer(order_details, many=True)
+            return serializer.data
+
     class Meta:
         model = Order
         fields = ('id', 'customer', 'volunteer', 'order_date', 'order_details')
+
+        depth = 1
 
 class ShopProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
