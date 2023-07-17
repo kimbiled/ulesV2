@@ -17,7 +17,7 @@ const Footer = () => {
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
-              <h2 className="mb-4 text-lg font-medium text-white">Страницы</h2>
+              <h2 className="mb-4 text-lg font-medium text-white">Навигация</h2>
               <ul className="text-white flex flex-col gap-3">
                 <li>
                   <a href="#" className="hover:underline">
@@ -26,30 +26,25 @@ const Footer = () => {
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    О нас
+                    Магазин
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Сервисы
+                    Волонтер
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Поддержка
+                    Помощь
                   </a>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h2 className="mb-4 text-lg font-medium text-white">Про нас</h2>
+              <h2 className="mb-4 text-lg font-medium text-white">Наши партнеры</h2>
               <ul className="text-white flex flex-col gap-3">
-                <li>
-                  <a href="#" className="hover:underline">
-                    СМИ
-                  </a>
-                </li>
                 <li>
                   <a href="#" className="hover:underline">
                     Партнеры
@@ -57,12 +52,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
-                    Сервисы
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Клиенты
+                    Стать партнером
                   </a>
                 </li>
               </ul>
@@ -75,12 +65,22 @@ const Footer = () => {
               <ul className="text-white flex flex-col gap-3">
                 <li>
                   <a href="#" className="hover:underline">
-                    Ules@temirqazyq.kz
+                    +7 (777) 777 77 77
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline">
                     +7 (777) 777 77 77
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:underline">
+                  Ules@temirqazyq.kz 
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:underline">
+                  Ules@temirqazyq.kz 
                   </a>
                 </li>
               </ul>
