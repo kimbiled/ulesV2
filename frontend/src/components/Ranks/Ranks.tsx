@@ -3,13 +3,13 @@ import React from 'react';
 import Image from 'next/image';
 const Ranks = () => {
   return (
-    <div className=" mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8  ">
+    <div className="fontRaleway mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8 ">
       <h2 className="text-center text-4xl font-bold  sm:text-5xl text-ulsDark">
         Топ пользователей
       </h2>
 
-      <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2">
-        <blockquote className="rounded-lg bg-[#D6EAF8]  p-8   ">
+      <div className="mt-12 flex flex-row justify-evenly">
+        <blockquote className="rounded-lg bg-[#D6EAF8] p-8 w-[550px]">
           <div className="flex items-center gap-4">
             <Image
               src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
@@ -35,7 +35,7 @@ const Ranks = () => {
           </p>
         </blockquote>
 
-        <blockquote className="rounded-lg bg-[#D6EAF8]  p-8 ">
+        <blockquote className="rounded-lg bg-[#D6EAF8] p-8 w-[550px]">
           <div className="flex items-center gap-4">
             <Image
               alt="mockup"

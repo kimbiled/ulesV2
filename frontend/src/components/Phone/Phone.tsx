@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ulesphone } from '@public/assets';
 const Phone = () => {
   return (
-    <section id="product" className="flex flex-row items-center mt-16 mb-16">
+    <section id="product" className=" fontRaleway flex flex-row items-center mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
       
       <div className='w-3/6 h-[545px] '>
         <Image src={ulesphone}

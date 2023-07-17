@@ -4,7 +4,7 @@ import { magnum, quote, quote01, quote02 } from '@public/assets';
 
 export default function Community() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="fontRaleway flex flex-col gap-4 mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
       <h3 className="text-center font-bold    text-5xl text-ulsDark">
         Что наши клиенты говорят о нас{' '}
       </h3>

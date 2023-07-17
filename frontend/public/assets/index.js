@@ -43,8 +43,10 @@ import magnum from './magnum.jpg';
 import quote01 from './quote01.jpg';
 import quote02 from './quote02.jpg';
 import downarrow from './downarrow.svg'
-
+import userImg from './user.svg'
+import volunteerImg from './volunteerImg.svg'
 export {
+  volunteerImg,
   downarrow,
   bill,
   binance,
@@ -88,5 +90,5 @@ export {
   volunteers,
   quote01,
   quote02,
-
+  userImg
 };
