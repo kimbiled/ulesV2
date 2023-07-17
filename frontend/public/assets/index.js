@@ -45,7 +45,9 @@ import quote02 from './quote02.jpg';
 import downarrow from './downarrow.svg'
 import userImg from './user.svg'
 import volunteerImg from './volunteerImg.svg'
+import profileImg from './profile.png'
 export {
+  profileImg,
   volunteerImg,
   downarrow,
   bill,

@@ -11,7 +11,7 @@ import { useUser } from "@context/User/useUser";
 import { useVolunteer } from "@context/Volunteer/useVolunteer";
 import { TOrder } from "@context/Volunteer/types";
 
-import { downarrow, volunteerImg } from "@public/assets";
+import { downarrow, profileImg } from "@public/assets";
 
 import Layout from "@components/Layout/Layout";
 
@@ -157,7 +157,7 @@ export default function Volunteer() {
 								</div>
 								<hr />
 								<div className="flex justify-center items-center p-2 fontInter">
-									<button className="hover:bg-stone-200 w-36 h-10 bg-white text-black rounded-3xl mb-1 mt-1 text-sm ">Подтвердить</button>
+									<button className="fontInter hover:bg-stone-200 w-36 h-10 bg-white text-black rounded-3xl mb-1 mt-1 text-sm ">Подтвердить</button>
 								</div>
 							</div>
 		
@@ -192,8 +192,8 @@ export default function Volunteer() {
 							</h4>
 							{orders.map((item) => (
 								<div className="flex flex-row justify-around items-center"> 
-									<div className="w-16 h-8"> 
-										<Image src={volunteerImg} alt="volunteericon" />
+									<div className="m-auto w-16 h-16"> 
+										<Image src={profileImg} alt="volunteericon" />
 									</div>
 		
 									<div
@@ -218,7 +218,7 @@ export default function Volunteer() {
 									</div>
 		
 									<div className="mr-2">
-										<button className="w-36 h-8 bg-white text-black rounded-3xl text-sm hover:bg-stone-200">
+										<button className="fontInter w-36 h-8 bg-white text-black rounded-3xl text-sm hover:bg-stone-200">
 											Подтвердить
 										</button>
 									</div>

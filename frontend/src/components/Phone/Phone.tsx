@@ -7,13 +7,13 @@ const Phone = () => {
   return (
     <section id="product" className=" fontRaleway flex flex-row items-center mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
       
-      <div className='w-3/6 h-[545px] '>
+      <div className='w-3/6'>
         <Image src={ulesphone}
                alt='Phone'
         />
       </div>
 
-      <div className="flex flex-col w-3/6 ">
+      <div className="flex flex-col w-3/6 gap-4">
         <h2 className="font-bold  text-5xl text-ulsDark">
           Мы за легкость и удобство
         </h2>
