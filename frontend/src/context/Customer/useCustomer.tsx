@@ -8,6 +8,8 @@ import config from "@root/config";
 
 interface CustomerContextProps {
 	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
+	getNorm: (id: string) => Promise<any>;
+	getOrders: () => Promise<any[]>;
 }
 
 const CustomerContext = createContext({} as CustomerContextProps);
@@ -32,8 +34,37 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 		});
 	}
 
+	async function getNorm(id: string) {
+		if (!access) return;
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-norm/${id}`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		}).then((response) => {
+			return response.data;
+		});
+	}
+
+	async function getOrders() {
+		if (!access) return [];
+
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-orders/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		}).then((response) => {
+			return response.data;
+		});
+	}
+
 	const values: CustomerContextProps = {
 		updateProfile,
+		getNorm,
+		getOrders,
 	};
 	return <CustomerContext.Provider value={values}>{children}</CustomerContext.Provider>;
 }

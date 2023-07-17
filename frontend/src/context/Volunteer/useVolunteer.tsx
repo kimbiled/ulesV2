@@ -7,6 +7,7 @@ import { IUpdateProfile, TOrder } from "@context/Volunteer/types";
 
 interface VolunteerContextProps {
 	getOrders: () => Promise<TOrder[] | void>;
+	getAvailableOrders: () => Promise<TOrder[] | void>;
 	assignOrder: (id: string) => Promise<void>;
 	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
 }
@@ -25,7 +26,25 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 		return await axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-volunteer-orders/`,
+			url: `${config.BACKEND_HOST}/service/get-orders/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		})
+			.then((response: AxiosResponse<TOrder[]>) => {
+				return response.data;
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
+	async function getAvailableOrders() {
+		if (!access) return [];
+
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-available-orders/`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
@@ -73,6 +92,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 		getOrders,
 		assignOrder,
 		updateProfile,
+		getAvailableOrders,
 	};
 	return <VolunteerContext.Provider value={values}>{children}</VolunteerContext.Provider>;
 }
