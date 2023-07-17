@@ -224,12 +224,12 @@ class GetOrders(APIView):
         user = request.user
 
         if hasattr(user, 'customer_profile'):  
-            orders = user.customer_profile.order_set
+            orders = user.customer_profile.order_set.all()
             serializer = OrderSerializer(orders, many=True)
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         
         elif  hasattr(user, 'volunteer_profile'):
-            orders = user.volunteer_profile.order_set
+            orders = user.volunteer_profile.order_set.all()
             serializer = OrderSerializer(orders, many=True)
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         
@@ -253,7 +253,7 @@ class AssignVolunteer(APIView):
             order.volunteer_id = request.user.id
             order.save()
             serializer = OrderSerializer(order)
-            return Response(serializer.data)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
         except Order.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO ORDERS'})
 
