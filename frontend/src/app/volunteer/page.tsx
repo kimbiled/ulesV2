@@ -1,11 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Modal from './Modal'
+import MoreModal from './MoreModal'
+import OrderModal from './OrderModal'
 import { useRouter } from "next/navigation";
-import { Raleway, Inter } from "next/font/google";
-const rlw = Raleway({ subsets: ["latin"] });
-const int = Inter({ subsets: ["latin"] });
 
 import { useUser } from "@context/User/useUser";
 import { useVolunteer } from "@context/Volunteer/useVolunteer";
@@ -14,14 +12,18 @@ import { TOrder } from "@context/Volunteer/types";
 import { downarrow, profileImg } from "@public/assets";
 
 import Layout from "@components/Layout/Layout";
+import Order from "./OrderModal";
 
 export default function Volunteer() {
 	const { getOrders } = useVolunteer();
 	const { user } = useUser();
 	const { push } = useRouter();
 
-	const [modalOpen, setModalOpen] = useState(false);
-	const handleOnClose = () => setModalOpen(false)
+	const [moreModalOpen, setMoreModalOpen] = useState(false);
+	const handleOnMoreClose = () => setMoreModalOpen(false)
+
+	const [orderModalOpen, setOrderModalOpen] = useState(false);
+	const handleOnOrderClose = () => setOrderModalOpen(false)
 
 	// const [orders, setOrders] = useState<TOrder[]>([]);
 
@@ -45,32 +47,26 @@ export default function Volunteer() {
 		{
 			id: 1,
 			place: 34,
-			fullName: "Ертаев Уалихан",
+			fullName: "Кадыр Сабыржан",
 			rating: 12,
 		},
 		{
 			id: 2,
 			place: 1,
-			fullName: "Ертаев Уалихан",
+			fullName: "Хамитов Фаяз",
 			rating: 15,
 		},
 		{
 			id: 3,
 			place: 5,
-			fullName: "Ертаев Уалихан",
+			fullName: "Бекжанов Алибек",
 			rating: 11,
 		},
 		{
 			id: 4,
 			place: 74,
-			fullName: "Ертаев Уалихан",
+			fullName: "Мейрамбеков Нурсултан",
 			rating: 1,
-		},
-		{
-			id: 5,
-			place: 15,
-			fullName: "Ертаев Уалихан",
-			rating: 9,
 		},
 	];
 
@@ -161,15 +157,24 @@ export default function Volunteer() {
 								</div>
 							</div>
 		
-							<div className="w-[445px] h-[475px] bg-gradient-linear2 rounded-3xl">
+							<div className="w-[445px] h-[475px] bg-gradient-linear3 rounded-3xl">
 								<h4 className="font-semibold text-[28px] text-white border-b-[1px] border-white p-4 px-10">
 									Рейтинг
 								</h4>
 								<div className="m-auto mt-4 flex flex-col gap-3">
+									<div className="border-white border-[1px] w-[390px] h-14 bg-volunteerColorHover ease-in-out text-white rounded-xl font-medium flex justify-between items-center p-4 m-auto ">
+										<div className="flex flex-col">
+											<p className="text-xs">32 место</p>
+											<p>Вы</p>
+										</div>
+										<div>
+											<p className="font-medium text-xl">28</p>
+										</div>
+									</div>
 									{ratings.map((item) => (
 										<div
 											key={item.id}
-											className="border-white border-[1px] w-[390px] h-14 bg-volunteerColor hover:bg-volunteerColorHover ease-in-out text-white rounded-xl font-medium flex justify-between items-center p-4 m-auto "
+											className="border-white border-[1px] w-[390px] h-14 bg-volunteerColor text-white rounded-xl font-medium flex justify-between items-center p-4 m-auto "
 										>
 											<div className="flex flex-col">
 												<p className="text-xs">{item.place} место</p>
@@ -190,6 +195,40 @@ export default function Volunteer() {
 							<h4 className="font-semibold text-[28px] text-white border-b-[1px] border-white p-4 px-10">
 								Заказы
 							</h4>
+
+							{/* current order of Volunteer */}
+							<div className="flex flex-row justify-around items-center"> 
+									<div className="m-auto w-16 h-16"> 
+										<Image src={profileImg} alt="volunteericon" />
+									</div>
+		
+									<div className="relative flex flex-row justify-between w-[585px] h-28 bg-volunteerColorHover rounded-xl border-[1px] border-white m-auto mt-4 items-center">
+									<div className="text-white font-medium flex flex-row items-center">
+										<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+											<p className="text-xs">Адрес:</p>
+											<p className="text-sm"> -</p>
+											<p className="text-sm italic underline cursor-pointer" onClick={()=>setMoreModalOpen(true)}>Подробнее</p>
+										</div>
+										<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+											<p className="text-xs">Дата:</p>
+											{/*<p className="text-sm">{item.pickDate} -</p>*/}
+											{/*<p className="text-sm">{item.deliverDate}</p>*/}
+										</div>
+										<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col  p-2">
+											<p className="text-xs">Вес:</p>
+											{/*<p className="text-sm">{item.value}</p>*/}
+										</div>
+									</div>
+		
+									<div className="mr-2">
+										<button className="fontInter w-36 h-8 bg-white text-black rounded-3xl text-sm hover:bg-stone-200" onClick={()=>setOrderModalOpen(true)}>
+											Смотреть
+										</button>
+									</div>
+								</div>
+							</div>
+
+							{/* other orders that are available for Volunteer */}
 							{orders.map((item) => (
 								<div className="flex flex-row justify-around items-center"> 
 									<div className="m-auto w-16 h-16"> 
@@ -198,13 +237,12 @@ export default function Volunteer() {
 		
 									<div
 									key={item.id}
-									className="relative flex flex-row justify-between w-[585px] h-28 bg-volunteerColor rounded-xl border-[1px] border-white m-auto mt-4 items-center"
-								>
+									className="relative flex flex-row justify-between w-[585px] h-28 bg-volunteerColor rounded-xl border-[1px] border-white m-auto mt-4 items-center">
 									<div className="text-white font-medium flex flex-row items-center">
 										<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
 											<p className="text-xs">Адрес:</p>
 											<p className="text-sm">{item.toAddress} -</p>
-											<p className="text-sm italic underline cursor-pointer" onClick={()=>setModalOpen(true)}>Подробнее</p>
+											<p className="text-sm italic underline cursor-pointer" onClick={()=>setMoreModalOpen(true)}>Подробнее</p>
 										</div>
 										<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
 											<p className="text-xs">Дата:</p>
@@ -229,7 +267,8 @@ export default function Volunteer() {
 							<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
 						</div>
 					</div>
-				<Modal onClose={handleOnClose} visible={modalOpen} />
+				<MoreModal onClose={handleOnMoreClose} visible={moreModalOpen} />
+				<OrderModal isOpen={orderModalOpen} modalClose={handleOnOrderClose} />
 		</Layout>
 	);
 }

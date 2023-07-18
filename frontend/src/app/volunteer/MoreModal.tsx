@@ -1,4 +1,4 @@
-const Modal =({visible, onClose} : {visible:boolean, onClose:any})=> {
+const More =({visible, onClose} : {visible:boolean, onClose:any})=> {
     if(!visible) return null;
     return(
         <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
@@ -25,4 +25,4 @@ const Modal =({visible, onClose} : {visible:boolean, onClose:any})=> {
         </div>
     )
 }
-export default Modal;
+export default More;

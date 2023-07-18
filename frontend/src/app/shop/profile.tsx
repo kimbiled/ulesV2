@@ -138,25 +138,25 @@ export default function Profile() {
 	) : (
 		<div className="bg-[#F7F7FB] w-[calc(100vw-280px)] p-9 h-[calc(100vh-80px)]">
 			<div className="bg-white p-4 rounded-lg shadow-md">
-				<h2 className="text-xl font-bold mb-2">Address</h2>
+				<h2 className="text-xl font-bold mb-2">Адрес</h2>
 				<p className="mb-4">{user && user.address}</p>
 
-				<h2 className="text-xl font-bold mb-2">Company</h2>
+				<h2 className="text-xl font-bold mb-2">Компания</h2>
 				<p className="mb-4">{user && user.company}</p>
 
-				<h2 className="text-xl font-bold mb-2">Rating</h2>
+				<h2 className="text-xl font-bold mb-2">Рейтинг</h2>
 				<div className="flex items-center">
 					<svg className="w-6 h-6 fill-current text-yellow-500 mr-2" viewBox="0 0 20 20">
 						<path d="M10 1l2.356 6.824h7.616l-5.832 4.25 2.28 6.942-5.824-4.214-5.824 4.214 2.28-6.942-5.832-4.25h7.616z"></path>
 					</svg>
-					<p className="font-bold">{(user && user.rating) || "-"} points</p>
+					<p className="font-bold">{(user && user.rating) || "-"} поинты</p>
 				</div>
 
 				<button
 					className="w-[160px] h-[50px] mt-5 rounded-3xl text-white font-bold font-lg bg-[#8CC8D1]"
 					onClick={() => setShowModal(true)}
 				>
-					Add product
+					Добавить продукт
 				</button>
 			</div>
 
@@ -165,16 +165,16 @@ export default function Profile() {
 					<thead className="text-xs text-gray-700 uppercase bg-gray-50">
 						<tr>
 							<th scope="col" className="px-6 py-3">
-								Product name
+								Название продукта
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Quantity
+								Количество
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Quantity per Unit
+								Количество на единицу
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Category
+								Категория
 							</th>
 						</tr>
 					</thead>
