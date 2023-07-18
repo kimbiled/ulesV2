@@ -6,6 +6,8 @@ from rest_framework import status, permissions, viewsets
 from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class ProductViewSet(viewsets.ViewSet):
     permission_classes=[permissions.IsAuthenticated]
@@ -211,46 +213,63 @@ class GetTop(APIView):
     def get(self, request, user_type):
         if (user_type == 2):
             profiles = VolunteerProfile.objects.order_by('-rating')[:5]
+            user_ids = profiles.values_list('user_id', flat=True)
+            users = User.objects.filter(id__in=user_ids)
 
-            data = [
-                VolunteerProfileSerializer(profile).data
-                for profile in profiles
-            ]
+            profile_data = []
+            for profile in profiles:
+                user = users.get(id=profile.user_id)
+                profile_data.append({
+                    'user': UserSerializer(profile.user).data,
+                    'profile': VolunteerProfileSerializer(profile).data
+                })
 
         elif (user_type == 3):
-            profiles = ShopProfile.objects.order_by('-rating')[:3]
+            profiles = ShopProfile.objects.order_by('-rating')[:5]
+            user_ids = profiles.values_list('user_id', flat=True)
+            users = User.objects.filter(id__in=user_ids)
 
-            data = [
-                ShopProfileSerializer(profile).data
-                for profile in profiles
-            ]
+            profile_data = []
+            for profile in profiles:
+                user = users.get(id=profile.user_id)
+                profile_data.append({
+                    'user': UserSerializer(profile.user).data,
+                    'profile': ShopProfileSerializer(profile).data
+                })
 
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, message="WRONG USER TYPE")
 
         response_data = {}
-        response_data['data'] = data
+        response_data['data'] = profile_data
 
         return Response(status=status.HTTP_200_OK, data=response_data)
 
 class GetOrders(APIView):
     permission_classes = [permissions.IsAuthenticated]
-
+    
     def get(self, request):
         user = request.user
 
         if hasattr(user, 'customer_profile'):  
             orders = user.customer_profile.order_set.all()
-            serializer = OrderSerializer(orders, many=True)
-            return Response(status=status.HTTP_200_OK, data=serializer.data)
         
         elif  hasattr(user, 'volunteer_profile'):
             orders = user.volunteer_profile.order_set.all()
-            serializer = OrderSerializer(orders, many=True)
-            return Response(status=status.HTTP_200_OK, data=serializer.data)
         
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.data)
+            return Response(status=status.HTTP_400_BAD_REQUEST, message="YOU ARE NO CUSTOMER OR VOLUNTEER")
+
+        serializer = OrderSerializer(orders, many=True)
+        data = serializer.data
+        for order_data in data:
+            order = Order.objects.get(pk=order_data['id'])
+
+            if order.customer:
+                order_data['customer_name'] = order.customer.user.name
+            if order.volunteer:
+                order_data['volunteer_name'] = order.volunteer.user.name
+        return Response(status=status.HTTP_200_OK, data=data)
 
 class GetAvailableOrders(APIView):
     permission_classes = [permissions.IsAuthenticated]
