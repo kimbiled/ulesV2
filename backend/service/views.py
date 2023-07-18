@@ -203,7 +203,7 @@ class GetProfile(APIView):
 class GetTop(APIView):
 
     def get(self, request, user_type):
-        if (user_type == 'volunteer')
+        if (user_type == 'volunteer'):
             profiles = VolunteerProfile.objects.order_by('-rating')[:5]
 
             data = [

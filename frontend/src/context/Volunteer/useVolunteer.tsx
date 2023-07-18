@@ -3,11 +3,11 @@ import { createContext, ReactNode, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
 import config from "@root/config";
-import { IUpdateProfile, TOrder } from "@context/Volunteer/types";
+import { IUpdateProfile, TAvailableOrder, TOrder } from "@context/Volunteer/types";
 
 interface VolunteerContextProps {
 	getOrders: () => Promise<TOrder[] | void>;
-	getAvailableOrders: () => Promise<TOrder[] | void>;
+	getAvailableOrders: () => Promise<TAvailableOrder[] | void>;
 	assignOrder: (id: string) => Promise<void>;
 	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
 }
@@ -49,7 +49,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 				Authorization: `Bearer ${access}`,
 			},
 		})
-			.then((response: AxiosResponse<TOrder[]>) => {
+			.then((response: AxiosResponse<TAvailableOrder[]>) => {
 				return response.data;
 			})
 			.catch((error) => {

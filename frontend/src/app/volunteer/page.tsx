@@ -15,20 +15,17 @@ import Layout from "@components/Layout/Layout";
 import Order from "./OrderModal";
 
 export default function Volunteer() {
-	const { getOrders } = useVolunteer();
+	const { getAvailableOrders } = useVolunteer();
 	const { user } = useUser();
 	const { push } = useRouter();
 
-	const [moreModalOpen, setMoreModalOpen] = useState(false);
-	const handleOnMoreClose = () => setMoreModalOpen(false);
-
-	const [orderModalOpen, setOrderModalOpen] = useState(false);
-	const handleOnOrderClose = () => setOrderModalOpen(false);
+	const [moreModalOpen, setMoreModalOpen] = useState<boolean>(false);
+	const [orderModalOpen, setOrderModalOpen] = useState<boolean>(false);
 
 	const [orders, setOrders] = useState<TOrder[]>([]);
 
 	useEffect(() => {
-		Promise.all([getOrders()]).then(([fetchedOrders]) => {
+		Promise.all([getAvailableOrders()]).then(([fetchedOrders]) => {
 			if (!fetchedOrders) return;
 			setOrders(fetchedOrders);
 		});
@@ -304,8 +301,8 @@ export default function Volunteer() {
 						<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
 					</div>
 				</div>
-				<MoreModal onClose={handleOnMoreClose} visible={moreModalOpen} />
-				<OrderModal isOpen={orderModalOpen} modalClose={handleOnOrderClose} />
+				<MoreModal visible={moreModalOpen} setVisible={setMoreModalOpen} />
+				<OrderModal visible={orderModalOpen} setVisible={setOrderModalOpen} />
 			</Layout>
 		)
 	);

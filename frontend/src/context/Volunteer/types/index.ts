@@ -6,6 +6,10 @@ export type TOrder = {
 	order_details: TOrderDetail[];
 };
 
+export type TAvailableOrder = {
+	volunteer: null;
+} & TOrder;
+
 export interface IUpdateProfile {
 	company: string;
 	rating?: number;
