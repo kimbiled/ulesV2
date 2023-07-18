@@ -181,6 +181,12 @@ class GetProfile(APIView):
         if hasattr(request.user, 'shop_profile'):
             profile_serializer = ShopProfileSerializer(request.user.shop_profile)
             profile_data = profile_serializer.data
+
+            profiles = ShopProfile.objects.order_by('-rating')
+            user_profile = profiles.get(user=request.user)
+            rank = profiles.filter(rating__gt=user_profile.rating).count() + 1
+
+
         elif hasattr(request.user, 'customer_profile'):
             profile_serializer = CustomerProfileSerializer(request.user.customer_profile)
             profile_data = profile_serializer.data
@@ -188,14 +194,14 @@ class GetProfile(APIView):
             profile_serializer = VolunteerProfileSerializer(request.user.volunteer_profile)
             profile_data = profile_serializer.data
 
+            profiles = VolunteerProfile.objects.order_by('-rating')
+            user_profile = profiles.get(user=request.user)
+            rank = profiles.filter(rating__gt=user_profile.rating).count() + 1
+
         response_data = user_serializer.data
         response_data.update(profile_data)
 
         if not hasattr(request.user, 'customer_profile'):
-            user_model = User.objects.all()
-            sorted_users = user_model.order_by('-rating')
-            rank = list(sorted_users).index(request.user) + 1
-
             response_data['rank'] = rank
 
         return Response(status=status.HTTP_200_OK, data=response_data)
