@@ -24,7 +24,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         model = OrderDetail
         fields = ('id', 'product', 'quantity')
 
-        depth = 1
+        depth = 2
 
 class OrderSerializer(serializers.ModelSerializer):
     order_details = serializers.SerializerMethodField()
