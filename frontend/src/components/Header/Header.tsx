@@ -62,6 +62,7 @@ const Header = () => {
 			<div
 				className="flex items-center space-x-4 relative cursor-pointer"
 				onClick={() => setOpen((prevState) => !prevState)}
+				style={{ display: user ? "flex" : "none" }}
 			>
 				<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full dropDown-menu-active" />
 				<p className="font-poppins text-white ml-2 dropDown-menu-active cursor-pointer">{user && user.name}</p>

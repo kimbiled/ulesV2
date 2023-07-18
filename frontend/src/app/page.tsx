@@ -11,7 +11,7 @@ import styles from "@root/style";
 export default function Home() {
 	return (
 		<div className=" w-full overflow-hidden">
-			<div className={` ${styles.flexCenter}`}>
+			<div className={`${styles.flexCenter}`}>
 				<div className={`${styles.boxWidth}`}>
 					<Header />
 				</div>
