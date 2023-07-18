@@ -1,15 +1,3 @@
-// export type TUser =
-// 	| {
-// 			name: string;
-// 			email: string;
-// 			user_type: number;
-// 			phone: string;
-// 			address: string;
-// 			company: string;
-// 			rating: number;
-// 	  }
-// 	| {};
-
 export type TUser = {
 	name: string;
 	email: string;
@@ -19,18 +7,5 @@ export type TUser = {
 	address: string;
 	rating: number;
 	norm_name: string;
+	rank: number;
 };
-
-type TVolunteerInfo = {
-	company: string;
-	rating: number;
-};
-type TShopInfo = {
-	address: string;
-	company: string;
-	rating: number;
-};
-export interface IGetTopResponse {
-	volunteers: TVolunteerInfo[];
-	shops: TShopInfo[];
-}

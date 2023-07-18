@@ -9,6 +9,7 @@ import { ShopProvider } from "@context/Shop/useShop";
 import { CustomerProvider } from "@context/Customer/useCustomer";
 import { VolunteerProvider } from "@context/Volunteer/useVolunteer";
 import { UserProvider } from "@context/User/useUser";
+import { ServiceProvider } from "@context/Service/useService";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,15 +22,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<AuthProvider>
-					<UserProvider>
-						<ShopProvider>
-							<VolunteerProvider>
-								<CustomerProvider>{children}</CustomerProvider>
-							</VolunteerProvider>
-						</ShopProvider>
-					</UserProvider>
-				</AuthProvider>
+				<ServiceProvider>
+					<AuthProvider>
+						<UserProvider>
+							<ShopProvider>
+								<VolunteerProvider>
+									<CustomerProvider>{children}</CustomerProvider>
+								</VolunteerProvider>
+							</ShopProvider>
+						</UserProvider>
+					</AuthProvider>
+				</ServiceProvider>
 			</body>
 		</html>
 	);

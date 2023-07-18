@@ -266,9 +266,7 @@ export default function Volunteer() {
 										<div className="text-white font-medium flex flex-row items-center">
 											<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
 												<p className="text-xs">Адрес:</p>
-												<p className="text-sm">
-													{item.customer.address} - {}
-												</p>
+												<p className="text-sm">{item.customer.address}</p>
 												<p
 													className="text-sm italic underline cursor-pointer"
 													onClick={() => setMoreModalOpen(true)}
@@ -277,13 +275,13 @@ export default function Volunteer() {
 												</p>
 											</div>
 											<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
-												<p className="text-xs">Дата:</p>
+												<p className="text-xs">Дата: {item.order_date}</p>
 
 												{/*<p className="text-sm">{item.pickDate} -</p>*/}
 												{/*<p className="text-sm">{item.deliverDate}</p>*/}
 											</div>
 											<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col  p-2">
-												<p className="text-xs">ФИО: {item.customer.user}</p>
+												<p className="text-xs">ФИО: {}</p>
 												{/*<p className="text-sm">{item.value}</p>*/}
 											</div>
 										</div>
