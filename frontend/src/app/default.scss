@@ -64,9 +64,12 @@ mark {
 
 .dropDown{
   position: absolute;
-  top:10.5rem;
-  left: 35%;
-  transform: translate(-50%, -50%);
+  //top:10.5rem;
+  //left: 35%;
+	left: 50%;
+	top: 200%;
+  transform: translate(-50%, 0);
+	margin: 0!important;
 }
 
 .fontRaleway{
