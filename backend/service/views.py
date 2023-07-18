@@ -203,7 +203,7 @@ class GetProfile(APIView):
 class GetTop(APIView):
 
     def get(self, request, user_type):
-        if (user_type == 'volunteer'):
+        if (user_type == 2):
             profiles = VolunteerProfile.objects.order_by('-rating')[:5]
 
             data = [
@@ -211,7 +211,7 @@ class GetTop(APIView):
                 for profile in profiles
             ]
 
-        elif (user_type == 'shop')
+        elif (user_type == 3):
             profiles = ShopProfile.objects.order_by('-rating')[:3]
 
             data = [

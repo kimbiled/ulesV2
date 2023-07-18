@@ -14,24 +14,12 @@ export type TUser = {
 	name: string;
 	email: string;
 	phone: string;
-} & (
-	| {
-			user_type: 2;
-			company: string;
-			rating: number;
-	  }
-	| {
-			user_type: 3;
-			address: string;
-			company: string;
-			rating: number;
-	  }
-	| {
-			user_type: 4;
-			address: string;
-			norm_name: string;
-	  }
-);
+	user_type: number;
+	company: string;
+	address: string;
+	rating: number;
+	norm_name: string;
+};
 
 type TVolunteerInfo = {
 	company: string;
