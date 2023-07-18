@@ -24,13 +24,15 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         model = OrderDetail
         fields = ('id', 'product', 'quantity')
 
+        depth = 1
+
 class OrderSerializer(serializers.ModelSerializer):
     order_details = serializers.SerializerMethodField()
     
     def get_order_details(self, order):
-            order_details = order.orderdetail_set.all()
-            serializer = OrderDetailSerializer(order_details, many=True)
-            return serializer.data
+        order_details = order.orderdetail_set.all()
+        serializer = OrderDetailSerializer(order_details, many=True)
+        return serializer.data
 
     class Meta:
         model = Order
