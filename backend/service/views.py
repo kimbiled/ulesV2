@@ -191,29 +191,39 @@ class GetProfile(APIView):
         response_data = user_serializer.data
         response_data.update(profile_data)
 
+        if not hasattr(request.user, 'customer_profile'):
+            user_model = User.objects.all()
+            sorted_users = user_model.order_by('-rating')
+            rank = list(sorted_users).index(request.user) + 1
+
+            response_data['rank'] = rank
+
         return Response(status=status.HTTP_200_OK, data=response_data)
 
 class GetTop(APIView):
 
-    def get(self, request):
-        volunteer_profiles = VolunteerProfile.objects.order_by('-rating')[:3]
+    def get(self, request, user_type):
+        if (user_type == 'volunteer')
+            profiles = VolunteerProfile.objects.order_by('-rating')[:5]
 
-        shop_profiles = ShopProfile.objects.order_by('-rating')[:3]
+            data = [
+                VolunteerProfileSerializer(profile).data
+                for profile in profiles
+            ]
 
-        volunteer_data = [
-            VolunteerProfileSerializer(profile).data
-            for profile in volunteer_profiles
-        ]
+        elif (user_type == 'shop')
+            profiles = ShopProfile.objects.order_by('-rating')[:3]
 
-        shop_data = [
-            ShopProfileSerializer(profile).data
-            for profile in shop_profiles
-        ]
+            data = [
+                ShopProfileSerializer(profile).data
+                for profile in profiles
+            ]
 
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST, message="WRONG USER TYPE")
 
         response_data = {}
-        response_data['volunteers'] = volunteer_data 
-        response_data['shops'] = shop_data
+        response_data['data'] = data
 
         return Response(status=status.HTTP_200_OK, data=response_data)
 
