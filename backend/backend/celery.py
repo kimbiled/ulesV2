@@ -12,7 +12,7 @@ app.conf.timezone = 'Asia/Almaty'
 app.conf.beat_schedule = {
     "create-order-daily": {
         "task": "service.tasks.create-order-daily",
-        "schedule": timedelta(seconds=120),
+        "schedule": timedelta(hours=24),
     },
 }
 

@@ -83,6 +83,7 @@ export default function Volunteer() {
 								<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
 								<div>
 									<p className="text-lg">{user.name}</p>
+
 									<p className="text-xs">Данные вашего аккаунта</p>
 								</div>
 							</div>
