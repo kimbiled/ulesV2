@@ -52,11 +52,11 @@ class ShopProfileSerializer(serializers.ModelSerializer):
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
-    norm_name = serializers.CharField(source = 'norm')
+    norm = serializers.IntegerField(source='norm_id')
 
     class Meta:
         model = CustomerProfile
-        fields = ('address','norm_name')
+        fields = ('address','norm')
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     company = serializers.CharField(required = True)
