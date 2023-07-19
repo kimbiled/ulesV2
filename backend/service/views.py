@@ -300,9 +300,9 @@ class GetAvailableOrders(APIView):
                 order = Order.objects.get(pk=order_data['id'])
 
                 if order.customer:
-                    order_data.customer['customer']['name'] = order.customer.user.name
+                    order_data['customer']['name'] = order.customer.user.name
                 if order.volunteer:
-                    order_data.volunteer['volunteer']['name'] = order.volunteer.user.name
+                    order_data['volunteer']['name'] = order.volunteer.user.name
             return Response(status=status.HTTP_200_OK,data=data)
         
         else:
