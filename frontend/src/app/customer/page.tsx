@@ -19,8 +19,8 @@ export default function Customer() {
 	const addressRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		Promise.all([getOrder(), getNorm(user!.norm)])
-			.then(([retrievedOrders, retrievedNorm]) => {
+		Promise.all([getOrder()])
+			.then(([retrievedOrders]) => {
 				if (retrievedOrders) setOrder(retrievedOrders);
 			})
 			.catch((error) => {
@@ -129,15 +129,13 @@ export default function Customer() {
 										<p className="text-[10px]">Дата создания</p>
 										<p className="text-sm">{order?.order_date}</p>
 									</div>
-									<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+									<div className="w-52 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
 										<p className="text-[10px]">Поставщик</p>
-										{order?.order_details.map((orderDetail) => {
-											return (
-												<p className="text-sm" key={orderDetail.id}>
-													{orderDetail.product.shop.company}
-												</p>
-											);
-										})}
+										{order?.order_details.length > 0 && (
+											<p className="text-sm" key={order.order_details[0].id}>
+												{order.order_details[0].product.shop.company}
+											</p>
+										)}
 									</div>
 									<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
 										<p className="text-[10px]">Адрес доставки</p>
