@@ -11,7 +11,7 @@ import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 import { TOrder } from "@context/Volunteer/types";
 export default function Customer() {
 	const { user, refreshUser } = useUser();
-	const { getOrder, updateProfile } = useCustomer();
+	const { getOrder, getNorm, orderConfirm, updateProfile } = useCustomer();
 
 	const [order, setOrder] = useState<TOrder | null>(null);
 	const [isChange, setChange] = useState<boolean>(false);
@@ -19,24 +19,14 @@ export default function Customer() {
 	const addressRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		Promise.all([getOrder()])
-			.then(([retrievedOrders]) => {
+		Promise.all([getOrder(), getNorm(user!.norm)])
+			.then(([retrievedOrders, retrievedNorm]) => {
 				if (retrievedOrders) setOrder(retrievedOrders);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	}, []);
-
-	const volunteerInfo = [
-		{
-			id: 1,
-			fullName: "Мейрамбеков Нурсултан",
-			deliveryDate: "21.07.2023",
-			provider: "Magnum",
-			destination: "Кабанбай Батыра 51/1",
-		},
-	];
 
 	const wantedProducts = [
 		{
@@ -109,7 +99,17 @@ export default function Customer() {
 								</div>
 							</div>
 							<div className="flex w-full justify-end mt-4">
-								<button className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm ">
+								<button
+									className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm "
+									type={"button"}
+									onClick={async () => {
+										if (!order) return;
+
+										await orderConfirm(order.id).then(() => {
+											window.location.reload();
+										});
+									}}
+								>
 									Подтвердить
 								</button>
 							</div>
@@ -200,7 +200,6 @@ export default function Customer() {
 										if (isChange)
 											await updateProfile({
 												address: addressRef.current.value,
-												norm_name: user!.norm_name,
 											}).then(() => {
 												refreshUser();
 											});

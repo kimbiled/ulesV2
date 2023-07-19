@@ -70,5 +70,6 @@ export type TTop = {
 			company: string;
 			rating: number;
 		};
+		rank: number;
 	}[];
 };

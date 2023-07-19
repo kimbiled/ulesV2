@@ -128,7 +128,7 @@ export default function Volunteer() {
 											className="border-white border-[1px] w-[390px] h-14 bg-volunteerColor text-white rounded-xl font-medium flex justify-between items-center p-4 m-auto "
 										>
 											<div className="flex flex-col">
-												<p className="text-xs">{rating.profile.rating} место</p>
+												<p className="text-xs">{rating.rank} место</p>
 												<p>{rating.user.name}</p>
 											</div>
 											<div>
