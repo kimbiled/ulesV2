@@ -316,6 +316,34 @@ class AssignVolunteer(APIView):
         except Order.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO ORDERS'})
 
+class DenyVolunteer(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request, order_id):
+        try:
+            if not hasattr(request.user, 'volunteer_profile'):
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
+
+            order = Order.objects.get(id=order_id)
+            if (order.volunteer_id == request.user.id):
+                volunteer = order.volunteer
+                if (volunteer.rating < 5):
+                    volunteer.rating = 0
+                else:
+                    volunteer.rating -= 5
+                order.volunteer_id = None
+                order.save()
+                volunteer.save()
+                serializer = OrderSerializer(order)
+
+                return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+            else:
+                return Response(status=status.HTTP_200_OK, data={"message":"Wrong volunteer"})
+
+        except Order.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO ORDERS'})
+
 class GetNorm(APIView):
 
     def get(self, request, norm_id):
@@ -351,6 +379,7 @@ class ConfirmOrder(APIView):
         if order.volunteer:
             volunteer = order.volunteer
             volunteer.rating += order_details.count()
+            volunteer.help_count += 1
             volunteer.save()
 
         for order_detail in order_details:
@@ -358,6 +387,7 @@ class ConfirmOrder(APIView):
             if product.shop:
                 shop = product.shop
                 shop.rating += 1
+                shop.help_count += 1
                 shop.save()
 
         order.delete()

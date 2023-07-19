@@ -1,5 +1,5 @@
 from django.urls import path
-from service.views import ProductViewSet, UpdateProduct, CreateNewProduct,  UpdateProduct, UpdateShopProfile, UpdateVolunteerProfile, UpdateCustomerProfile, GetProfile, GetTop, GetOrders, AssignVolunteer, GetNorm, GetAvailableOrders, GetCategories,ConfirmOrder
+from service.views import ProductViewSet, UpdateProduct, CreateNewProduct,  UpdateProduct, UpdateShopProfile, UpdateVolunteerProfile, UpdateCustomerProfile, GetProfile, GetTop, GetOrders, AssignVolunteer, GetNorm, GetAvailableOrders, GetCategories,ConfirmOrder, DenyVolunteer
 
 urlpatterns = [
     path('get-products/', ProductViewSet.as_view({'get':'list'}), name='view_products'),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('get-available-orders/', GetAvailableOrders.as_view(), name= 'get-available-orders'),
     path('get-norm/<int:norm_id>', GetNorm.as_view(), name= 'get-norm'),
     path('orders/<int:order_id>/assign', AssignVolunteer.as_view(), name='assign-volunteer'),
+    path('orders/<int:order_id>/deny', DenyVolunteer.as_view(), name='assign-volunteer'),
     path('update-shop-profile/', UpdateShopProfile.as_view(), name= 'update-shop-profile'),
     path('update-customer-profile/', UpdateCustomerProfile.as_view(), name= 'update-customer-profile'),
     path('update-volunteer-profile/', UpdateVolunteerProfile.as_view(), name= 'update-volunteer-profile'),
