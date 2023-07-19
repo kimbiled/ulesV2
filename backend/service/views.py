@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from service.models import Category, Product, ShopProfile, VolunteerProfile, Order,Norm
 from rest_framework import status, permissions, viewsets
-from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer
+from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer, CategorySerializer
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 from django.contrib.auth import get_user_model
@@ -207,6 +207,20 @@ class GetProfile(APIView):
             response_data['rank'] = rank
 
         return Response(status=status.HTTP_200_OK, data=response_data)
+
+class GetCategories(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        if hasattr(request.user, 'shop_profile'):
+            categories = Category.objects.all()
+            serializer = CategorySerializer(categories, many=True)
+            serializer.data[0].pop('product_set')
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST, message="YOU ARE NO SHOP")
+
+
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 class GetTop(APIView):
 
