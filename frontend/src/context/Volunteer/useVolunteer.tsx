@@ -58,19 +58,30 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	}
 
 	async function assignOrder(id: string) {
+		if (!access) return;
+
 		await axios({
 			method: "PUT",
 			url: `${config.BACKEND_HOST}/service/orders/${id}/assign`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
-		})
-			.then((response) => {
-				console.log(response.data);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		}).catch((error) => {
+			console.log(error);
+		});
+	}
+	async function denyOrder(id: string) {
+		if (!access) return;
+
+		await axios({
+			method: "PUT",
+			url: `${config.BACKEND_HOST}/service/orders/${id}/deny`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		}).catch((error) => {
+			console.log(error);
+		});
 	}
 	async function updateProfile({ company, rating }: IUpdateProfile) {
 		if (!access) return;
