@@ -57,3 +57,18 @@ export type TOrderDetail = {
 	product: TProduct;
 	quantity: number;
 };
+
+export type TTop = {
+	data: {
+		user: {
+			email: string;
+			user_type: number;
+			phone: string;
+			name: string;
+		};
+		profile: {
+			company: string;
+			rating: number;
+		};
+	}[];
+};

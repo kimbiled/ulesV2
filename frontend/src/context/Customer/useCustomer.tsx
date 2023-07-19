@@ -1,15 +1,16 @@
 "use client";
 import { createContext, ReactNode, useContext } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 import { IUpdateProfile } from "@context/Customer/types";
 
 import config from "@root/config";
+import { TOrder } from "@context/Volunteer/types";
 
 interface CustomerContextProps {
 	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
-	getNorm: (id: string) => Promise<any>;
-	getOrders: () => Promise<any[]>;
+	getNorm: (id: string) => Promise<any | null>;
+	getOrder: () => Promise<TOrder | null>;
 }
 
 const CustomerContext = createContext({} as CustomerContextProps);
@@ -36,20 +37,20 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 	}
 
 	async function getNorm(id: string) {
-		if (!access) return;
+		if (!access) return null;
 		return await axios({
 			method: "GET",
 			url: `${config.BACKEND_HOST}/service/get-norm/${id}`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
-		}).then((response) => {
+		}).then((response: AxiosResponse) => {
 			return response.data;
 		});
 	}
 
-	async function getOrders() {
-		if (!access) return [];
+	async function getOrder() {
+		if (!access) return null;
 
 		return await axios({
 			method: "GET",
@@ -57,15 +58,15 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
-		}).then((response) => {
-			return response.data;
+		}).then((response: AxiosResponse<TOrder[]>) => {
+			return response.data[0];
 		});
 	}
 
 	const values: CustomerContextProps = {
 		updateProfile,
 		getNorm,
-		getOrders,
+		getOrder,
 	};
 	return <CustomerContext.Provider value={values}>{children}</CustomerContext.Provider>;
 }

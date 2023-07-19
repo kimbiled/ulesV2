@@ -2,36 +2,37 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import OrderModal from "./OrderModal";
-import { useRouter } from "next/navigation";
 
 import { useUser } from "@context/User/useUser";
 import { useVolunteer } from "@context/Volunteer/useVolunteer";
-import { TAvailableOrder, TOrder } from "@context/Volunteer/types";
+import { TAvailableOrder, TOrder, TTop } from "@context/Volunteer/types";
 
 import { downarrow, profileImg } from "@public/assets";
 
 import Layout from "@components/Layout/Layout";
+import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 
 export default function Volunteer() {
-	const { getOrders, getAvailableOrders, updateProfile, assignOrder, denyOrder } = useVolunteer();
+	const { getOrders, getAvailableOrders, getTop, updateProfile, assignOrder, denyOrder } = useVolunteer();
 	const { user, refreshUser } = useUser();
-	const { push } = useRouter();
 
 	const [orderModalOpen, setOrderModalOpen] = useState(false);
 	const [isChangeable, setIsChangeable] = useState(false);
 
 	const [availableOrders, setAvailableOrders] = useState<TAvailableOrder[]>([]);
 	const [orders, setOrders] = useState<TOrder[]>([]);
+	const [ratings, setRatings] = useState<TTop | null>(null);
 
 	const [currentOrder, setCurrentOrder] = useState<TOrder>({} as TOrder);
 
 	const companyRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		Promise.all([getAvailableOrders(), getOrders()])
-			.then(([retrievedAvailableOrders, retrievedOrders]) => {
+		Promise.all([getAvailableOrders(), getOrders(), getTop()])
+			.then(([retrievedAvailableOrders, retrievedOrders, retrievedRating]) => {
 				if (retrievedAvailableOrders) setAvailableOrders(retrievedAvailableOrders);
 				if (retrievedOrders) setOrders(retrievedOrders);
+				if (retrievedRating) setRatings(retrievedRating);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -40,41 +41,11 @@ export default function Volunteer() {
 		return () => {
 			setAvailableOrders([]);
 			setOrders([]);
+			setRatings(null);
 		};
 	}, []);
-
-	useEffect(() => {
-		if (!user) return push("/login");
-	}, [user]);
-
-	const ratings = [
-		{
-			id: 1,
-			place: 34,
-			fullName: "Кадыр Сабыржан",
-			rating: 12,
-		},
-		{
-			id: 2,
-			place: 1,
-			fullName: "Хамитов Фаяз",
-			rating: 15,
-		},
-		{
-			id: 3,
-			place: 5,
-			fullName: "Бекжанов Алибек",
-			rating: 11,
-		},
-		{
-			id: 4,
-			place: 74,
-			fullName: "Мейрамбеков Нурсултан",
-			rating: 1,
-		},
-	];
 	return (
-		user && (
+		<ProtectedRoute>
 			<Layout>
 				<div className="w-full h-full flex flex-row justify-between mb-16 mt-16 fontRaleway">
 					<div className="flex flex-col justify-between">
@@ -82,7 +53,7 @@ export default function Volunteer() {
 							<div className="flex flex-row justify-start gap-4 items-center w-[365px] m-auto">
 								<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
 								<div>
-									<p className="text-lg">{user.name}</p>
+									<p className="text-lg">{user?.name}</p>
 
 									<p className="text-xs">Данные вашего аккаунта</p>
 								</div>
@@ -91,11 +62,11 @@ export default function Volunteer() {
 							<div className="flex flex-col h-[270px] justify-center p-5">
 								<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
 									<p className="text-xs">Имя</p>
-									<p className="text-sm">{user.name}</p>
+									<p className="text-sm">{user?.name}</p>
 								</div>
 								<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
 									<p className="text-xs">Номер телефона</p>
-									<p className="text-sm">{user.phone}</p>
+									<p className="text-sm">{user?.phone}</p>
 								</div>
 							</div>
 							<hr className="mb-2" />
@@ -103,11 +74,11 @@ export default function Volunteer() {
 								<div className="h-auto w-[365px] font-medium flex flex-col justify-center m-auto gap-2">
 									<p>Hазвание организации</p>
 									<input
-										placeholder={user.company}
+										placeholder={user?.company}
 										type="text"
 										className="fontInter focus:outline-none text-sm w-auto h-9 rounded-3xl border-[1px] border-white flex items-center p-4 text-gray-200 bg-organisationInput"
 										disabled={!isChangeable}
-										defaultValue={user.company}
+										defaultValue={user?.company}
 										ref={companyRef}
 									/>
 								</div>
@@ -141,27 +112,31 @@ export default function Volunteer() {
 							<div className="m-auto mt-4 flex flex-col gap-3">
 								<div className="border-white border-[1px] w-[390px] h-14 bg-volunteerColorHover ease-in-out text-white rounded-xl font-medium flex justify-between items-center p-4 m-auto ">
 									<div className="flex flex-col">
-										<p className="text-xs">32 место</p>
-										<p>Вы</p>
+										<p className="text-xs">{user?.rank} место</p>
+										<p>Вы {user?.name}</p>
 									</div>
 									<div>
-										<p className="font-medium text-xl">28</p>
+										<p className="font-medium text-xl">{user?.rating}</p>
 									</div>
 								</div>
-								{ratings.map((item) => (
-									<div
-										key={item.id}
-										className="border-white border-[1px] w-[390px] h-14 bg-volunteerColor text-white rounded-xl font-medium flex justify-between items-center p-4 m-auto "
-									>
-										<div className="flex flex-col">
-											<p className="text-xs">{item.place} место</p>
-											<p>{item.fullName}</p>
+								{ratings?.data.map((rating) => {
+									if (user?.email === rating.user.email) return;
+
+									return (
+										<div
+											key={rating.user.email}
+											className="border-white border-[1px] w-[390px] h-14 bg-volunteerColor text-white rounded-xl font-medium flex justify-between items-center p-4 m-auto "
+										>
+											<div className="flex flex-col">
+												<p className="text-xs">{rating.profile.rating} место</p>
+												<p>{rating.user.name}</p>
+											</div>
+											<div>
+												<p className="font-medium text-xl">{rating.profile.rating}</p>
+											</div>
 										</div>
-										<div>
-											<p className="font-medium text-xl">{item.rating}</p>
-										</div>
-									</div>
-								))}
+									);
+								})}
 							</div>
 							<hr className="mt-4" />
 							<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
@@ -258,8 +233,13 @@ export default function Volunteer() {
 						<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
 					</div>
 				</div>
-				<OrderModal isVisible={orderModalOpen} setIsVisible={setOrderModalOpen} order={currentOrder} />
+				<OrderModal
+					isVisible={orderModalOpen}
+					setIsVisible={setOrderModalOpen}
+					order={currentOrder}
+					denyOrder={denyOrder}
+				/>
 			</Layout>
-		)
+		</ProtectedRoute>
 	);
 }
