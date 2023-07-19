@@ -19,7 +19,7 @@ export function useCustomer(): CustomerContextProps {
 }
 export function CustomerProvider({ children }: { children: ReactNode }) {
 	const access = localStorage.getItem("access");
-	async function updateProfile({ address }: IUpdateProfile) {
+	async function updateProfile({ address, norm_name }: IUpdateProfile) {
 		if (!access) return;
 
 		await axios({
@@ -27,6 +27,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 			url: `${config.BACKEND_HOST}/service/update-customer-profile/`,
 			data: {
 				address,
+				norm_name,
 			} satisfies IUpdateProfile,
 			headers: {
 				Authorization: `Bearer ${access}`,

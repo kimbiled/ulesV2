@@ -21,8 +21,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
 	const [user, setUser] = useState<TUser | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
-	const access = localStorage.getItem("access");
 	async function getUser() {
+		const access = localStorage.getItem("access");
 		if (!access) return null;
 
 		return await axios({
