@@ -226,13 +226,16 @@ class GetTop(APIView):
             user_ids = profiles.values_list('user_id', flat=True)
             users = User.objects.filter(id__in=user_ids)
 
+            rank = 1
             profile_data = []
             for profile in profiles:
                 user = users.get(id=profile.user_id)
                 profile_data.append({
                     'user': UserSerializer(profile.user).data,
-                    'profile': VolunteerProfileSerializer(profile).data
+                    'profile': VolunteerProfileSerializer(profile).data,
+                    'rank': rank
                 })
+                rank+=1
 
         elif (user_type == 3):
             profiles = ShopProfile.objects.order_by('-rating')[:5]
@@ -240,12 +243,15 @@ class GetTop(APIView):
             users = User.objects.filter(id__in=user_ids)
 
             profile_data = []
+            rank = 1
             for profile in profiles:
                 user = users.get(id=profile.user_id)
                 profile_data.append({
                     'user': UserSerializer(profile.user).data,
-                    'profile': ShopProfileSerializer(profile).data
+                    'profile': ShopProfileSerializer(profile).data,
+                    'rank': rank
                 })
+                rank+=1
 
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message":"WRONG USER TYPE"})
