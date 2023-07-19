@@ -258,7 +258,12 @@ export default function Volunteer() {
 						<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
 					</div>
 				</div>
-				<OrderModal isVisible={orderModalOpen} setIsVisible={setOrderModalOpen} order={currentOrder} />
+				<OrderModal
+					isVisible={orderModalOpen}
+					setIsVisible={setOrderModalOpen}
+					order={currentOrder}
+					denyOrder={denyOrder}
+				/>
 			</Layout>
 		)
 	);

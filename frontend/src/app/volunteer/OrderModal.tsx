@@ -7,9 +7,10 @@ interface OrderProps {
 	isVisible: boolean;
 	setIsVisible: Dispatch<SetStateAction<boolean>>;
 	order: TOrder;
+	denyOrder: (id: number) => Promise<void>;
 }
 
-const Order = ({ isVisible, setIsVisible, order }: OrderProps) => {
+const Order = ({ isVisible, setIsVisible, order, denyOrder }: OrderProps) => {
 	return (
 		order.order_details && (
 			<div
@@ -128,7 +129,15 @@ const Order = ({ isVisible, setIsVisible, order }: OrderProps) => {
 					</div>
 					<hr className="mt-5" />
 					<div className="flex justify-center h-20  items-center">
-						<button className="fontInter w-52 h-10 bg-ulsDark text-white rounded-3xl" type={"button"}>
+						<button
+							className="fontInter w-52 h-10 bg-ulsDark text-white rounded-3xl"
+							type={"button"}
+							onClick={async () => {
+								await denyOrder(order.id).then(() => {
+									window.location.reload();
+								});
+							}}
+						>
 							Отменить заказ
 						</button>
 					</div>
