@@ -8,7 +8,8 @@ import { IUpdateProfile, TAvailableOrder, TOrder } from "@context/Volunteer/type
 interface VolunteerContextProps {
 	getOrders: () => Promise<TOrder[] | void>;
 	getAvailableOrders: () => Promise<TAvailableOrder[] | void>;
-	assignOrder: (id: string) => Promise<void>;
+	assignOrder: (id: number) => Promise<void>;
+	denyOrder: (id: number) => Promise<void>;
 	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
 }
 
@@ -57,12 +58,12 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 			});
 	}
 
-	async function assignOrder(id: string) {
+	async function assignOrder(id: number) {
 		if (!access) return;
 
 		await axios({
 			method: "PUT",
-			url: `${config.BACKEND_HOST}/service/orders/${id}/assign`,
+			url: `${config.BACKEND_HOST}/service/orders/${id}/assign/`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
@@ -70,12 +71,12 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 			console.log(error);
 		});
 	}
-	async function denyOrder(id: string) {
+	async function denyOrder(id: number) {
 		if (!access) return;
 
 		await axios({
 			method: "PUT",
-			url: `${config.BACKEND_HOST}/service/orders/${id}/deny`,
+			url: `${config.BACKEND_HOST}/service/orders/${id}/deny/`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
@@ -104,6 +105,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 		assignOrder,
 		updateProfile,
 		getAvailableOrders,
+		denyOrder,
 	};
 	return <VolunteerContext.Provider value={values}>{children}</VolunteerContext.Provider>;
 }
