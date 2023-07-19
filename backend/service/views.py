@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from service.models import Category, Product, ShopProfile, VolunteerProfile, Order,Norm
+from service.models import Category, Product, ShopProfile, VolunteerProfile, Order, Norm, OrderDetail
 from rest_framework import status, permissions, viewsets
 from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer, CategorySerializer
 from rest_framework import mixins
@@ -215,9 +215,10 @@ class GetCategories(APIView):
         if hasattr(request.user, 'shop_profile'):
             categories = Category.objects.all()
             serializer = CategorySerializer(categories, many=True)
-            serializer.data[0].pop('product_set')
+            for data in serializer.data:
+                data.pop('product_set')
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST, message="YOU ARE NO SHOP")
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message":"YOU ARE NO SHOP"})
 
 
         return Response(status=status.HTTP_200_OK, data=serializer.data)
@@ -252,7 +253,7 @@ class GetTop(APIView):
                 })
 
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST, message="WRONG USER TYPE")
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message":"WRONG USER TYPE"})
 
         response_data = {}
         response_data['data'] = profile_data
@@ -272,7 +273,7 @@ class GetOrders(APIView):
             orders = user.volunteer_profile.order_set.all()
         
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST, message="YOU ARE NO CUSTOMER OR VOLUNTEER")
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message":"YOU ARE NO CUSTOMER OR VOLUNTEER"})
 
         serializer = OrderSerializer(orders, many=True)
         data = serializer.data
@@ -297,7 +298,7 @@ class GetAvailableOrders(APIView):
             return Response(status=status.HTTP_200_OK,data=serializer.data)
         
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.data, message="YOU ARE NO VOLUNTEER")
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message':"YOU ARE NO VOLUNTEER"})
 
 class AssignVolunteer(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -334,3 +335,31 @@ class GetNorm(APIView):
 
 
         return Response(status=status.HTTP_200_OK, data=response_data)
+
+class ConfirmOrder(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, order_id):
+        if not hasattr(request.user, 'customer_profile'):
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
+        try:
+            order = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND, data={"message":"Order not found"})
+
+        order_details = OrderDetail.objects.filter(order=order)
+        if order.volunteer:
+            volunteer = order.volunteer
+            volunteer.rating += order_details.count()
+            volunteer.save()
+
+        for order_detail in order_details:
+            product = order_detail.product
+            if product.shop:
+                shop = product.shop
+                shop.rating += 1
+                shop.save()
+
+        order.delete()
+
+        return Response(status=status.HTTP_200_OK, data={'message':"Order deleted and rating is given"})
