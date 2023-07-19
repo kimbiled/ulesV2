@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
 import config from "@root/config";
-import { IUpdateProfile, TAvailableOrder, TOrder } from "@context/Volunteer/types";
+import { IUpdateProfile, TAvailableOrder, TOrder, TTop } from "@context/Volunteer/types";
 
 interface VolunteerContextProps {
 	getOrders: () => Promise<TOrder[] | void>;
@@ -11,6 +11,7 @@ interface VolunteerContextProps {
 	assignOrder: (id: number) => Promise<void>;
 	denyOrder: (id: number) => Promise<void>;
 	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
+	getTop: () => Promise<TTop | null>;
 }
 
 const VolunteerContext = createContext({} as VolunteerContextProps);
@@ -99,6 +100,19 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 			},
 		});
 	}
+	async function getTop() {
+		if (!access) return null;
+
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-top/2/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		}).then((response: AxiosResponse<TTop>) => {
+			return response.data;
+		});
+	}
 
 	const values: VolunteerContextProps = {
 		getOrders,
@@ -106,6 +120,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 		updateProfile,
 		getAvailableOrders,
 		denyOrder,
+		getTop,
 	};
 	return <VolunteerContext.Provider value={values}>{children}</VolunteerContext.Provider>;
 }
