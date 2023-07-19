@@ -3,26 +3,25 @@ import Layout from "@components/Layout/Layout";
 import Image from "next/image";
 import { downarrow, userImg } from "../../../public/assets/index";
 import { Fragment, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { TProduct } from "@context/Shop/types";
 import { useCustomer } from "@root/context/Customer/useCustomer";
 import { useUser } from "@context/User/useUser";
 
 import { useEffect } from "react";
 import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
+import { TOrder } from "@context/Volunteer/types";
 export default function Customer() {
 	const { user, refreshUser } = useUser();
-	const { getOrders, updateProfile } = useCustomer();
+	const { getOrder, updateProfile } = useCustomer();
 
-	const [products, setProducts] = useState<TProduct[]>([]);
-	const [isChange, setChange] = useState(false);
+	const [order, setOrder] = useState<TOrder | null>(null);
+	const [isChange, setChange] = useState<boolean>(false);
 
 	const addressRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		Promise.all([getOrders()])
-			.then(([retrievedProducts]) => {
-				if (retrievedProducts) setProducts(retrievedProducts);
+		Promise.all([getOrder()])
+			.then(([retrievedOrders]) => {
+				if (retrievedOrders) setOrder(retrievedOrders);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -85,15 +84,24 @@ export default function Customer() {
 						<div className="h-auto">
 							<div className="bg-volunteerColor w-[465px] h-auto py-4 gap-4 rounded-3xl border-[1px] border-white flex flex-wrap items-center justify-evenly">
 								<div className="w-full text-center">
-									<p className="font-semibold text-xl text-white">Заказ создан 11.07.2023</p>
+									<p className="font-semibold text-xl text-white">Ваш заказ</p>
 								</div>
-								{products.map((item) => (
+								{order?.order_details.map((item) => (
 									<div
 										key={item.id}
 										className="w-44 h-14 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-2"
 									>
-										<p className="text-[10px]">Количество продукта</p>
-										<p className="text-sm">{item.product_name}</p>
+										<div className="flex flex-row justify-between">
+											<p className="text-[10px]">Название</p>
+											<p className="text-[10px]">Количество</p>
+										</div>
+										<div className="flex flex-row justify-between">
+											<p className="text-sm">{item.product.product_name}</p>
+											<p className="text-sm">
+												{item.quantity} шт
+												{/*{item.product.category.unit_of_measurement}*/}
+											</p>
+										</div>
 									</div>
 								))}
 								<div className="w-full">
@@ -112,26 +120,30 @@ export default function Customer() {
 								<div className="w-52 h-44 rounded-2xl bg-white flex justify-center items-center">
 									<Image src={userImg} alt="userImg" className="m-auto py-2 cursor-pointer" />
 								</div>
-								{volunteerInfo.map((item) => (
-									<Fragment key={item.id}>
-										<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
-											<p className="text-[10px]">Волонтер</p>
-											<p className="text-sm">{item.fullName}</p>
-										</div>
-										<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
-											<p className="text-[10px]">Дата доставки</p>
-											<p className="text-sm">{item.deliveryDate}</p>
-										</div>
-										<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
-											<p className="text-[10px]">Поставщик</p>
-											<p className="text-sm">{item.provider}</p>
-										</div>
-										<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
-											<p className="text-[10px]">Адрес доставки</p>
-											<p className="text-sm">{item.destination}</p>
-										</div>
-									</Fragment>
-								))}
+								<Fragment key={order?.volunteer.user}>
+									<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+										<p className="text-[10px]">Волонтер</p>
+										<p className="text-sm">{order?.volunteer.name}</p>
+									</div>
+									<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+										<p className="text-[10px]">Дата создания</p>
+										<p className="text-sm">{order?.order_date}</p>
+									</div>
+									<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+										<p className="text-[10px]">Поставщик</p>
+										{order?.order_details.map((orderDetail) => {
+											return (
+												<p className="text-sm" key={orderDetail.id}>
+													{orderDetail.product.shop.company}
+												</p>
+											);
+										})}
+									</div>
+									<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+										<p className="text-[10px]">Адрес доставки</p>
+										<p className="text-sm">{order?.customer.address}</p>
+									</div>
+								</Fragment>
 							</div>
 						</div>
 					</div>
