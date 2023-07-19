@@ -19,11 +19,10 @@ export default function Volunteer() {
 	const { user } = useUser();
 	const { push } = useRouter();
 
-	const [moreModalOpen, setMoreModalOpen] = useState(false);
-	const handleOnMoreClose = () => setMoreModalOpen(false)
-
 	const [orderModalOpen, setOrderModalOpen] = useState(false);
 	const handleOnOrderClose = () => setOrderModalOpen(false)
+
+	const [isChangable, setChangable] = useState(false);
 
 	// const [orders, setOrders] = useState<TOrder[]>([]);
 
@@ -125,7 +124,7 @@ export default function Volunteer() {
 		<Layout>
 					<div className="w-full h-full flex flex-row justify-between mb-16 mt-16 fontRaleway" >
 						<div className="flex flex-col justify-between">
-							<div className="w-[445px] h-[530px] bg-gradient-linear2 rounded-3xl text-white flex flex-col">
+							<div className="w-[445px] h-[530px] bg-gradient-linear2 rounded-3xl text-white flex flex-col ">
 								<div className="flex flex-row justify-start gap-4 items-center w-[365px] m-auto">
 									<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
 									<div>
@@ -134,28 +133,54 @@ export default function Volunteer() {
 									</div>
 								</div>
 								<hr />
-								<div className="h-auto w-[365px] font-medium flex flex-col justify-center m-auto gap-2">
-									<p>Ваше ФИО</p>
-									<input placeholder="Ертаев Уалихан" type="text" className="fontInter focus:outline-none text-sm w-auto h-9 rounded-3xl border-[1px] border-white flex items-center p-4 bg-organisationInput"/>
+								<div className="flex flex-col h-[270px] justify-center p-5">
+									<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
+										<p className="text-xs">ФИО</p>
+										<p className="text-sm">Ертаев Уалихан</p>
+									</div>
+			
+									<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
+										<p className="text-xs">Возраст</p>
+										<p className="text-sm">16 лет</p>
+									</div>
+									<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
+										<p className="text-xs">Номер телефона</p>
+										<p className="text-sm">+7 707 777 77 77</p>
+									</div>
 								</div>
-		
-								<div className="h-auto w-[365px] font-medium flex flex-col justify-center m-auto gap-2">
-									<p>Ваш возраст</p>
-									<input placeholder="17 лет" type="text" className="fontInter focus:outline-none text-sm w-auto h-9 rounded-3xl border-[1px] border-white flex items-center p-4 bg-organisationInput"/>
-								</div>
-								<div className="h-auto w-[365px] font-medium flex flex-col justify-center m-auto gap-2">
-									<p>Ваш номер</p>
-									<input placeholder="+7 707 777 77 77" type="tel" className="fontInter focus:outline-none text-sm w-auto h-9 rounded-3xl border-[1px] border-white flex items-center p-4 bg-organisationInput"/>
-								</div>
-								<div className="h-auto w-[365px] font-medium flex flex-col justify-center m-auto gap-2">
-									<p>Ваша организация</p>
-									<input placeholder="Жастар Рухы" type="text" className="fontInter focus:outline-none text-sm w-auto h-9 rounded-3xl border-[1px] border-white flex items-center p-4 bg-organisationInput"/>
-								</div>
-								<hr />
-								<div className="flex justify-center items-center p-2 fontInter">
-									<button className="fontInter hover:bg-stone-200 w-36 h-10 bg-white text-black rounded-3xl mb-1 mt-1 text-sm ">Подтвердить</button>
+								<hr className="mb-2"/>
+								<div className="flex flex-col gap-2">
+									{isChangable?
+									(
+									<>
+										<div className="h-auto w-[365px] font-medium flex flex-col justify-center m-auto gap-2">
+											<p>Hазвание организации</p>
+											<input placeholder="Жастар Рухы" type="text" className="fontInter focus:outline-none text-sm w-auto h-9 rounded-3xl border-[1px] border-white flex items-center p-4 text-gray-200 bg-organisationInput"/>
+										</div>
+										<div className="flex justify-center items-center p-2 fontInter">
+											<button className="fontInter hover:bg-stone-200 w-36 h-10 bg-white text-black rounded-3xl text-sm" onClick={()=>setChangable(false)}>Сохранить</button>
+										</div>
+									</>
+										
+									) :
+										(
+									<>
+										<div className="h-auto w-[365px] font-medium flex flex-col justify-center m-auto gap-2">
+											<p>Hазвание организации</p>
+											<div className="fontInter text-sm w-auto h-9 rounded-xl border-[1px] border-white flex items-center p-4 bg-organisationInput">
+												Жастар Рухы
+											</div>
+										</div>
+										<div className="flex justify-center items-center p-2 fontInter">
+											<button className="fontInter hover:bg-stone-200 w-36 h-10 bg-white text-black rounded-3xl text-sm" onClick={()=>setChangable(true)}>Изменить</button>
+										</div>
+									</>
+										)
+									}
 								</div>
 							</div>
+
+							
 		
 							<div className="w-[445px] h-[475px] bg-gradient-linear3 rounded-3xl">
 								<h4 className="font-semibold text-[28px] text-white border-b-[1px] border-white p-4 px-10">
@@ -207,15 +232,14 @@ export default function Volunteer() {
 										<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
 											<p className="text-xs">Адрес:</p>
 											<p className="text-sm"> -</p>
-											<p className="text-sm italic underline cursor-pointer" onClick={()=>setMoreModalOpen(true)}>Подробнее</p>
 										</div>
 										<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
 											<p className="text-xs">Дата:</p>
 											{/*<p className="text-sm">{item.pickDate} -</p>*/}
 											{/*<p className="text-sm">{item.deliverDate}</p>*/}
 										</div>
-										<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col  p-2">
-											<p className="text-xs">Вес:</p>
+										<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+											<p className="text-xs">ФИО:</p>
 											{/*<p className="text-sm">{item.value}</p>*/}
 										</div>
 									</div>
@@ -241,17 +265,16 @@ export default function Volunteer() {
 									<div className="text-white font-medium flex flex-row items-center">
 										<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
 											<p className="text-xs">Адрес:</p>
-											<p className="text-sm">{item.toAddress} -</p>
-											<p className="text-sm italic underline cursor-pointer" onClick={()=>setMoreModalOpen(true)}>Подробнее</p>
+											<p className="text-sm">{item.toAddress}</p>
 										</div>
 										<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
 											<p className="text-xs">Дата:</p>
-											{/*<p className="text-sm">{item.pickDate} -</p>*/}
-											{/*<p className="text-sm">{item.deliverDate}</p>*/}
+											<p className="text-sm">{item.pickDate} -</p>
+											<p className="text-sm">{item.deliverDate}</p>
 										</div>
-										<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col  p-2">
-											<p className="text-xs">Вес:</p>
-											{/*<p className="text-sm">{item.value}</p>*/}
+										<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+											<p className="text-xs">ФИО:</p>
+											<p className="text-sm">Нургуль Гулжановна</p>
 										</div>
 									</div>
 		
@@ -267,7 +290,6 @@ export default function Volunteer() {
 							<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
 						</div>
 					</div>
-				<MoreModal onClose={handleOnMoreClose} visible={moreModalOpen} />
 				<OrderModal isOpen={orderModalOpen} modalClose={handleOnOrderClose} />
 		</Layout>
 	);
