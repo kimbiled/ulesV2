@@ -198,9 +198,7 @@ export default function Customer() {
 										if (!addressRef.current) return;
 
 										if (isChange)
-											await updateProfile({
-												address: addressRef.current.value,
-											}).then(() => {
+											await updateProfile(addressRef.current.value).then(() => {
 												refreshUser();
 											});
 
