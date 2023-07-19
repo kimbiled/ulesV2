@@ -281,9 +281,9 @@ class GetOrders(APIView):
             order = Order.objects.get(pk=order_data['id'])
 
             if order.customer:
-                order_data['customer_name'] = order.customer.user.name
+                order_data['customer']['name'] = order.customer.user.name
             if order.volunteer:
-                order_data['volunteer_name'] = order.volunteer.user.name
+                order_data['volunteer']['name'] = order.volunteer.user.name
         return Response(status=status.HTTP_200_OK, data=data)
 
 class GetAvailableOrders(APIView):
@@ -295,7 +295,15 @@ class GetAvailableOrders(APIView):
         if hasattr(user, 'volunteer_profile'):
             orders = Order.objects.filter(volunteer__isnull=True)
             serializer = OrderSerializer(orders, many=True)
-            return Response(status=status.HTTP_200_OK,data=serializer.data)
+            data = serializer.data
+            for order_data in data:
+                order = Order.objects.get(pk=order_data['id'])
+
+                if order.customer:
+                    order_data.customer['customer']['name'] = order.customer.user.name
+                if order.volunteer:
+                    order_data.volunteer['volunteer']['name'] = order.volunteer.user.name
+            return Response(status=status.HTTP_200_OK,data=data)
         
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message':"YOU ARE NO VOLUNTEER"})
