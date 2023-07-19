@@ -5,20 +5,21 @@ import Image from 'next/image';
 
 import { exitForm } from '@public/assets';
 
-import { TProduct } from '@context/Shop/types';
+import { TCategory, TProduct } from '@context/Shop/types';
 import { useShop } from '@context/Shop/useShop';
 import { useUser } from '@context/User/useUser';
 
 export default function Profile() {
-  const { getProducts, createProduct } = useShop();
+  const { getProducts, createProduct, getCategories } = useShop();
   const { user } = useUser();
   const { push } = useRouter();
 
   const [showModal, setShowModal] = useState(false);
   const [products, setProducts] = useState<TProduct[]>([]);
+  const [categories, setCategories] = useState<TCategory[]>([]);
 
   const nameRef = useRef<HTMLInputElement>(null);
-  const categoryRef = useRef<HTMLInputElement>(null);
+  const categoryRef = useRef<HTMLSelectElement>(null);
   const unitsInStockRef = useRef<HTMLInputElement>(null);
   const quantityPerUnitRef = useRef<HTMLInputElement>(null);
 
@@ -26,11 +27,11 @@ export default function Profile() {
     if (!user) return push('/');
   }, [user]);
 
-  useMemo(() => {
-    Promise.all([getProducts()])
-      .then(([res]) => {
-        if (!res) return;
-        setProducts(res);
+  useEffect(() => {
+    Promise.all([getProducts(), getCategories()])
+      .then(([retrievedProducts, retrievedCategories]) => {
+        if (retrievedProducts) setProducts(retrievedProducts);
+        if (retrievedCategories) setCategories(retrievedCategories);
       })
       .catch(error => {
         console.log(error);
@@ -83,13 +84,21 @@ export default function Profile() {
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
                     Категория товара
                   </label>
-                  <input
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Продукты питания"
-                    type="text"
-                    required
-                    ref={categoryRef}
-                  />
+                  <select
+                    id="categories"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    ref={categoryRef}>
+                    {categories.map(category => {
+                      return (
+                        <option
+                          value={category.category_name}
+                          title={category.description}
+                          key={category.category_name}>
+                          {category.category_name}
+                        </option>
+                      );
+                    })}
+                  </select>
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
