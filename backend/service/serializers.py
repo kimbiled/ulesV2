@@ -53,7 +53,6 @@ class ShopProfileSerializer(serializers.ModelSerializer):
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     norm = serializers.IntegerField(source='norm_id')
-
     class Meta:
         model = CustomerProfile
         fields = ('address','norm')
