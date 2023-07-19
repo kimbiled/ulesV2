@@ -138,13 +138,8 @@ class UpdateCustomerProfile(APIView):
 
             request.user.customer_profile.address = serializer.data['address']
 
-            norm = Norm.objects.filter(norm_name = serializer.data['norm_name'])[:1].get()
-
-            if not norm:
-                return Response(data={'message': 'FAILED TO FIND THE NORM'}, status=status.HTTP_400_BAD_REQUEST)
             
             
-            request.user.customer_profile.norm = norm
             request.user.customer_profile.save()
             
             return Response(data={'message': 'CUSTOMER PROFILE WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)
@@ -267,8 +262,8 @@ class GetOrders(APIView):
         user = request.user
 
         if hasattr(user, 'customer_profile'):  
-            orders = user.customer_profile.order_set.all()
-        
+            orders = user.volunteer_profile.order_set.all()
+    
         elif  hasattr(user, 'volunteer_profile'):
             orders = user.volunteer_profile.order_set.all()
         
