@@ -127,7 +127,7 @@ export default function Volunteer() {
 										}}
 										type={"button"}
 									>
-										{isChangeable ? "Сохронить" : "Изменить"}
+										{isChangeable ? "Сохранить" : "Изменить"}
 									</button>
 								</div>
 							</div>
