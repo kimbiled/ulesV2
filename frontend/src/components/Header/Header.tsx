@@ -59,37 +59,37 @@ const Header = () => {
 					})}
 				</ul>
 			</div>
+			<div
+				className="flex items-center space-x-4 relative cursor-pointer"
+				onClick={() => setOpen((prevState) => !prevState)}
+				style={{ display: user ? "flex" : "none" }}
+			>
+				<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full dropDown-menu-active" />
+				<p className="font-poppins text-white ml-2 dropDown-menu-active cursor-pointer">{user && user.name}</p>
 
-			{isOpen? (
-				<div className="flex flex-col relative">
-					<div className="flex items-center space-x-4" onClick={()=>setOpen(false)}>
-						<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full dropDown-menu-active" />
-						<p className="font-poppins text-white ml-2 dropDown-menu-active" >{user && user.name}</p>
-					</div>
-
-					<div className="dropDown h-56 w-48 rounded-2xl bg-gradient-linearDropDown flex flex-col items-center">
+				{isOpen && (
+					<div className="dropDown h-56 w-48 rounded-2xl bg-gradient-linearDropDown flex flex-col justify-start items-center">
 						<div className="flex flex-row h-20 justify-between items-center gap-3">
-							<Link href="/" className="flex justify-center space-x-4 items-center cursor-pointer ">
-								<Image src={uleslogo} alt="ules" className=" h-[60px] " />
-								<p className=" font-poppins font-semibold text-[20px]  text-white ">Úles</p>
-							</Link>	
+							<Link href={"/"} className="flex justify-center space-x-4 items-center cursor-pointer ">
+								<Image src={uleslogo} alt="ules" className="h-[60px]" />
+								<p className="font-poppins font-semibold text-[20px] text-white">Úles</p>
+							</Link>
 						</div>
 						<div className="w-full h-28 border-t-[1px] border-b-[1px] flex flex-col items-center justify-center gap-4">
-							<Link href="/profile">
+							<Link href={"/profile"}>
 								<button className="fontInter w-32 h-8 rounded-3xl bg-white text-sm">Профиль</button>
 							</Link>
-								<button className="fontInter w-32 h-8 rounded-3xl bg-white text-sm" onClick={logOut}>Выйти</button>
+							<button
+								className="fontInter w-32 h-8 rounded-3xl bg-white text-sm"
+								type={"button"}
+								onClick={logOut}
+							>
+								Выйти
+							</button>
 						</div>
 					</div>
-				</div>
-			) : (
-				<div className="flex items-center space-x-4" onClick={()=>setOpen(true)} style={{ display: user ? "flex" : "none" }}>
-					<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full dropDown-menu-inactive"/>
-					<p className="font-poppins text-white ml-2 dropDown-menu-inactive">{user && user.name}</p>
-				</div>
-			)}
-			
-
+				)}
+			</div>
 			<div className="sm:hidden flex flex-1 justify-end items-center">
 				<Image
 					src={toggle ? close : menu}

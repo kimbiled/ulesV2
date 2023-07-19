@@ -1,23 +1,11 @@
 export type TUser = {
 	name: string;
 	email: string;
-	user_type: number;
 	phone: string;
+	user_type: number;
+	company: string;
 	address: string;
-	company: string;
 	rating: number;
+	norm_name: string;
+	rank: number;
 };
-
-type TVolunteerInfo = {
-	company: string;
-	rating: number;
-};
-type TShopInfo = {
-	address: string;
-	company: string;
-	rating: number;
-};
-export interface IGetTopResponse {
-	volunteers: TVolunteerInfo[];
-	shops: TShopInfo[];
-}

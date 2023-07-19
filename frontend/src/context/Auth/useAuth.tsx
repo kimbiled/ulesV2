@@ -1,9 +1,10 @@
 "use client";
 import { createContext, ReactNode, useContext, useEffect } from "react";
+import axios, { AxiosResponse } from "axios";
+
+import config from "@root/config";
 
 import { ISignIn, ISignUp, TTokens } from "@context/Auth/types";
-import axios, { AxiosResponse } from "axios";
-import config from "@root/config";
 
 interface AuthContextProps {
 	signUp: ({ email, name, user_type, phone, password }: ISignUp) => Promise<void>;
@@ -62,7 +63,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}).then((response: AxiosResponse<TTokens>) => {
 			if (!response.data.refresh || !response.data.access) return;
 
-			console.log(response.data);
 			localStorage.setItem("access", response.data.access);
 			localStorage.setItem("refresh", response.data.refresh);
 		});
