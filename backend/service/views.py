@@ -262,7 +262,7 @@ class GetOrders(APIView):
         user = request.user
 
         if hasattr(user, 'customer_profile'):  
-            orders = user.volunteer_profile.order_set.all()
+            orders = user.customer_profile.order_set.all()
     
         elif  hasattr(user, 'volunteer_profile'):
             orders = user.volunteer_profile.order_set.all()
