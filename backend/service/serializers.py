@@ -17,7 +17,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields= ('category_name','description', 'product_set')
+        fields= ('category_name','description', 'unit_of_measurement', 'product_set')
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
