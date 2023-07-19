@@ -391,7 +391,7 @@ class ConfirmOrder(APIView):
         if order.volunteer:
             volunteer = order.volunteer
             volunteer.rating += order_details.count()
-            volunteer.help_count += 1
+            volunteer.order_count += 1
             volunteer.save()
 
         for order_detail in order_details:
