@@ -26,11 +26,11 @@ const Header = () => {
 		// },
 		{
 			id: "register",
-			title: "Register",
+			title: "Регистрация",
 		},
 		{
 			id: "login",
-			title: "Login",
+			title: "Вход в аккаунт",
 		},
 	];
 

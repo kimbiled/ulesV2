@@ -53,7 +53,6 @@ export default function Home() {
                       !nameRef.current
                     )
                       return;
-
                     await signUp({
                       email: emailRef.current.value,
                       name: nameRef.current.value,
