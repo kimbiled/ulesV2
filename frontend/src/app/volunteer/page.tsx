@@ -120,7 +120,7 @@ export default function Volunteer() {
 	return (
 		user && (
 			<Layout>
-				<div className="w-full h-full flex flex-row justify-between mb-16 mt-16 fontRaleway">
+				<div className="w-full h-full flex flex-row gap-[30px] justify-between mb-16 mt-16 fontRaleway">
 					<div className="flex flex-col justify-between">
 						<div className="w-[445px] h-[530px] bg-gradient-linear2 rounded-3xl text-white flex flex-col">
 							<div className="flex flex-row justify-start gap-4 items-center w-[365px] m-auto">
