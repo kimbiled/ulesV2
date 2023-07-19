@@ -101,14 +101,9 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 		});
 	}
 	async function getTop() {
-		if (!access) return null;
-
 		return await axios({
 			method: "GET",
 			url: `${config.BACKEND_HOST}/service/get-top/2/`,
-			headers: {
-				Authorization: `Bearer ${access}`,
-			},
 		}).then((response: AxiosResponse<TTop>) => {
 			return response.data;
 		});

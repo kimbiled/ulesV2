@@ -6,6 +6,6 @@ export type TUser = {
 	company: string;
 	address: string;
 	rating: number;
-	norm_name: string;
+	norm: number;
 	rank: number;
 };

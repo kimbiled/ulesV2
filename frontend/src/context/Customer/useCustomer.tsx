@@ -2,15 +2,14 @@
 import { createContext, ReactNode, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
-import { IUpdateProfile } from "@context/Customer/types";
-
 import config from "@root/config";
 import { TOrder } from "@context/Volunteer/types";
 
 interface CustomerContextProps {
-	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
-	getNorm: (id: string) => Promise<any | null>;
+	updateProfile: (address: string) => Promise<void>;
+	getNorm: (id: number) => Promise<any | null>;
 	getOrder: () => Promise<TOrder | null>;
+	orderConfirm: (orderId: number) => Promise<void>;
 }
 
 const CustomerContext = createContext({} as CustomerContextProps);
@@ -20,7 +19,7 @@ export function useCustomer(): CustomerContextProps {
 }
 export function CustomerProvider({ children }: { children: ReactNode }) {
 	const access = localStorage.getItem("access");
-	async function updateProfile({ address, norm_name }: IUpdateProfile) {
+	async function updateProfile(address: string) {
 		if (!access) return;
 
 		await axios({
@@ -28,19 +27,30 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 			url: `${config.BACKEND_HOST}/service/update-customer-profile/`,
 			data: {
 				address,
-				norm_name,
-			} satisfies IUpdateProfile,
+			},
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
 		});
 	}
 
-	async function getNorm(id: string) {
+	async function orderConfirm(orderId: number) {
+		if (!access) return;
+
+		await axios({
+			method: "POST",
+			url: `${config.BACKEND_HOST}/service/orders/confirm/${orderId}/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		});
+	}
+
+	async function getNorm(id: number) {
 		if (!access) return null;
 		return await axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-norm/${id}`,
+			url: `${config.BACKEND_HOST}/service/get-norm/${id}/`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
@@ -67,6 +77,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 		updateProfile,
 		getNorm,
 		getOrder,
+		orderConfirm,
 	};
 	return <CustomerContext.Provider value={values}>{children}</CustomerContext.Provider>;
 }
