@@ -6,9 +6,7 @@ export type TOrder = {
 	order_details: TOrderDetail[];
 };
 
-export type TAvailableOrder = {
-	volunteer: null;
-} & TOrder;
+export type TAvailableOrder = Omit<TOrder, "volunteer">;
 
 export interface IUpdateProfile {
 	company: string;
@@ -19,12 +17,14 @@ type TCustomer = {
 	user: number;
 	address: string;
 	norm: null;
+	name: string;
 };
 type TVolunteer = {
 	user: number;
 	company: string;
 	rating: number;
 	order_count: number;
+	name: string;
 };
 type TShop = {
 	user: number;
@@ -52,7 +52,7 @@ type TProduct = {
 	category: TCategory;
 };
 
-type TOrderDetail = {
+export type TOrderDetail = {
 	id: number;
 	product: TProduct;
 	quantity: number;

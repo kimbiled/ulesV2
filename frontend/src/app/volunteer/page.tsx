@@ -1,42 +1,47 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import MoreModal from "./MoreModal";
 import OrderModal from "./OrderModal";
 import { useRouter } from "next/navigation";
 
 import { useUser } from "@context/User/useUser";
 import { useVolunteer } from "@context/Volunteer/useVolunteer";
-import { TOrder } from "@context/Volunteer/types";
+import { TAvailableOrder, TOrder } from "@context/Volunteer/types";
 
 import { downarrow, profileImg } from "@public/assets";
 
 import Layout from "@components/Layout/Layout";
-import Order from "./OrderModal";
 
 export default function Volunteer() {
-	const { getOrders } = useVolunteer();
-	const { user } = useUser();
+	const { getOrders, getAvailableOrders, updateProfile, assignOrder, denyOrder } = useVolunteer();
+	const { user, refreshUser } = useUser();
 	const { push } = useRouter();
 
 	const [orderModalOpen, setOrderModalOpen] = useState(false);
-	const handleOnOrderClose = () => setOrderModalOpen(false);
+	const [isChangeable, setIsChangeable] = useState(false);
 
-	const [isChangable, setChangable] = useState(false);
+	const [availableOrders, setAvailableOrders] = useState<TAvailableOrder[]>([]);
+	const [orders, setOrders] = useState<TOrder[]>([]);
 
-	// const [orders, setOrders] = useState<TOrder[]>([]);
+	const [currentOrder, setCurrentOrder] = useState<TOrder>({} as TOrder);
 
-	// useEffect(() => {
-	// 	// Data fetching
-	// 	Promise.all([getOrders()]).then(([fetchedOrders]) => {
-	// 		if (!fetchedOrders) return;
-	// 		setOrders(fetchedOrders);
-	// 	});
+	const companyRef = useRef<HTMLInputElement>(null);
 
-	// 	return () => {
-	// 		setOrders([]);
-	// 	};
-	// }, []);
+	useEffect(() => {
+		Promise.all([getAvailableOrders(), getOrders()])
+			.then(([retrievedAvailableOrders, retrievedOrders]) => {
+				if (retrievedAvailableOrders) setAvailableOrders(retrievedAvailableOrders);
+				if (retrievedOrders) setOrders(retrievedOrders);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
+		return () => {
+			setAvailableOrders([]);
+			setOrders([]);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (!user) return push("/login");
@@ -68,58 +73,6 @@ export default function Volunteer() {
 			rating: 1,
 		},
 	];
-
-	const orders = [
-		{
-			id: 1,
-			fromAddress: "Тауелсиздик 2/5",
-			toAddress: "Республика 12",
-			pickDate: "21.07.2023",
-			deliverDate: "22.07.2023",
-			value: "3кг",
-		},
-		{
-			id: 2,
-			fromAddress: "Тауелсиздик 2/4",
-			toAddress: "Республика 5",
-			pickDate: "21.07.2023",
-			deliverDate: "22.07.2023",
-			value: "3кг",
-		},
-		{
-			id: 3,
-			fromAddress: "Тауелсиздик 2/1",
-			toAddress: "Республика 1",
-			pickDate: "21.07.2023",
-			deliverDate: "22.07.2023",
-			value: "3кг",
-		},
-		{
-			id: 4,
-			fromAddress: "Тауелсиздик 2/5",
-			toAddress: "Республика 12",
-			pickDate: "21.07.2023",
-			deliverDate: "22.07.2023",
-			value: "3кг",
-		},
-		{
-			id: 5,
-			fromAddress: "Тауелсиздик 2/5",
-			toAddress: "Республика 22",
-			pickDate: "21.07.2023",
-			deliverDate: "22.07.2023",
-			value: "3кг",
-		},
-		{
-			id: 6,
-			fromAddress: "Тауелсиздик 2/5",
-			toAddress: "Республика 12",
-			pickDate: "21.07.2023",
-			deliverDate: "22.07.2023",
-			value: "3кг",
-		},
-	];
-
 	return (
 		user && (
 			<Layout>
@@ -129,14 +82,14 @@ export default function Volunteer() {
 							<div className="flex flex-row justify-start gap-4 items-center w-[365px] m-auto">
 								<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
 								<div>
-									<p className="text-lg">Ертаев Уалихан</p>
+									<p className="text-lg">{user.name}</p>
 									<p className="text-xs">Данные вашего аккаунта</p>
 								</div>
 							</div>
 							<hr />
 							<div className="flex flex-col h-[270px] justify-center p-5">
 								<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
-									<p className="text-xs">ФИО</p>
+									<p className="text-xs">Имя</p>
 									<p className="text-sm">{user.name}</p>
 								</div>
 								<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
@@ -152,16 +105,29 @@ export default function Volunteer() {
 										placeholder={user.company}
 										type="text"
 										className="fontInter focus:outline-none text-sm w-auto h-9 rounded-3xl border-[1px] border-white flex items-center p-4 text-gray-200 bg-organisationInput"
-										disabled={!isChangable}
+										disabled={!isChangeable}
 										defaultValue={user.company}
+										ref={companyRef}
 									/>
 								</div>
 								<div className="flex justify-center items-center p-2 fontInter mb-[20px]">
 									<button
 										className="fontInter hover:bg-stone-200 w-36 h-10 bg-white text-black rounded-3xl text-sm"
-										onClick={() => setChangable((prevState) => !prevState)}
+										onClick={async () => {
+											if (!companyRef.current) return;
+
+											if (isChangeable)
+												await updateProfile({
+													company: companyRef.current.value,
+												}).then(() => {
+													refreshUser();
+												});
+
+											setIsChangeable((prevState) => !prevState);
+										}}
+										type={"button"}
 									>
-										{isChangable ? "Сохронить" : "Изменить"}
+										{isChangeable ? "Сохранить" : "Изменить"}
 									</button>
 								</div>
 							</div>
@@ -201,85 +167,97 @@ export default function Volunteer() {
 						</div>
 					</div>
 
-					<div className="w-[740px] h-[1050px] bg-gradient-linear2 rounded-3xl">
+					<div className="w-[740px] h-[1050px] bg-gradient-linear2 rounded-3xl overflow-auto">
 						<h4 className="font-semibold text-[28px] text-white border-b-[1px] border-white p-4 px-10">
 							Заказы
 						</h4>
 
-						{/* current order of Volunteer */}
-						<div className="flex flex-row justify-around items-center">
-							<div className="m-auto w-16 h-16">
-								<Image src={profileImg} alt="volunteericon" />
-							</div>
+						{orders.map((order) => {
+							return (
+								<div className="flex flex-row justify-around items-center" key={order.id}>
+									<div className="m-auto w-16 h-16">
+										<Image src={profileImg} alt="volunteericon" />
+									</div>
 
-							<div className="relative flex flex-row justify-between w-[585px] h-28 bg-volunteerColorHover rounded-xl border-[1px] border-white m-auto mt-4 items-center">
-								<div className="text-white font-medium flex flex-row items-center">
-									<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
-										<p className="text-xs">Адрес:</p>
-										<p className="text-sm"> -</p>
-									</div>
-									<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
-										<p className="text-xs">Дата:</p>
-										{/*<p className="text-sm">{item.pickDate} -</p>*/}
-										{/*<p className="text-sm">{item.deliverDate}</p>*/}
-									</div>
-									<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
-										<p className="text-xs">ФИО:</p>
-										{/*<p className="text-sm">{item.value}</p>*/}
+									<div className="relative flex flex-row justify-between w-[585px] h-28 bg-volunteerColorHover rounded-xl border-[1px] border-white m-auto mt-4 items-center">
+										<div className="text-white font-medium flex flex-row items-center">
+											<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+												<p className="text-xs">Адрес:</p>
+												<p className="text-sm">{order.customer.address}</p>
+											</div>
+											<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+												<p className="text-xs">Дата:</p>
+												<p className="text-sm">{order.order_date}</p>
+											</div>
+											<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+												<p className="text-xs">Имя:</p>
+												<p className="text-sm">{order.customer.name}</p>
+											</div>
+										</div>
+
+										<div className="mr-2">
+											<button
+												className="fontInter w-36 h-8 bg-white text-black rounded-3xl text-sm hover:bg-stone-200"
+												onClick={() => {
+													setCurrentOrder(order);
+													setOrderModalOpen((prevState) => !prevState);
+												}}
+											>
+												Смотреть
+											</button>
+										</div>
 									</div>
 								</div>
-
-								<div className="mr-2">
-									<button
-										className="fontInter w-36 h-8 bg-white text-black rounded-3xl text-sm hover:bg-stone-200"
-										onClick={() => setOrderModalOpen(true)}
-									>
-										Смотреть
-									</button>
-								</div>
-							</div>
-						</div>
+							);
+						})}
 
 						{/* other orders that are available for Volunteer */}
-						{orders.map((item) => (
-							<div className="flex flex-row justify-around items-center">
-								<div className="m-auto w-16 h-16">
-									<Image src={profileImg} alt="volunteericon" />
-								</div>
-
-								<div
-									key={item.id}
-									className="relative flex flex-row justify-between w-[585px] h-28 bg-volunteerColor rounded-xl border-[1px] border-white m-auto mt-4 items-center"
-								>
-									<div className="text-white font-medium flex flex-row items-center">
-										<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
-											<p className="text-xs">Адрес:</p>
-											<p className="text-sm">{item.toAddress}</p>
-										</div>
-										<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
-											<p className="text-xs">Дата:</p>
-											<p className="text-sm">{item.pickDate} -</p>
-											<p className="text-sm">{item.deliverDate}</p>
-										</div>
-										<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
-											<p className="text-xs">ФИО:</p>
-											<p className="text-sm">Нургуль Гулжановна</p>
-										</div>
+						{availableOrders.map((availableOrder) => {
+							return (
+								<div className="flex flex-row justify-around items-center" key={availableOrder.id}>
+									<div className="m-auto w-16 h-16">
+										<Image src={profileImg} alt="volunteericon" />
 									</div>
+									<div
+										key={availableOrder.id}
+										className="relative flex flex-row justify-between w-[585px] h-28 bg-volunteerColor rounded-xl border-[1px] border-white m-auto mt-4 items-center"
+									>
+										<div className="text-white font-medium flex flex-row items-center">
+											<div className="w-[135px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+												<p className="text-xs">Адрес:</p>
 
-									<div className="mr-2">
-										<button className="fontInter w-36 h-8 bg-white text-black rounded-3xl text-sm hover:bg-stone-200">
+												<p className="text-sm">{availableOrder.customer.address}</p>
+											</div>
+											<div className="w-[100px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+												<p className="text-xs">Дата:</p>
+												<p className="text-sm">{availableOrder.order_date}</p>
+											</div>
+											<div className="w-[121px] h-24 border-white border-[1px] rounded-xl ml-4 flex flex-col justify-center p-2">
+												<p className="text-xs">Имя:</p>
+												<p className="text-sm">{availableOrder.customer.name}</p>
+											</div>
+										</div>
+
+										<button
+											className="fontInter w-36 h-8 mr-2 bg-white text-black rounded-3xl text-sm hover:bg-stone-200"
+											type={"button"}
+											onClick={async () => {
+												await assignOrder(availableOrder.id).then(() => {
+													window.location.reload();
+												});
+											}}
+										>
 											Подтвердить
 										</button>
 									</div>
 								</div>
-							</div>
-						))}
+							);
+						})}
 						<hr className="mt-6" />
 						<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
 					</div>
 				</div>
-				<OrderModal isOpen={orderModalOpen} modalClose={handleOnOrderClose} />
+				<OrderModal isVisible={orderModalOpen} setIsVisible={setOrderModalOpen} order={currentOrder} />
 			</Layout>
 		)
 	);
