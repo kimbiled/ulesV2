@@ -9,8 +9,6 @@ interface useUserProps {
 }
 
 export async function useUser(accessToken: string | null): Promise<useUserProps> {
-	let user: TUser | null = null;
-
 	async function getMe() {
 		return await useAxios({
 			url: "/service/get-profile/",
@@ -21,12 +19,12 @@ export async function useUser(accessToken: string | null): Promise<useUserProps>
 			.then((response: AxiosResponse<TUser>) => {
 				return response.data;
 			})
-			.catch((error) => {
+			.catch(() => {
 				return null;
 			});
 	}
 
-	user = await getMe();
+	const user: TUser | null = await getMe();
 	return {
 		user,
 	};
