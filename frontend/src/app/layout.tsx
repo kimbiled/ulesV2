@@ -22,17 +22,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<ServiceProvider>
-					<AuthProvider>
-						<UserProvider>
-							<ShopProvider>
-								<VolunteerProvider>
-									<CustomerProvider>{children}</CustomerProvider>
-								</VolunteerProvider>
-							</ShopProvider>
-						</UserProvider>
-					</AuthProvider>
-				</ServiceProvider>
+				{/*<ServiceProvider>*/}
+				{/*	<AuthProvider>*/}
+				{/*		<UserProvider>*/}
+				{/*			<ShopProvider>*/}
+				{/*				<VolunteerProvider>*/}
+				{/*					<CustomerProvider>*/}
+				{children}
+				{/*</CustomerProvider>*/}
+				{/*</VolunteerProvider>*/}
+				{/*</ShopProvider>*/}
+				{/*</UserProvider>*/}
+				{/*</AuthProvider>*/}
+				{/*</ServiceProvider>*/}
 			</body>
 		</html>
 	);
