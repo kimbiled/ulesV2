@@ -1,29 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { close, logo, menu, profilePhoto, uleslogo } from "public/assets/index";
-import { useUser } from "@context/User/useUser";
+import { useUser } from "@hooks/user/useUser";
 import { useAuth } from "@context/Auth/useAuth";
+import { TUser } from "@hooks/user/types";
 
-const Header = () => {
-	const { user } = useUser();
+export default function Header() {
 	const { logOut } = useAuth();
 
-	const [active, setActive] = useState("Home");
-	const [toggle, setToggle] = useState(false);
-	const [isOpen, setOpen] = useState(false);
+	const [active, setActive] = useState<string>("Home");
+	const [toggle, setToggle] = useState<boolean>(false);
+	const [isOpen, setOpen] = useState<boolean>(false);
+
+	const [user, setUser] = useState<TUser | null>(null);
 
 	const navLinks = [
-		// {
-		// 	id: "/",
-		// 	title: "Home",
-		// },
-		// {
-		// 	id: "aboutUs",
-		// 	title: "About Us",
-		// },
 		{
 			id: "register",
 			title: "Регистрация",
@@ -33,6 +27,12 @@ const Header = () => {
 			title: "Вход в аккаунт",
 		},
 	];
+
+	useEffect(() => {
+		useUser(localStorage.getItem("access")).then((props) => {
+			setUser(props.user);
+		});
+	}, []);
 
 	return (
 		<nav className="fontInter w-full bg-gradient-linear px-16 flex py-2 justify-between items-center navbar">
@@ -44,7 +44,7 @@ const Header = () => {
 
 				<ul className="list-none sm:flex hidden justify-end items-center gap-6">
 					{navLinks.map((nav) => {
-						if (user !== null && (nav.id === "register" || nav.id === "login")) return;
+						if (user && (nav.id === "register" || nav.id === "login")) return;
 						return (
 							<li
 								key={nav.id}
@@ -82,7 +82,9 @@ const Header = () => {
 							<button
 								className="fontInter w-32 h-8 rounded-3xl bg-white text-sm"
 								type={"button"}
-								onClick={logOut}
+								onClick={() => {
+									logOut();
+								}}
 							>
 								Выйти
 							</button>
@@ -123,6 +125,4 @@ const Header = () => {
 			</div>
 		</nav>
 	);
-};
-
-export default Header;
+}
