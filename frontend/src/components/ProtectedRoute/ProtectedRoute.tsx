@@ -10,6 +10,6 @@ interface ProtectedRouteProps {
 export default async function ProtectedRoute({ children }: ProtectedRouteProps) {
 	const { user } = await useUser();
 
-	if (!user) redirect("/login");
+	if (!user) redirect("/auth/login");
 	return <>{children}</>;
 }

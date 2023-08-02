@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { useAuth } from "@context/Auth/useAuth";
 
 import styles from "../../style";
-import Layout from "@components/Layout/Layout";
 
 export default function Login() {
 	const { signIn } = useAuth();
