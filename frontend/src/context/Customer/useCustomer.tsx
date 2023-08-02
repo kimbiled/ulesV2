@@ -1,16 +1,15 @@
-'use client';
-import { createContext, ReactNode, useContext } from 'react';
-import axios from 'axios';
+"use client";
+import { createContext, ReactNode, useContext } from "react";
+import axios, { AxiosResponse } from "axios";
 
-import { IUpdateProfile } from '@context/Customer/types';
-
-import config from '@root/config';
+import config from "@root/config";
+import { TOrder } from "@context/Volunteer/types";
 
 interface CustomerContextProps {
-  updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
-  getNorm: (id: string) => Promise<any>;
-  getOrders: () => Promise<any[]>;
-  confirmOrder: (order_id: Int16Array) => Promise<void>;
+	updateProfile: (address: string) => Promise<void>;
+	getNorm: (id: number) => Promise<any | null>;
+	getOrder: () => Promise<TOrder | null>;
+	orderConfirm: (orderId: number) => Promise<void>;
 }
 
 const CustomerContext = createContext({} as CustomerContextProps);
@@ -19,69 +18,66 @@ export function useCustomer(): CustomerContextProps {
   return useContext(CustomerContext);
 }
 export function CustomerProvider({ children }: { children: ReactNode }) {
-  const access = localStorage.getItem('access');
-  async function updateProfile({ address }: IUpdateProfile) {
-    if (!access) return;
+	const access = localStorage.getItem("access");
+	async function updateProfile(address: string) {
+		if (!access) return;
 
-    await axios({
-      method: 'POST',
-      url: `${config.BACKEND_HOST}/service/update-customer-profile/`,
-      data: {
-        address,
-      } satisfies IUpdateProfile,
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    });
-  }
+		await axios({
+			method: "POST",
+			url: `${config.BACKEND_HOST}/service/update-customer-profile/`,
+			data: {
+				address,
+			},
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		});
+	}
 
-  async function getNorm(id: string) {
-    if (!access) return;
-    return await axios({
-      method: 'GET',
-      url: `${config.BACKEND_HOST}/service/get-norm/${id}`,
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    }).then(response => {
-      return response.data;
-    });
-  }
+	async function orderConfirm(orderId: number) {
+		if (!access) return;
 
-  async function getOrders() {
-    if (!access) return [];
+		await axios({
+			method: "POST",
+			url: `${config.BACKEND_HOST}/service/orders/confirm/${orderId}/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		});
+	}
 
-    return await axios({
-      method: 'GET',
-      url: `${config.BACKEND_HOST}/service/get-orders/`,
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    }).then(response => {
-      return response.data;
-    });
-  }
+	async function getNorm(id: number) {
+		if (!access) return null;
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-norm/${id}/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		}).then((response: AxiosResponse) => {
+			return response.data;
+		});
+	}
 
-  async function confirmOrder(order_id: Int16Array) {
-    if (!access) return;
-    return await axios({
-      method: 'POST',
-      url: `${config.BACKEND_HOST}/service/confirm/${order_id}`,
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    });
-  }
+	async function getOrder() {
+		if (!access) return null;
 
-  const values: CustomerContextProps = {
-    updateProfile,
-    getNorm,
-    getOrders,
-	confirmOrder
-  };
-  return (
-    <CustomerContext.Provider value={values}>
-      {children}
-    </CustomerContext.Provider>
-  );
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-orders/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		}).then((response: AxiosResponse<TOrder[]>) => {
+			return response.data[0];
+		});
+	}
+
+	const values: CustomerContextProps = {
+		updateProfile,
+		getNorm,
+		getOrder,
+		orderConfirm,
+	};
+	return <CustomerContext.Provider value={values}>{children}</CustomerContext.Provider>;
 }

@@ -30,7 +30,7 @@ class Norm(models.Model):
 class CustomerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name="customer_profile")
     address = models.CharField(max_length=255, default='')
-    norm = models.ForeignKey(Norm,on_delete=models.CASCADE, null=True)
+    norm = models.ForeignKey(Norm, on_delete=models.CASCADE, null=True, blank=True)
 
     
 

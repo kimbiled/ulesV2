@@ -1,29 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { close, logo, menu, profilePhoto, uleslogo } from "public/assets/index";
-import { useUser } from "@context/User/useUser";
+import { useUser } from "@hooks/user/useUser";
 import { useAuth } from "@context/Auth/useAuth";
+import { TUser } from "@hooks/user/types";
 
-const Header = () => {
-	const { user } = useUser();
+export default function Header() {
 	const { logOut } = useAuth();
 
-	const [active, setActive] = useState("Home");
-	const [toggle, setToggle] = useState(false);
-	const [isOpen, setOpen] = useState(false);
+	const [active, setActive] = useState<string>("Home");
+	const [toggle, setToggle] = useState<boolean>(false);
+	const [isOpen, setOpen] = useState<boolean>(false);
+
+	const [user, setUser] = useState<TUser | null>(null);
 
 	const navLinks = [
-		// {
-		// 	id: "/",
-		// 	title: "Home",
-		// },
-		// {
-		// 	id: "aboutUs",
-		// 	title: "About Us",
-		// },
 		{
 			id: "register",
 			title: "Регистрация",
@@ -33,6 +27,12 @@ const Header = () => {
 			title: "Вход в аккаунт",
 		},
 	];
+
+	useEffect(() => {
+		useUser(localStorage.getItem("access")).then((props) => {
+			setUser(props.user);
+		});
+	}, []);
 
 	return (
 		<nav className="fontInter w-full bg-gradient-linear px-16 flex py-2 justify-between items-center navbar">
@@ -44,7 +44,7 @@ const Header = () => {
 
 				<ul className="list-none sm:flex hidden justify-end items-center gap-6">
 					{navLinks.map((nav) => {
-						if (user !== null && (nav.id === "register" || nav.id === "login")) return;
+						if (user && (nav.id === "register" || nav.id === "login")) return;
 						return (
 							<li
 								key={nav.id}
@@ -59,37 +59,39 @@ const Header = () => {
 					})}
 				</ul>
 			</div>
+			<div
+				className="flex items-center space-x-4 relative cursor-pointer"
+				onClick={() => setOpen((prevState) => !prevState)}
+				style={{ display: user ? "flex" : "none" }}
+			>
+				<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full dropDown-menu-active" />
+				<p className="font-poppins text-white ml-2 dropDown-menu-active cursor-pointer">{user && user.name}</p>
 
-			{isOpen? (
-				<div className="flex flex-col relative">
-					<div className="flex items-center space-x-4" onClick={()=>setOpen(false)}>
-						<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full dropDown-menu-active" />
-						<p className="font-poppins text-white ml-2 dropDown-menu-active" >{user && user.name}</p>
-					</div>
-
-					<div className="dropDown h-56 w-48 rounded-2xl bg-gradient-linearDropDown flex flex-col items-center">
+				{isOpen && (
+					<div className="dropDown h-56 w-48 rounded-2xl bg-gradient-linearDropDown flex flex-col justify-start items-center">
 						<div className="flex flex-row h-20 justify-between items-center gap-3">
-							<Link href="/" className="flex justify-center space-x-4 items-center cursor-pointer ">
-								<Image src={uleslogo} alt="ules" className=" h-[60px] " />
-								<p className=" font-poppins font-semibold text-[20px]  text-white ">Úles</p>
-							</Link>	
+							<Link href={"/"} className="flex justify-center space-x-4 items-center cursor-pointer ">
+								<Image src={uleslogo} alt="ules" className="h-[60px]" />
+								<p className="font-poppins font-semibold text-[20px] text-white">Úles</p>
+							</Link>
 						</div>
 						<div className="w-full h-28 border-t-[1px] border-b-[1px] flex flex-col items-center justify-center gap-4">
-							<Link href="/profile">
+							<Link href={"/profile"}>
 								<button className="fontInter w-32 h-8 rounded-3xl bg-white text-sm">Профиль</button>
 							</Link>
-								<button className="fontInter w-32 h-8 rounded-3xl bg-white text-sm" onClick={logOut}>Выйти</button>
+							<button
+								className="fontInter w-32 h-8 rounded-3xl bg-white text-sm"
+								type={"button"}
+								onClick={() => {
+									logOut();
+								}}
+							>
+								Выйти
+							</button>
 						</div>
 					</div>
-				</div>
-			) : (
-				<div className="flex items-center space-x-4" onClick={()=>setOpen(true)} style={{ display: user ? "flex" : "none" }}>
-					<Image src={profilePhoto} alt="Profile Photo" className="h-8 w-8 rounded-full dropDown-menu-inactive"/>
-					<p className="font-poppins text-white ml-2 dropDown-menu-inactive">{user && user.name}</p>
-				</div>
-			)}
-			
-
+				)}
+			</div>
 			<div className="sm:hidden flex flex-1 justify-end items-center">
 				<Image
 					src={toggle ? close : menu}
@@ -123,6 +125,4 @@ const Header = () => {
 			</div>
 		</nav>
 	);
-};
-
-export default Header;
+}

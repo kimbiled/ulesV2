@@ -3,13 +3,15 @@ import { createContext, ReactNode, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
 import config from "@root/config";
-import { IUpdateProfile, TOrder } from "@context/Volunteer/types";
+import { IUpdateProfile, TAvailableOrder, TOrder, TTop } from "@context/Volunteer/types";
 
 interface VolunteerContextProps {
 	getOrders: () => Promise<TOrder[] | void>;
-	getAvailableOrders: () => Promise<TOrder[] | void>;
-	assignOrder: (id: string) => Promise<void>;
+	getAvailableOrders: () => Promise<TAvailableOrder[] | void>;
+	assignOrder: (id: number) => Promise<void>;
+	denyOrder: (id: number) => Promise<void>;
 	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
+	getTop: () => Promise<TTop | null>;
 }
 
 const VolunteerContext = createContext({} as VolunteerContextProps);
@@ -49,7 +51,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 				Authorization: `Bearer ${access}`,
 			},
 		})
-			.then((response: AxiosResponse<TOrder[]>) => {
+			.then((response: AxiosResponse<TAvailableOrder[]>) => {
 				return response.data;
 			})
 			.catch((error) => {
@@ -57,20 +59,31 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 			});
 	}
 
-	async function assignOrder(id: string) {
+	async function assignOrder(id: number) {
+		if (!access) return;
+
 		await axios({
 			method: "PUT",
-			url: `${config.BACKEND_HOST}/service/orders/${id}/assign`,
+			url: `${config.BACKEND_HOST}/service/orders/${id}/assign/`,
 			headers: {
 				Authorization: `Bearer ${access}`,
 			},
-		})
-			.then((response) => {
-				console.log(response.data);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		}).catch((error) => {
+			console.log(error);
+		});
+	}
+	async function denyOrder(id: number) {
+		if (!access) return;
+
+		await axios({
+			method: "PUT",
+			url: `${config.BACKEND_HOST}/service/orders/${id}/deny/`,
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		}).catch((error) => {
+			console.log(error);
+		});
 	}
 	async function updateProfile({ company, rating }: IUpdateProfile) {
 		if (!access) return;
@@ -87,12 +100,22 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 			},
 		});
 	}
+	async function getTop() {
+		return await axios({
+			method: "GET",
+			url: `${config.BACKEND_HOST}/service/get-top/2/`,
+		}).then((response: AxiosResponse<TTop>) => {
+			return response.data;
+		});
+	}
 
 	const values: VolunteerContextProps = {
 		getOrders,
 		assignOrder,
 		updateProfile,
 		getAvailableOrders,
+		denyOrder,
+		getTop,
 	};
 	return <VolunteerContext.Provider value={values}>{children}</VolunteerContext.Provider>;
 }

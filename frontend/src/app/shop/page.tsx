@@ -1,25 +1,13 @@
-"use client";
-import Header from "@components/Header/Header";
-import Menu from "./menu";
-import Info from "./info";
-import Profile from "./profile";
-import Statistics from "./statistics";
-import Orders from "./orders";
-import { useState } from "react";
-export default function Shop() {
-	const [page, setPage] = useState(1);
+import { ShopProvider } from "@context/Shop/useShop";
 
-	function changePage(newPage: number) {
-		setPage(newPage);
-	}
-
+import Shop from "@routes/shop/shop";
+import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
+export default function page() {
 	return (
-		<>
-			<Header />
-			<div className="flex h-[calc(100vh-80px) fontRaleway">
-				<Menu setPage={changePage} />
-				{page === 1 ? <Profile /> : page === 2 ? <Statistics /> : page === 3 ? <Info /> : null}
-			</div>
-		</>
+		<ProtectedRoute>
+			<ShopProvider>
+				<Shop />
+			</ShopProvider>
+		</ProtectedRoute>
 	);
 }
