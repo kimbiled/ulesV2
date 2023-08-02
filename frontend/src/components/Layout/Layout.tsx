@@ -20,7 +20,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
       </CustomCookieProvider>
       <main
         className={
-          'flex  items-center justify-center bg-gradient-to-r from-blue-100 from-10% via-yellow-50 via-50% to-blue-100 to-90%'
+          'flex  items-center justify-center bg-gradient-to-r from-blue-100 from-10% via-[#F9FEF6] via-50% to-blue-100 to-90%'
         }>
         {children}
       </main>
