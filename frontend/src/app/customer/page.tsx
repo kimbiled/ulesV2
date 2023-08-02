@@ -4,7 +4,7 @@ import Layout from '@components/Layout/Layout';
 import Image from 'next/image';
 import { downarrow, userImg } from '../../../public/assets/index';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { TProduct } from '@context/Shop/types';
 import { useCustomer } from '@root/context/Customer/useCustomer';
 import { useUser } from '@context/User/useUser';
@@ -14,7 +14,7 @@ export default function Customer() {
   const { user } = useUser();
   const { push } = useRouter();
   const [isChange, setChange] = useState(false);
-  const { getOrders } = useCustomer();
+  const { getOrders, confirmOrder } = useCustomer();
   const [products, setProducts] = useState<TProduct[]>([]);
 
   useEffect(() => {

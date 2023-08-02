@@ -1,70 +1,87 @@
-"use client";
-import { createContext, ReactNode, useContext } from "react";
-import axios from "axios";
+'use client';
+import { createContext, ReactNode, useContext } from 'react';
+import axios from 'axios';
 
-import { IUpdateProfile } from "@context/Customer/types";
+import { IUpdateProfile } from '@context/Customer/types';
 
-import config from "@root/config";
+import config from '@root/config';
 
 interface CustomerContextProps {
-	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
-	getNorm: (id: string) => Promise<any>;
-	getOrders: () => Promise<any[]>;
+  updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
+  getNorm: (id: string) => Promise<any>;
+  getOrders: () => Promise<any[]>;
+  confirmOrder: (order_id: Int16Array) => Promise<void>;
 }
 
 const CustomerContext = createContext({} as CustomerContextProps);
 
 export function useCustomer(): CustomerContextProps {
-	return useContext(CustomerContext);
+  return useContext(CustomerContext);
 }
 export function CustomerProvider({ children }: { children: ReactNode }) {
-	const access = localStorage.getItem("access");
-	async function updateProfile({ address }: IUpdateProfile) {
-		if (!access) return;
+  const access = localStorage.getItem('access');
+  async function updateProfile({ address }: IUpdateProfile) {
+    if (!access) return;
 
-		await axios({
-			method: "POST",
-			url: `${config.BACKEND_HOST}/service/update-customer-profile/`,
-			data: {
-				address,
-			} satisfies IUpdateProfile,
-			headers: {
-				Authorization: `Bearer ${access}`,
-			},
-		});
-	}
+    await axios({
+      method: 'POST',
+      url: `${config.BACKEND_HOST}/service/update-customer-profile/`,
+      data: {
+        address,
+      } satisfies IUpdateProfile,
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+  }
 
-	async function getNorm(id: string) {
-		if (!access) return;
-		return await axios({
-			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-norm/${id}`,
-			headers: {
-				Authorization: `Bearer ${access}`,
-			},
-		}).then((response) => {
-			return response.data;
-		});
-	}
+  async function getNorm(id: string) {
+    if (!access) return;
+    return await axios({
+      method: 'GET',
+      url: `${config.BACKEND_HOST}/service/get-norm/${id}`,
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    }).then(response => {
+      return response.data;
+    });
+  }
 
-	async function getOrders() {
-		if (!access) return [];
+  async function getOrders() {
+    if (!access) return [];
 
-		return await axios({
-			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-orders/`,
-			headers: {
-				Authorization: `Bearer ${access}`,
-			},
-		}).then((response) => {
-			return response.data;
-		});
-	}
+    return await axios({
+      method: 'GET',
+      url: `${config.BACKEND_HOST}/service/get-orders/`,
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    }).then(response => {
+      return response.data;
+    });
+  }
 
-	const values: CustomerContextProps = {
-		updateProfile,
-		getNorm,
-		getOrders,
-	};
-	return <CustomerContext.Provider value={values}>{children}</CustomerContext.Provider>;
+  async function confirmOrder(order_id: Int16Array) {
+    if (!access) return;
+    return await axios({
+      method: 'POST',
+      url: `${config.BACKEND_HOST}/service/confirm/${order_id}`,
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+  }
+
+  const values: CustomerContextProps = {
+    updateProfile,
+    getNorm,
+    getOrders,
+	confirmOrder
+  };
+  return (
+    <CustomerContext.Provider value={values}>
+      {children}
+    </CustomerContext.Provider>
+  );
 }
