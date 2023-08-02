@@ -15,7 +15,6 @@ export default function Login() {
 	const passwordRef = useRef<HTMLInputElement>(null);
 
 	return (
-		// <Layout>
 		<div className={`${styles.flexStart}`}>
 			<div className={`${styles.boxWidth}`}>
 				<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
