@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from service.models import Category, Product, ShopProfile, VolunteerProfile, Order, Norm, OrderDetail
+from service.models import Category, Product, ShopProfile, VolunteerProfile, Order, Norm, OrderDetail, CategoryNorm
 from rest_framework import status, permissions, viewsets
 from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer, CategorySerializer
 from rest_framework import mixins
@@ -138,13 +138,8 @@ class UpdateCustomerProfile(APIView):
 
             request.user.customer_profile.address = serializer.data['address']
 
-            norm = Norm.objects.filter(norm_name = serializer.data['norm_name'])[:1].get()
-
-            if not norm:
-                return Response(data={'message': 'FAILED TO FIND THE NORM'}, status=status.HTTP_400_BAD_REQUEST)
             
             
-            request.user.customer_profile.norm = norm
             request.user.customer_profile.save()
             
             return Response(data={'message': 'CUSTOMER PROFILE WAS UPDATED SUCCESSFULLY', 'data':serializer.data}, status=status.HTTP_200_OK)
@@ -231,13 +226,16 @@ class GetTop(APIView):
             user_ids = profiles.values_list('user_id', flat=True)
             users = User.objects.filter(id__in=user_ids)
 
+            rank = 1
             profile_data = []
             for profile in profiles:
                 user = users.get(id=profile.user_id)
                 profile_data.append({
                     'user': UserSerializer(profile.user).data,
-                    'profile': VolunteerProfileSerializer(profile).data
+                    'profile': VolunteerProfileSerializer(profile).data,
+                    'rank': rank
                 })
+                rank+=1
 
         elif (user_type == 3):
             profiles = ShopProfile.objects.order_by('-rating')[:5]
@@ -245,12 +243,15 @@ class GetTop(APIView):
             users = User.objects.filter(id__in=user_ids)
 
             profile_data = []
+            rank = 1
             for profile in profiles:
                 user = users.get(id=profile.user_id)
                 profile_data.append({
                     'user': UserSerializer(profile.user).data,
-                    'profile': ShopProfileSerializer(profile).data
+                    'profile': ShopProfileSerializer(profile).data,
+                    'rank': rank
                 })
+                rank+=1
 
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message":"WRONG USER TYPE"})
@@ -268,7 +269,7 @@ class GetOrders(APIView):
 
         if hasattr(user, 'customer_profile'):  
             orders = user.customer_profile.order_set.all()
-        
+    
         elif  hasattr(user, 'volunteer_profile'):
             orders = user.volunteer_profile.order_set.all()
         
@@ -281,9 +282,9 @@ class GetOrders(APIView):
             order = Order.objects.get(pk=order_data['id'])
 
             if order.customer:
-                order_data['customer_name'] = order.customer.user.name
+                order_data['customer']['name'] = order.customer.user.name
             if order.volunteer:
-                order_data['volunteer_name'] = order.volunteer.user.name
+                order_data['volunteer']['name'] = order.volunteer.user.name
         return Response(status=status.HTTP_200_OK, data=data)
 
 class GetAvailableOrders(APIView):
@@ -295,7 +296,15 @@ class GetAvailableOrders(APIView):
         if hasattr(user, 'volunteer_profile'):
             orders = Order.objects.filter(volunteer__isnull=True)
             serializer = OrderSerializer(orders, many=True)
-            return Response(status=status.HTTP_200_OK,data=serializer.data)
+            data = serializer.data
+            for order_data in data:
+                order = Order.objects.get(pk=order_data['id'])
+
+                if order.customer:
+                    order_data['customer']['name'] = order.customer.user.name
+                if order.volunteer:
+                    order_data['volunteer']['name'] = order.volunteer.user.name
+            return Response(status=status.HTTP_200_OK,data=data)
         
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message':"YOU ARE NO VOLUNTEER"})
@@ -353,10 +362,13 @@ class GetNorm(APIView):
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
             norm = Norm.objects.get(id=norm_id)
             category_norms = CategoryNorm.objects.filter(norm=norm)
-            product_ids = [cn.category.product.id for cn in category_norms]
-            products = Product.objects.filter(id__in=product_ids)
-            serializer = ProductSerializer(products, many=True)
-            return Response(status=status.HTTP_200_OK, data=serializer.data)
+            categories = [cn.category for cn in category_norms]
+            serializer = CategorySerializer(categories, many=True)
+            data = serializer.data
+            for data in serializer.data:
+                data.pop('product_set')
+            
+            return Response(status=status.HTTP_200_OK, data=data)
 
         except Norm.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO NORM'})
@@ -379,7 +391,7 @@ class ConfirmOrder(APIView):
         if order.volunteer:
             volunteer = order.volunteer
             volunteer.rating += order_details.count()
-            volunteer.help_count += 1
+            volunteer.order_count += 1
             volunteer.save()
 
         for order_detail in order_details:

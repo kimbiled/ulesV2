@@ -17,7 +17,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields= ('category_name','description', 'product_set')
+        fields= ('category_name','description', 'unit_of_measurement', 'product_set')
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,11 +52,10 @@ class ShopProfileSerializer(serializers.ModelSerializer):
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
-    norm_name = serializers.CharField(source = 'norm')
-
+    norm = serializers.IntegerField(source='norm_id')
     class Meta:
         model = CustomerProfile
-        fields = ('address','norm_name')
+        fields = ('address','norm')
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     company = serializers.CharField(required = True)

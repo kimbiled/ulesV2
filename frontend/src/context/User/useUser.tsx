@@ -2,14 +2,13 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 
-import { IGetTopResponse, TUser } from "@context/User/types";
+import { TUser } from "@context/User/types";
 
 import config from "@root/config";
 
 interface UserContextProps {
 	user: TUser | null;
-	refreshUser: (access: string) => Promise<void>;
-	getTop: () => Promise<IGetTopResponse>;
+	refreshUser: () => Promise<void>;
 }
 
 const UserContext = createContext({} as UserContextProps);
@@ -22,7 +21,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
 	const [user, setUser] = useState<TUser | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
-	async function getUser(access: string) {
+	async function getUser() {
+		const access = localStorage.getItem("access");
+		if (!access) return null;
+
 		return await axios({
 			method: "GET",
 			url: `${config.BACKEND_HOST}/service/get-profile/`,
@@ -37,25 +39,13 @@ export function UserProvider({ children }: { children: ReactNode }) {
 				return null;
 			});
 	}
-	async function refreshUser(access: string) {
-		const [user] = await Promise.all([getUser(access)]);
+	async function refreshUser() {
+		const [user] = await Promise.all([getUser()]);
 		setUser(user);
 	}
 
-	async function getTop() {
-		return await axios({
-			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-top/`,
-		}).then((response: AxiosResponse<IGetTopResponse>) => {
-			return response.data;
-		});
-	}
-
 	useEffect(() => {
-		const access = localStorage.getItem("access");
-		if (!access) return setIsLoading(false);
-
-		Promise.all([getUser(access)])
+		Promise.all([getUser()])
 			.then(([user]) => {
 				setUser(user);
 				setIsLoading(false);
@@ -73,7 +63,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
 	const values: UserContextProps = {
 		user,
 		refreshUser,
-		getTop,
 	};
 	return <UserContext.Provider value={values}>{!isLoading && children}</UserContext.Provider>;
 }
