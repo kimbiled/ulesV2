@@ -4,17 +4,13 @@ import Image from "next/image";
 
 import { useCustomer } from "@context/Customer/useCustomer";
 
-import Layout from "@components/Layout/Layout";
-
 import { downarrow, userImg } from "@public/assets";
 
 import type { TOrder } from "@context/Volunteer/types";
 import type { TUser } from "@hooks/user/types";
 
-export default function Customer({}: { user: TUser | null }) {
+export default function Customer({ user }: { user: TUser | null }) {
 	const { getOrder, orderConfirm, updateProfile } = useCustomer();
-
-	const [user, setUser] = useState<TUser | null>(null);
 
 	const [order, setOrder] = useState<TOrder | null>(null);
 	const [isChange, setChange] = useState<boolean>(false);

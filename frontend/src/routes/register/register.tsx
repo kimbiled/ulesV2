@@ -1,17 +1,12 @@
 "use client";
 import { useRef } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import styles from "../../style";
 
-import Header from "@components/Header/Header";
-
 import { useAuth } from "@context/Auth/useAuth";
 export default function Register() {
 	const { signUp } = useAuth();
-
-	const { push } = useRouter();
 
 	const emailRef = useRef<HTMLInputElement>(null);
 	const nameRef = useRef<HTMLInputElement>(null);

@@ -1,9 +1,12 @@
 "use client";
 import { createContext, ReactNode, useContext } from "react";
-import axios, { AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 
-import config from "@root/config";
-import { TOrder } from "@context/Volunteer/types";
+import { useCustomCookie } from "@context/CustomCookie/useCustomCookie";
+
+import { Axios } from "@lib/axios/axios";
+
+import type { TOrder } from "@context/Volunteer/types";
 
 interface CustomerContextProps {
 	updateProfile: (address: string) => Promise<void>;
@@ -18,41 +21,41 @@ export function useCustomer(): CustomerContextProps {
 	return useContext(CustomerContext);
 }
 export function CustomerProvider({ children }: { children: ReactNode }) {
-	const access = localStorage.getItem("access");
+	const { cookie } = useCustomCookie();
 	async function updateProfile(address: string) {
-		if (!access) return;
+		if (!cookie.access) return;
 
-		await axios({
+		await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/service/update-customer-profile/`,
+			url: `/service/update-customer-profile/`,
 			data: {
 				address,
 			},
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		});
 	}
 
 	async function orderConfirm(orderId: number) {
-		if (!access) return;
+		if (!cookie.access) return;
 
-		await axios({
+		await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/service/orders/confirm/${orderId}/`,
+			url: `/service/orders/confirm/${orderId}/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		});
 	}
 
 	async function getNorm(id: number) {
-		if (!access) return null;
-		return await axios({
+		if (!cookie.access) return null;
+		return await Axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-norm/${id}/`,
+			url: `/service/get-norm/${id}/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		}).then((response: AxiosResponse) => {
 			return response.data;
@@ -60,13 +63,13 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 	}
 
 	async function getOrder() {
-		if (!access) return null;
+		if (!cookie.access) return null;
 
-		return await axios({
+		return await Axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-orders/`,
+			url: `/service/get-orders/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		}).then((response: AxiosResponse<TOrder[]>) => {
 			return response.data[0];
