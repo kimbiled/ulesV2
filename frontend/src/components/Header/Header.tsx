@@ -1,38 +1,29 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { close, logo, menu, profilePhoto, uleslogo } from "public/assets/index";
-import { useUser } from "@hooks/user/useUser";
+import { close, menu, profilePhoto, uleslogo } from "public/assets/index";
 import { useAuth } from "@context/Auth/useAuth";
 import { TUser } from "@hooks/user/types";
 
-export default function Header() {
+export default function Header({ user }: { user: TUser | null }) {
 	const { logOut } = useAuth();
 
 	const [active, setActive] = useState<string>("Home");
 	const [toggle, setToggle] = useState<boolean>(false);
 	const [isOpen, setOpen] = useState<boolean>(false);
 
-	const [user, setUser] = useState<TUser | null>(null);
-
 	const navLinks = [
 		{
-			id: "register",
+			id: "/auth/register",
 			title: "Регистрация",
 		},
 		{
-			id: "login",
+			id: "/auth/login",
 			title: "Вход в аккаунт",
 		},
 	];
-
-	useEffect(() => {
-		useUser(localStorage.getItem("access")).then((props) => {
-			setUser(props.user);
-		});
-	}, []);
 
 	return (
 		<nav className="fontInter w-full bg-gradient-linear px-16 flex py-2 justify-between items-center navbar">
@@ -44,7 +35,7 @@ export default function Header() {
 
 				<ul className="list-none sm:flex hidden justify-end items-center gap-6">
 					{navLinks.map((nav) => {
-						if (user && (nav.id === "register" || nav.id === "login")) return;
+						if (user && (nav.id === "/auth/register" || nav.id === "/auth/login")) return;
 						return (
 							<li
 								key={nav.id}
@@ -53,7 +44,13 @@ export default function Header() {
 								}`}
 								onClick={() => setActive(nav.title)}
 							>
-								<Link href={`${nav.id}`}>{nav.title}</Link>
+								<Link
+									href={{
+										pathname: nav.id,
+									}}
+								>
+									{nav.title}
+								</Link>
 							</li>
 						);
 					})}

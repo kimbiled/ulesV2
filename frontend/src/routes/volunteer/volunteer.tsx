@@ -1,23 +1,18 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+
+import { useVolunteer } from "@context/Volunteer/useVolunteer";
+
 import OrderModal from "./OrderModal";
 
-// import { useUser } from "@context/User/useUser";
-import { useVolunteer } from "@context/Volunteer/useVolunteer";
-import { TAvailableOrder, TOrder, TTop } from "@context/Volunteer/types";
+import type { TAvailableOrder, TOrder, TTop } from "@context/Volunteer/types";
+import type { TUser } from "@hooks/user/types";
 
 import { downarrow, profileImg } from "@public/assets";
 
-import Layout from "@components/Layout/Layout";
-import { TUser } from "@hooks/user/types";
-import { useUser } from "@hooks/user/useUser";
-
-export default function Volunteer() {
+export default function Volunteer({ user }: { user: TUser | null }) {
 	const { getOrders, getAvailableOrders, getTop, updateProfile, assignOrder, denyOrder } = useVolunteer();
-	// const { user } = useUser();
-
-	const [user, setUser] = useState<TUser | null>(null);
 
 	const [orderModalOpen, setOrderModalOpen] = useState(false);
 	const [isChangeable, setIsChangeable] = useState(false);
@@ -31,10 +26,6 @@ export default function Volunteer() {
 	const companyRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		useUser(localStorage.getItem("access")).then((props) => {
-			setUser(props.user);
-		});
-
 		Promise.all([getAvailableOrders(), getOrders(), getTop()])
 			.then(([retrievedAvailableOrders, retrievedOrders, retrievedRating]) => {
 				if (retrievedAvailableOrders) setAvailableOrders(retrievedAvailableOrders);
@@ -52,7 +43,7 @@ export default function Volunteer() {
 		};
 	}, []);
 	return (
-		<Layout>
+		<>
 			<div className="w-full h-full flex flex-row justify-between mb-16 mt-16 fontRaleway">
 				<div className="flex flex-col justify-between">
 					<div className="w-[445px] h-[530px] bg-gradient-linear2 rounded-3xl text-white flex flex-col ">
@@ -245,6 +236,6 @@ export default function Volunteer() {
 				order={currentOrder}
 				denyOrder={denyOrder}
 			/>
-		</Layout>
+		</>
 	);
 }

@@ -1,14 +1,15 @@
 import Volunteer from "@routes/volunteer/volunteer";
 
-import { VolunteerProvider } from "@context/Volunteer/useVolunteer";
-import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
+import Layout from "@components/Layout/Layout";
 
-export default function page() {
+import { useUser } from "@hooks/user/useUser";
+
+export default async function page() {
+	const { user } = await useUser();
+
 	return (
-		<ProtectedRoute>
-			<VolunteerProvider>
-				<Volunteer />
-			</VolunteerProvider>
-		</ProtectedRoute>
+		<Layout>
+			<Volunteer user={user} />
+		</Layout>
 	);
 }
