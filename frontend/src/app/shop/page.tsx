@@ -1,13 +1,14 @@
-import { ShopProvider } from "@context/Shop/useShop";
+import { useUser } from "@hooks/user/useUser";
 
+import Layout from "@components/Layout/Layout";
 import Shop from "@routes/shop/shop";
-import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
-export default function page() {
+
+export default async function page() {
+	const { user } = await useUser();
+
 	return (
-		<ProtectedRoute>
-			<ShopProvider>
-				<Shop />
-			</ShopProvider>
-		</ProtectedRoute>
+		<Layout>
+			<Shop user={user} />
+		</Layout>
 	);
 }

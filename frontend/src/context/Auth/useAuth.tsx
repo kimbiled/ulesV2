@@ -1,10 +1,13 @@
 "use client";
 import { createContext, ReactNode, useContext, useEffect } from "react";
-import axios, { AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 
-import config from "@root/config";
+import { Axios } from "@lib/axios/axios";
 
-import { ISignIn, ISignUp, TTokens } from "@context/Auth/types";
+import { useCustomCookie } from "@context/CustomCookie/useCustomCookie";
+
+import type { ISignIn, ISignUp, TTokens } from "@context/Auth/types";
+import { useRouter } from "next/navigation";
 
 interface AuthContextProps {
 	signUp: ({ email, name, user_type, phone, password }: ISignUp) => Promise<void>;
@@ -19,10 +22,13 @@ export function useAuth(): AuthContextProps {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+	const { push } = useRouter();
+	const { cookie, setCookie, removeCookie } = useCustomCookie();
+
 	async function signUp({ email, name, user_type, password, phone }: ISignUp) {
-		return await axios({
+		return await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/auth/register/`,
+			url: `/auth/register/`,
 			data: {
 				email,
 				name,
@@ -39,9 +45,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	}
 
 	async function signIn({ email, password }: ISignIn) {
-		return await axios({
+		return await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/auth/login/`,
+			url: `/auth/login/`,
 			data: {
 				email,
 				password,
@@ -49,33 +55,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}).then((response: AxiosResponse<TTokens>) => {
 			if (!response.data.access || !response.data.refresh) return;
 
-			localStorage.setItem("access", response.data.access);
-			localStorage.setItem("refresh", response.data.refresh);
+			setCookie("access", response.data.access, {
+				path: "/",
+			});
+
+			setCookie("refresh", response.data.access, {
+				path: "/",
+			});
+
+			push("/");
 		});
 	}
 	async function refreshTokens(refresh: string) {
-		return await axios({
+		return await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/auth/login/refresh/`,
+			url: `/auth/login/refresh/`,
 			data: {
 				refresh,
 			},
 		}).then((response: AxiosResponse<TTokens>) => {
 			if (!response.data.refresh || !response.data.access) return;
 
-			localStorage.setItem("access", response.data.access);
-			localStorage.setItem("refresh", response.data.refresh);
+			setCookie("access", response.data.access, {
+				path: "/",
+			});
+
+			setCookie("refresh", response.data.access, {
+				path: "/",
+			});
 		});
 	}
 	function logOut() {
-		localStorage.removeItem("access");
-		localStorage.removeItem("refresh");
+		removeCookie("access");
+		removeCookie("refresh");
 
 		window.location.reload();
 	}
 
 	useEffect(() => {
-		const refresh = localStorage.getItem("refresh");
+		const refresh = cookie.refresh;
 		if (!refresh) return;
 
 		setTimeout(async () => {

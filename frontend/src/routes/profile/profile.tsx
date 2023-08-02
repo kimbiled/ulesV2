@@ -1,21 +1,14 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { useUser } from "@hooks/user/useUser";
 
 export default async function Profile() {
-	const { push } = useRouter();
+	const { user } = await useUser();
 
-	useEffect(() => {
-		useUser(localStorage.getItem("access")).then((props) => {
-			if (!props.user) return push("/login");
+	if (!user) return redirect("/login");
 
-			if (props.user.user_type === 2) return push("/volunteer");
-			if (props.user.user_type === 3) return push("/shop");
-			if (props.user.user_type === 4) return push("/customer");
-		});
-	}, []);
-
-	return <></>;
+	if (user.user_type === 2) return redirect("/volunteer");
+	if (user.user_type === 3) return redirect("/shop");
+	if (user.user_type === 4) return redirect("/customer");
+	else return redirect("/");
 }
