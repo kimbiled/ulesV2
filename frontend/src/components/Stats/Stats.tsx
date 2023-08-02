@@ -3,7 +3,7 @@ import styles from '@root/style';
 import Image from 'next/image';
 const Stats = () => {
   return (
-    <section className=" fontRaleway bg-white">
+    <section className=" fontRaleway ">
       <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold text-ulsDark sm:text-4xl">
@@ -16,7 +16,7 @@ const Stats = () => {
             {stats.map(item => (
               <div
                 key={item.id}
-                className="shadow-md transform transition-all hover:scale-105 hover:shadow-xl flex flex-col space-y-4 justify-center items-center rounded-3xl border border-gray-100 px-4 py-8 text-center ">
+                className="shadow-md bg-white transform transition-all hover:scale-105 hover:shadow-xl flex flex-col space-y-4 justify-center items-center rounded-3xl border border-gray-100 px-4 py-8 text-center ">
                 <Image
                   alt="item"
                   width={100}
