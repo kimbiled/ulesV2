@@ -25,6 +25,7 @@ export default function Volunteer({ user }: { user: TUser | null }) {
 
 	const companyRef = useRef<HTMLInputElement>(null);
 
+	console.log(user);
 	useEffect(() => {
 		Promise.all([getAvailableOrders(), getOrders(), getTop()])
 			.then(([retrievedAvailableOrders, retrievedOrders, retrievedRating]) => {
@@ -88,8 +89,6 @@ export default function Volunteer({ user }: { user: TUser | null }) {
 										if (isChangeable)
 											await updateProfile({
 												company: companyRef.current.value,
-											}).then(() => {
-												// refreshUser();
 											});
 
 										setIsChangeable((prevState) => !prevState);
