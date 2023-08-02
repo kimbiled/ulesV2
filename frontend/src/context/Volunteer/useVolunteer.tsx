@@ -3,7 +3,10 @@ import { createContext, ReactNode, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
 import config from "@root/config";
-import { IUpdateProfile, TAvailableOrder, TOrder, TTop } from "@context/Volunteer/types";
+
+import { useCustomCookie } from "@context/CustomCookie/useCustomCookie";
+
+import type { IUpdateProfile, TAvailableOrder, TOrder, TTop } from "@context/Volunteer/types";
 
 interface VolunteerContextProps {
 	getOrders: () => Promise<TOrder[] | void>;
@@ -21,16 +24,16 @@ export function useVolunteer(): VolunteerContextProps {
 }
 
 export function VolunteerProvider({ children }: { children: ReactNode }) {
-	const access = localStorage.getItem("access");
+	const { cookie } = useCustomCookie();
 
 	async function getOrders() {
-		if (!access) return [];
+		if (!cookie.access) return [];
 
 		return await axios({
 			method: "GET",
 			url: `${config.BACKEND_HOST}/service/get-orders/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		})
 			.then((response: AxiosResponse<TOrder[]>) => {
@@ -42,13 +45,13 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	}
 
 	async function getAvailableOrders() {
-		if (!access) return [];
+		if (!cookie.access) return [];
 
 		return await axios({
 			method: "GET",
 			url: `${config.BACKEND_HOST}/service/get-available-orders/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		})
 			.then((response: AxiosResponse<TAvailableOrder[]>) => {
@@ -60,33 +63,33 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	}
 
 	async function assignOrder(id: number) {
-		if (!access) return;
+		if (!cookie.access) return;
 
 		await axios({
 			method: "PUT",
 			url: `${config.BACKEND_HOST}/service/orders/${id}/assign/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		}).catch((error) => {
 			console.log(error);
 		});
 	}
 	async function denyOrder(id: number) {
-		if (!access) return;
+		if (!cookie.access) return;
 
 		await axios({
 			method: "PUT",
 			url: `${config.BACKEND_HOST}/service/orders/${id}/deny/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		}).catch((error) => {
 			console.log(error);
 		});
 	}
 	async function updateProfile({ company, rating }: IUpdateProfile) {
-		if (!access) return;
+		if (!cookie.access) return;
 
 		await axios({
 			method: "POST",
@@ -96,7 +99,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 				rating,
 			} satisfies IUpdateProfile,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		});
 	}
