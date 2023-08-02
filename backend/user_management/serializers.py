@@ -33,3 +33,13 @@ class UserSignUpSerializer(serializers.ModelSerializer):
             raise ValidationError("Email has already been used")
 
         return super().validate(attrs)
+    
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(required = True)
+    user_type = serializers.IntegerField(required = True)
+    phone = serializers.CharField(required = True)
+    name = serializers.CharField(required = True)
+
+    class Meta:
+        model = User
+        fields = ['email', 'user_type', 'phone', 'name']
