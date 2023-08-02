@@ -6,13 +6,10 @@ import { exitForm } from "@public/assets";
 
 import { TCategory, TProduct } from "@context/Shop/types";
 import { useShop } from "@context/Shop/useShop";
-import { useUser } from "@hooks/user/useUser";
-import { TUser } from "@hooks/user/types";
+import type { TUser } from "@hooks/user/types";
 
-export default function Profile() {
+export default function Profile({ user }: { user: TUser | null }) {
 	const { getProducts, createProduct, getCategories } = useShop();
-
-	const [user, setUser] = useState<TUser | null>(null);
 
 	const [showModal, setShowModal] = useState(false);
 	const [products, setProducts] = useState<TProduct[]>([]);
@@ -24,10 +21,6 @@ export default function Profile() {
 	const quantityPerUnitRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		useUser(localStorage.getItem("access")).then((props) => {
-			setUser(props.user);
-		});
-
 		Promise.all([getProducts(), getCategories()])
 			.then(([retrievedProducts, retrievedCategories]) => {
 				if (retrievedProducts) setProducts(retrievedProducts);

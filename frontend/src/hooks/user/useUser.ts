@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
+import { cookies } from "next/headers";
 
-import { useAxios } from "@hooks/axios/useAxios";
+import { Axios } from "@lib/axios/axios";
 
 import { TUser } from "@hooks/user/types";
 
@@ -8,9 +9,11 @@ interface useUserProps {
 	user: TUser | null;
 }
 
-export async function useUser(accessToken: string | null): Promise<useUserProps> {
+export async function useUser(): Promise<useUserProps> {
+	const accessToken = cookies().get("access")?.value;
+
 	async function getMe() {
-		return await useAxios({
+		return await Axios({
 			url: "/service/get-profile/",
 			headers: {
 				Authorization: `Bearer ${accessToken}`,

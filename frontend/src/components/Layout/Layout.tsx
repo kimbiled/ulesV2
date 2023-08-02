@@ -2,15 +2,23 @@ import { ReactNode } from "react";
 
 import Header from "@components/Header/Header";
 import Footer from "@components/Footer/Footer";
-import { AuthProvider } from "@context/Auth/useAuth";
 
-export default function Layout({ children }: { children: ReactNode }) {
+import { AuthProvider } from "@context/Auth/useAuth";
+import { CustomCookieProvider } from "@context/CustomCookie/useCustomCookie";
+
+import { useUser } from "@hooks/user/useUser";
+
+export default async function Layout({ children }: { children: ReactNode }) {
+	const { user } = await useUser();
+
 	return (
 		<>
-			<AuthProvider>
-				<Header />
-			</AuthProvider>
-			<main className={"flex flex-1 m-auto w-[85%]"}>{children}</main>
+			<CustomCookieProvider>
+				<AuthProvider>
+					<Header user={user} />
+				</AuthProvider>
+			</CustomCookieProvider>
+			<main className={"flex flex-1 m-auto w-[85%] items-center justify-center"}>{children}</main>
 			<Footer />
 		</>
 	);

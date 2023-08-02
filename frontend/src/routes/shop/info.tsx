@@ -2,14 +2,10 @@ import { useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { useShop } from "@context/Shop/useShop";
-import { useUser } from "@context/User/useUser";
 
-import Image from "next/image";
-import { uleslogo } from "@public/assets";
 export default function Info() {
-	const { push } = useRouter();
+	const { push, refresh } = useRouter();
 	const { updateProfile } = useShop();
-	const { refreshUser } = useUser();
 
 	const addressRef = useRef<HTMLInputElement>(null);
 	const companyRef = useRef<HTMLInputElement>(null);
@@ -30,12 +26,9 @@ export default function Info() {
 							await updateProfile({
 								address: addressRef.current.value,
 								company: companyRef.current.value,
-								rating: 0,
 							}).then(() => {
-								const access = localStorage.getItem("access");
-								if (!access) return;
-								refreshUser(access);
 								push("/profile");
+								refresh();
 							});
 						}}
 					>
@@ -75,14 +68,5 @@ export default function Info() {
 				</div>
 			</div>
 		</div>
-
-		//  <div className="flex justify-center items-center py-6 absolute z-1 top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-screen h-screen scrollHide drop-shadow-2xl">
-		//  	<div className="w-4/12 h-5/12 rounded-xl bg-white shadow-lg flex justify-center p-6 ">
-		//  		<div className="relative w-full max-w-md max-h-full">
-		//  			<div className="relative bg-white rounded-lg  ">
-		//  			</div>
-		//  		</div>
-		//  	</div>
-		//  </div>
 	);
 }

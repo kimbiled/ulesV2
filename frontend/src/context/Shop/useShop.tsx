@@ -1,9 +1,12 @@
 "use client";
 import { createContext, ReactNode, useContext } from "react";
-import axios, { AxiosResponse } from "axios";
-import config from "@root/config";
+import type { AxiosResponse } from "axios";
 
-import { ICreateProduct, IUpdateProduct, IUpdateProfile, TCategory, TProduct } from "@context/Shop/types";
+import { useCustomCookie } from "@context/CustomCookie/useCustomCookie";
+
+import { Axios } from "@lib/axios/axios";
+
+import type { ICreateProduct, IUpdateProduct, IUpdateProfile, TCategory, TProduct } from "@context/Shop/types";
 
 interface ShopContextProps {
 	getProducts: () => Promise<TProduct[] | void>;
@@ -20,16 +23,16 @@ export function useShop(): ShopContextProps {
 }
 
 export function ShopProvider({ children }: { children: ReactNode }) {
-	const access = localStorage.getItem("access");
+	const { cookie } = useCustomCookie();
 
 	async function getProducts() {
-		if (!access) return [];
+		if (!cookie.access) return [];
 
-		return await axios({
+		return await Axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-products/`,
+			url: `/service/get-products/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		})
 			.then((response: AxiosResponse<TProduct[]>) => {
@@ -48,11 +51,11 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 		units_on_order,
 		discontinued,
 	}: ICreateProduct) {
-		if (!access) return;
+		if (!cookie.access) return;
 
-		await axios({
+		await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/service/create-new-product/`,
+			url: `/service/create-new-product/`,
 			data: {
 				product_name,
 				category_name,
@@ -62,23 +65,22 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 				discontinued,
 			} satisfies ICreateProduct,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		});
 	}
 	async function updateProfile({ address, company }: IUpdateProfile) {
-		if (!access) return;
+		if (!cookie.access) return;
 
-		await axios({
+		await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/service/update-shop-profile/`,
+			url: `/service/update-shop-profile/`,
 			data: {
 				address,
 				company,
-				rating: 0,
 			} satisfies IUpdateProfile,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		});
 	}
@@ -91,11 +93,11 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 		units_on_order,
 		discontinued,
 	}: IUpdateProduct) {
-		if (!access) return;
+		if (!cookie.access) return;
 
-		await axios({
+		await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/service/update-product/`,
+			url: `/service/update-product/`,
 			data: {
 				id,
 				product_name,
@@ -106,18 +108,18 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 				discontinued,
 			} satisfies IUpdateProduct,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		});
 	}
 	async function getOrders() {
-		if (!access) return [];
+		if (!cookie.access) return [];
 
-		return await axios({
+		return await Axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-orders/`,
+			url: `/service/get-orders/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		}).then((response: AxiosResponse) => {
 			return response.data;
@@ -125,13 +127,13 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 	}
 
 	async function getCategories() {
-		if (!access) return [];
+		if (!cookie.access) return [];
 
-		return await axios({
+		return await Axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-categories/`,
+			url: `/service/get-categories/`,
 			headers: {
-				Authorization: `Bearer ${access}`,
+				Authorization: `Bearer ${cookie.access}`,
 			},
 		}).then((response: AxiosResponse<TCategory[]>) => {
 			return response.data;

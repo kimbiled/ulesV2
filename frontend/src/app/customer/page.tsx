@@ -1,13 +1,15 @@
 import Customer from "@routes/customer/customer";
-import { CustomerProvider } from "@context/Customer/useCustomer";
-import ProtectedRoute from "@components/ProtectedRoute/ProtectedRoute";
 
-export default function page() {
+import { useUser } from "@hooks/user/useUser";
+
+import Layout from "@components/Layout/Layout";
+
+export default async function page() {
+	const { user } = await useUser();
+
 	return (
-		<ProtectedRoute>
-			<CustomerProvider>
-				<Customer />
-			</CustomerProvider>
-		</ProtectedRoute>
+		<Layout>
+			<Customer user={user} />
+		</Layout>
 	);
 }

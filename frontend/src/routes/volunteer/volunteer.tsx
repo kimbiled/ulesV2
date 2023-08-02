@@ -1,30 +1,18 @@
-'use client';
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import OrderModal from './OrderModal';
+"use client";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
-// import { useUser } from "@context/User/useUser";
-import { useVolunteer } from '@context/Volunteer/useVolunteer';
-import { TAvailableOrder, TOrder, TTop } from '@context/Volunteer/types';
+import { useVolunteer } from "@context/Volunteer/useVolunteer";
+
+import OrderModal from "./OrderModal";
+
+import type { TAvailableOrder, TOrder, TTop } from "@context/Volunteer/types";
+import type { TUser } from "@hooks/user/types";
 
 import { downarrow, profileImg } from '@public/assets';
 
-import Layout from '@components/Layout/Layout';
-import { TUser } from '@hooks/user/types';
-import { useUser } from '@hooks/user/useUser';
-
-export default function Volunteer() {
-  const {
-    getOrders,
-    getAvailableOrders,
-    getTop,
-    updateProfile,
-    assignOrder,
-    denyOrder,
-  } = useVolunteer();
-  // const { user } = useUser();
-
-  const [user, setUser] = useState<TUser | null>(null);
+export default function Volunteer({ user }: { user: TUser | null }) {
+	const { getOrders, getAvailableOrders, getTop, updateProfile, assignOrder, denyOrder } = useVolunteer();
 
   const [orderModalOpen, setOrderModalOpen] = useState(false);
   const [isChangeable, setIsChangeable] = useState(false);
@@ -37,37 +25,33 @@ export default function Volunteer() {
 
   const companyRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    useUser(localStorage.getItem('access')).then(props => {
-      setUser(props.user);
-    });
+	console.log(user);
+	useEffect(() => {
+		Promise.all([getAvailableOrders(), getOrders(), getTop()])
+			.then(([retrievedAvailableOrders, retrievedOrders, retrievedRating]) => {
+				if (retrievedAvailableOrders) setAvailableOrders(retrievedAvailableOrders);
+				if (retrievedOrders) setOrders(retrievedOrders);
+				if (retrievedRating) setRatings(retrievedRating);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 
-    Promise.all([getAvailableOrders(), getOrders(), getTop()])
-      .then(([retrievedAvailableOrders, retrievedOrders, retrievedRating]) => {
-        if (retrievedAvailableOrders)
-          setAvailableOrders(retrievedAvailableOrders);
-        if (retrievedOrders) setOrders(retrievedOrders);
-        if (retrievedRating) setRatings(retrievedRating);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    return () => {
-      setAvailableOrders([]);
-      setOrders([]);
-      setRatings(null);
-    };
-  }, []);
-  return (
-    <Layout>
-      <div className="w-full h-full flex flex-row justify-between mb-16 mt-16 fontRaleway">
-        <div className="flex flex-col justify-between">
-          <div className="w-[445px] h-[530px] bg-gradient-linear2 rounded-3xl text-white flex flex-col ">
-            <div className="flex flex-row justify-start gap-4 items-center w-[365px] m-auto">
-              <div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
-              <div>
-                <p className="text-lg">{user?.name}</p>
+		return () => {
+			setAvailableOrders([]);
+			setOrders([]);
+			setRatings(null);
+		};
+	}, []);
+	return (
+		<>
+			<div className="w-full h-full flex flex-row justify-between mb-16 mt-16 fontRaleway">
+				<div className="flex flex-col justify-between">
+					<div className="w-[445px] h-[530px] bg-gradient-linear2 rounded-3xl text-white flex flex-col ">
+						<div className="flex flex-row justify-start gap-4 items-center w-[365px] m-auto">
+							<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
+							<div>
+								<p className="text-lg">{user?.name}</p>
 
                 <p className="text-xs">Данные вашего аккаунта</p>
               </div>
@@ -102,12 +86,10 @@ export default function Volunteer() {
                   onClick={async () => {
                     if (!companyRef.current) return;
 
-                    if (isChangeable)
-                      await updateProfile({
-                        company: companyRef.current.value,
-                      }).then(() => {
-                        // refreshUser();
-                      });
+										if (isChangeable)
+											await updateProfile({
+												company: companyRef.current.value,
+											});
 
                     setIsChangeable(prevState => !prevState);
                   }}
@@ -236,34 +218,31 @@ export default function Volunteer() {
                     </div>
                   </div>
 
-                  <button
-                    className="fontInter w-36 h-8 mr-2 bg-white text-black rounded-3xl text-sm hover:bg-stone-200"
-                    type={'button'}
-                    onClick={async () => {
-                      await assignOrder(availableOrder.id).then(() => {
-                        window.location.reload();
-                      });
-                    }}>
-                    Подтвердить
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-          <hr className="mt-6" />
-          <Image
-            src={downarrow}
-            alt="DownArrow"
-            className="m-auto py-2 cursor-pointer"
-          />
-        </div>
-      </div>
-      <OrderModal
-        isVisible={orderModalOpen}
-        setIsVisible={setOrderModalOpen}
-        order={currentOrder}
-        denyOrder={denyOrder}
-      />
-    </Layout>
-  );
+									<button
+										className="fontInter w-36 h-8 mr-2 bg-white text-black rounded-3xl text-sm hover:bg-stone-200"
+										type={"button"}
+										onClick={async () => {
+											await assignOrder(availableOrder.id).then(() => {
+												window.location.reload();
+											});
+										}}
+									>
+										Подтвердить
+									</button>
+								</div>
+							</div>
+						);
+					})}
+					<hr className="mt-6" />
+					<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
+				</div>
+			</div>
+			<OrderModal
+				isVisible={orderModalOpen}
+				setIsVisible={setOrderModalOpen}
+				order={currentOrder}
+				denyOrder={denyOrder}
+			/>
+		</>
+	);
 }
