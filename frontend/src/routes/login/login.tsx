@@ -16,7 +16,7 @@ export default function Login() {
 	return (
 		<div className={`${styles.flexStart}`}>
 			<div className={`${styles.boxWidth}`}>
-				<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+				<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0 mt-8 mb-8">
 					<div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
 						<div className="p-6 space-y-4 md:space-y-6 sm:p-8">
 							<h2
@@ -50,7 +50,7 @@ export default function Login() {
 										type="text"
 										name="email"
 										id="email"
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full h-10 p-4"
+										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-64 p-2.5"
 										placeholder="name@email.com"
 										ref={emailRef}
 									/>
@@ -64,7 +64,7 @@ export default function Login() {
 										name="password"
 										id="password"
 										placeholder="••••••••"
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full h-10 p-4"
+										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-64 p-2.5"
 										ref={passwordRef}
 									/>
 								</div>
@@ -81,7 +81,7 @@ export default function Login() {
 								</button>
 								<p className="text-sm font-light text-gray-500">
 									Нет аккаунта?{" "}
-									<Link href={"/register"} className="font-medium text-primary-600 hover:underline">
+									<Link href={"/auth/register"} className="font-medium text-primary-600 hover:underline">
 										Зарегистрироватся
 									</Link>
 								</p>
