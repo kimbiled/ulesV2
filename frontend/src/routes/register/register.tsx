@@ -55,7 +55,7 @@ export default function Register() {
 										type="email"
 										name="email"
 										id="email"
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full h-10 p-4"
 										placeholder="name@email.com"
 										ref={emailRef}
 									/>
@@ -68,7 +68,7 @@ export default function Register() {
 										type="text"
 										name="name"
 										id="name"
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full h-10 p-4"
 										placeholder="Ваше имя"
 										ref={nameRef}
 									/>
@@ -79,7 +79,7 @@ export default function Register() {
 									</label>
 									<select
 										id="roles"
-										className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-4 h-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 										ref={roleRef}
 									>
 										<option value="2">Волонтер</option>
@@ -96,7 +96,7 @@ export default function Register() {
 										name="phone"
 										id="phone"
 										placeholder="+7 333 222 11 00"
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full h-10 p-4"
 										ref={phoneRef}
 									/>
 								</div>
@@ -109,7 +109,7 @@ export default function Register() {
 										name="password"
 										id="password"
 										placeholder="••••••••"
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full h-10 p-4"
 										ref={passwordRef}
 									/>
 								</div>
@@ -118,7 +118,7 @@ export default function Register() {
 									className="w-full text-white bg-ulsDark 
                       hover:bg-primary-700 focus:ring-4 focus:outline-none 
                       focus:ring-primary-300 font-medium rounded-lg 
-                      text-sm px-5 py-2.5 
+                      text-sm h-10 
                       text-center"
 								>
 									Создать аккаунт
