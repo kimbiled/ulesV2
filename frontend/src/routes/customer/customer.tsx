@@ -1,12 +1,9 @@
 "use client";
 import { Fragment, useRef, useState, useEffect } from "react";
-import Image from "next/image";
 
 import { useCustomer } from "@context/Customer/useCustomer";
 
-import { userImg } from "@public/assets";
-
-import type { TOrder} from "@context/Volunteer/types";
+import type { TOrder } from "@context/Volunteer/types";
 import type { TUser } from "@hooks/user/types";
 
 export default function Customer({ user }: { user: TUser | null }) {
@@ -14,10 +11,8 @@ export default function Customer({ user }: { user: TUser | null }) {
 
 	const [order, setOrder] = useState<TOrder | null>(null);
 	const [isChange, setChange] = useState<boolean>(false);
-	const [isChangeable, setIsChangeable] = useState<boolean>(false);
 
 	const addressRef = useRef<HTMLInputElement>(null);
-	const companyRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		Promise.all([getOrder()])
@@ -70,60 +65,60 @@ export default function Customer({ user }: { user: TUser | null }) {
 	return (
 		<div className="fontRaleway flex flex-row justify-around w-screen mt-16 mb-16 max-sm:flex max-sm:flex-col max-sm:gap-3 max-sm:items-center max-md:flex max-md:flex-col max-md:gap-3 max-md:items-center max-lg:flex max-lg:flex-col max-lg:gap-3 max-lg:items-center max-xl:flex max-xl:flex-row max-xl:gap-3 max-xl:items-center ">
 			<div className="max-sm:w-[380px] max-md:w-[450px] max-lg:w-[475px] max-xl:w-[390px] w-[505px] h-auto bg-gradient-linear3 rounded-3xl flex items-center gap-2 p-4 flex-col">
-					<div className="max-sm:w-[320px] max-md:w-[390px] max-lg:w-[415px] max-xl:w-[330px] bg-volunteerColor w-[465px] h-auto py-4 gap-4 rounded-3xl border-[1px] border-white flex flex-wrap items-center justify-evenly">
-						<div className="w-full text-center">
-							<p className="font-semibold text-xl text-white">Заказ создан 03.08.23</p>
-						</div>
-						{order?.order_details.map((item) => (
-							<div
-								key={item.id}
-								className="max-sm:w-36 max-sm:h-11 w-44 h-14 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-2"
-							>
-								<div className="flex flex-row justify-between">
-									<p className="text-[10px]">Название</p>
-									<p className="text-[10px]">Количество</p>
-								</div>
-								<div className="flex flex-row justify-between">
-									<p className="text-sm">{item.product.product_name}</p>
-									<p className="text-sm">
-										{item.quantity} шт
-										{/*{item.product.category.unit_of_measurement}*/}
-									</p>
-								</div>
+				<div className="max-sm:w-[320px] max-md:w-[390px] max-lg:w-[415px] max-xl:w-[330px] bg-volunteerColor w-[465px] h-auto py-4 gap-4 rounded-3xl border-[1px] border-white flex flex-wrap items-center justify-evenly">
+					<div className="w-full text-center">
+						<p className="font-semibold text-xl text-white">Заказ создан 03.08.23</p>
+					</div>
+					{order?.order_details.map((item) => (
+						<div
+							key={item.id}
+							className="max-sm:w-36 max-sm:h-11 w-44 h-14 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-2"
+						>
+							<div className="flex flex-row justify-between">
+								<p className="text-[10px]">Название</p>
+								<p className="text-[10px]">Количество</p>
 							</div>
-						))}
-					</div>
-					<div className="flex w-full justify-between flex-row mt-4">
-						<button
-							className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm max-sm:w-28 "
-							type={"button"}
-							// onClick={async () => {
-							// 	if (!order) return;
+							<div className="flex flex-row justify-between">
+								<p className="text-sm">{item.product.product_name}</p>
+								<p className="text-sm">
+									{item.quantity} шт
+									{/*{item.product.category.unit_of_measurement}*/}
+								</p>
+							</div>
+						</div>
+					))}
+				</div>
+				<div className="flex w-full justify-between flex-row-reverse mt-4">
+					{/*<button*/}
+					{/*	className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm max-sm:w-28 "*/}
+					{/*	type={"button"}*/}
+					{/*	// onClick={async () => {*/}
+					{/*	// 	if (!order) return;*/}
 
-							// 	await orderConfirm(order.id).then(() => {
-							// 		window.location.reload();
-							// 	});
-							// }}
-						>
-							Отменить
-						</button>
+					{/*	// 	await orderConfirm(order.id).then(() => {*/}
+					{/*	// 		window.location.reload();*/}
+					{/*	// 	});*/}
+					{/*	// }}*/}
+					{/*>*/}
+					{/*	Отменить*/}
+					{/*</button>*/}
 
-						<button
-							className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm max-sm:w-28"
-							type={"button"}
-							onClick={async () => {
-								if (!order) return;
+					<button
+						className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm max-sm:w-28"
+						type={"button"}
+						onClick={async () => {
+							if (!order) return;
 
-								await orderConfirm(order.id).then(() => {
-									window.location.reload();
-								});
-							}}
-						>
-							Подтвердить
-						</button>
-					</div>
+							await orderConfirm(order.id).then(() => {
+								window.location.reload();
+							});
+						}}
+					>
+						Подтвердить
+					</button>
+				</div>
 			</div>
-			<div className="w-[445px] h-auto bg-gradient-linear3 rounded-3xl text-white flex flex-col gap-5 max-sm:w-[380px] max-md:w-[450px] max-lg:w-[475px] max-xl:w-[475px] max-xl:w-[390px] max-xl:h-[540px]" >
+			<div className="w-[445px] h-auto bg-gradient-linear3 rounded-3xl text-white flex flex-col gap-5 max-sm:w-[380px] max-md:w-[450px] max-lg:w-[475px] max-xl:w-[475px] max-xl:h-[540px]">
 				<div className="flex justify-center items-center mt-8">
 					<div className="flex flex-row gap-4 items-center w-[365px] max-sm:w-[280px] max-md:w-[340px] max-lg:w-[360px] max-xl:w-[320px]">
 						<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
@@ -133,7 +128,7 @@ export default function Customer({ user }: { user: TUser | null }) {
 						</div>
 					</div>
 				</div>
-					<hr />
+				<hr />
 				<div className="flex flex-col gap-5">
 					<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">
 						<p className="text-xs">ФИ</p>
@@ -147,14 +142,14 @@ export default function Customer({ user }: { user: TUser | null }) {
 						<p className="text-xs">Почта</p>
 						<p className="text-sm">{user?.email}</p>
 					</div>
-					<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">
-						<p className="text-xs">Организации</p>
-						<p className="text-sm">{user?.company}</p>
-					</div>
-					<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">
-						<p className="text-xs">Ules поинты</p>
-						<p className="text-sm">{user?.rank}</p>
-					</div>
+					{/*<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">*/}
+					{/*	<p className="text-xs">Организации</p>*/}
+					{/*	<p className="text-sm">{user?.company}</p>*/}
+					{/*</div>*/}
+					{/*<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">*/}
+					{/*	<p className="text-xs">Ules поинты</p>*/}
+					{/*	<p className="text-sm">{user?.rank}</p>*/}
+					{/*</div>*/}
 				</div>
 				<hr />
 			</div>

@@ -31,7 +31,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 		return await Axios({
 			method: "GET",
-			url: `/service/get-orders/`,
+			url: `/orders/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -49,7 +49,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 		return await Axios({
 			method: "GET",
-			url: `/service/get-available-orders/`,
+			url: `/orders/available/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -67,7 +67,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "PUT",
-			url: `/service/orders/${id}/assign/`,
+			url: `/orders/assign/${id}/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -80,7 +80,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "PUT",
-			url: `/service/orders/${id}/deny/`,
+			url: `/orders/deny/${id}/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -93,7 +93,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "POST",
-			url: `/service/update-volunteer-profile/`,
+			url: `/profile/update-volunteer/`,
 			data: {
 				company,
 				rating,
@@ -106,7 +106,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	async function getTop() {
 		return await Axios({
 			method: "GET",
-			url: `/service/get-top/2/`,
+			url: `/profile/get-top/2/`,
 		}).then((response: AxiosResponse<TTop>) => {
 			return response.data;
 		});
