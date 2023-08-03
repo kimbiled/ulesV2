@@ -74,7 +74,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "POST",
-			url: `/profile/update-shop`,
+			url: `/profile/update-shop/`,
 			data: {
 				address,
 				company,
