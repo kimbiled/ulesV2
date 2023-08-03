@@ -1,4 +1,3 @@
-
 import bill from './bill.png';
 import binance from './binance.png';
 import card from './card.png';
@@ -42,10 +41,11 @@ import exitForm from './exit_form.svg';
 import magnum from './magnum.jpg';
 import quote01 from './quote01.jpg';
 import quote02 from './quote02.jpg';
-import downarrow from './downarrow.svg'
-import userImg from './user.svg'
-import volunteerImg from './volunteerImg.svg'
-import profileImg from './profile.png'
+import downarrow from './downarrow.svg';
+import userImg from './user.svg';
+import volunteerImg from './volunteerImg.svg';
+import profileImg from './profile.png';
+import heroBg from './hero-bg.png';
 export {
   profileImg,
   volunteerImg,
@@ -92,5 +92,6 @@ export {
   volunteers,
   quote01,
   quote02,
-  userImg
+  userImg,
+  heroBg,
 };

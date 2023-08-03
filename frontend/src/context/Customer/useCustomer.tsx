@@ -18,7 +18,7 @@ interface CustomerContextProps {
 const CustomerContext = createContext({} as CustomerContextProps);
 
 export function useCustomer(): CustomerContextProps {
-	return useContext(CustomerContext);
+  return useContext(CustomerContext);
 }
 export function CustomerProvider({ children }: { children: ReactNode }) {
 	const { cookie } = useCustomCookie();

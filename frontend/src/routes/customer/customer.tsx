@@ -4,9 +4,9 @@ import Image from "next/image";
 
 import { useCustomer } from "@context/Customer/useCustomer";
 
-import { downarrow, userImg } from "@public/assets";
+import { userImg } from "@public/assets";
 
-import type { TOrder } from "@context/Volunteer/types";
+import type { TOrder} from "@context/Volunteer/types";
 import type { TUser } from "@hooks/user/types";
 
 export default function Customer({ user }: { user: TUser | null }) {
@@ -14,8 +14,10 @@ export default function Customer({ user }: { user: TUser | null }) {
 
 	const [order, setOrder] = useState<TOrder | null>(null);
 	const [isChange, setChange] = useState<boolean>(false);
+	const [isChangeable, setIsChangeable] = useState<boolean>(false);
 
 	const addressRef = useRef<HTMLInputElement>(null);
+	const companyRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		Promise.all([getOrder()])
@@ -66,12 +68,11 @@ export default function Customer({ user }: { user: TUser | null }) {
 		},
 	];
 	return (
-		<div className="fontRaleway flex flex-row justify-between w-screen mt-16 mb-16">
-			<div className="w-[845px] h-auto bg-gradient-linear rounded-3xl flex flex-row justify-between p-8">
-				<div className="h-auto">
+		<div className="fontRaleway flex flex-row justify-around w-screen mt-16 mb-16">
+			<div className="w-[505px] h-auto bg-gradient-linear3 rounded-3xl flex items-center gap-2 p-4 flex-col">
 					<div className="bg-volunteerColor w-[465px] h-auto py-4 gap-4 rounded-3xl border-[1px] border-white flex flex-wrap items-center justify-evenly">
 						<div className="w-full text-center">
-							<p className="font-semibold text-xl text-white">Ваш заказ</p>
+							<p className="font-semibold text-xl text-white">Заказ создан 03.08.23</p>
 						</div>
 						{order?.order_details.map((item) => (
 							<div
@@ -91,11 +92,22 @@ export default function Customer({ user }: { user: TUser | null }) {
 								</div>
 							</div>
 						))}
-						<div className="w-full">
-							<Image src={downarrow} alt="DownArrow" className="m-auto py-2 cursor-pointer" />
-						</div>
 					</div>
-					<div className="flex w-full justify-end mt-4">
+					<div className="flex w-full justify-between flex-row mt-4">
+						<button
+							className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm "
+							type={"button"}
+							// onClick={async () => {
+							// 	if (!order) return;
+
+							// 	await orderConfirm(order.id).then(() => {
+							// 		window.location.reload();
+							// 	});
+							// }}
+						>
+							Отменить
+						</button>
+
 						<button
 							className="fontInter hover:bg-stone-200 w-36 h-8 bg-white text-black rounded-3xl mb-1 mt-1 text-sm "
 							type={"button"}
@@ -110,42 +122,44 @@ export default function Customer({ user }: { user: TUser | null }) {
 							Подтвердить
 						</button>
 					</div>
-				</div>
-
-				<div className="w-64 h-[450px] bg-volunteerColor rounded-3xl border-[1px] border-white">
-					<div className="flex flex-col items-center gap-3 mt-4">
-						<div className="w-52 h-44 rounded-2xl bg-white flex justify-center items-center">
-							<Image src={userImg} alt="userImg" className="m-auto py-2 cursor-pointer" />
+			</div>
+			<div className="w-[445px] h-auto bg-gradient-linear3 rounded-3xl text-white flex flex-col gap-5">
+				<div className="flex justify-center items-center mt-8">
+					<div className="flex flex-row gap-4  items-center w-[365px]">
+						<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
+						<div>
+							<p className="text-lg">{user?.name}</p>
+							<p className="text-xs">Данные волонтера</p>
 						</div>
-						<Fragment key={order?.volunteer.user}>
-							<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
-								<p className="text-[10px]">Волонтер</p>
-								<p className="text-sm">{order?.volunteer.name}</p>
-							</div>
-							<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
-								<p className="text-[10px]">Дата создания</p>
-								<p className="text-sm">{order?.order_date}</p>
-							</div>
-							<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
-								<p className="text-[10px]">Поставщик</p>
-								{order?.order_details.map((orderDetail) => {
-									return (
-										<p className="text-sm" key={orderDetail.id}>
-											{orderDetail.product.shop.company}
-										</p>
-									);
-								})}
-							</div>
-							<div className="w-52 h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
-								<p className="text-[10px]">Адрес доставки</p>
-								<p className="text-sm">{order?.customer.address}</p>
-							</div>
-						</Fragment>
 					</div>
 				</div>
+					<hr />
+				<div className="flex flex-col gap-5">
+					<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
+						<p className="text-xs">ФИ</p>
+						<p className="text-sm">{user?.name}</p>
+					</div>
+					<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
+						<p className="text-xs">Номер телефона</p>
+						<p className="text-sm">{user?.phone}</p>
+					</div>
+					<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
+						<p className="text-xs">Почта</p>
+						<p className="text-sm">{user?.email}</p>
+					</div>
+					<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
+						<p className="text-xs">Организации</p>
+						<p className="text-sm">{user?.company}</p>
+					</div>
+					<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput">
+						<p className="text-xs">Ules поинты</p>
+						<p className="text-sm">{user?.rank}</p>
+					</div>
+				</div>
+				<hr />
 			</div>
 
-			<div className="w-[336px] h-auto bg-gradient-linear rounded-3xl text-white p-4">
+			<div className="w-3/12 h-auto bg-gradient-linear3 rounded-3xl text-white p-4">
 				<div className="flex flex-col gap-5 justify-center w-[280px] m-auto">
 					<div className="flex flex-row  justify-start gap-4 items-center">
 						<div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
@@ -172,6 +186,10 @@ export default function Customer({ user }: { user: TUser | null }) {
 					<div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
 						<p className="text-[10px]">Ваше имя</p>
 						<p className="text-sm">{user?.name}</p>
+					</div>
+					<div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
+						<p className="text-[10px]">Ваш номер телефона</p>
+						<p className="text-sm">{user?.phone}</p>
 					</div>
 					{/*<div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">*/}
 					{/*	<p className="text-[10px]">Возраст</p>*/}
