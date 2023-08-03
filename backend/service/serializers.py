@@ -4,6 +4,7 @@ from rest_framework import serializers
 from service.models import Category, CustomerProfile, Product, ShopProfile, VolunteerProfile, Order, OrderDetail
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
 class ProductSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     category_name = serializers.CharField(source='category') 
@@ -52,10 +53,10 @@ class ShopProfileSerializer(serializers.ModelSerializer):
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
-    norm = serializers.IntegerField(source='norm_id')
+    norm_id = serializers.IntegerField(source='norm', required = False)
     class Meta:
         model = CustomerProfile
-        fields = ('address','norm')
+        fields = ('address','norm_id')
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     company = serializers.CharField(required = True)

@@ -49,7 +49,7 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 		return await Axios({
 			method: "GET",
-			url: `/orders/available/get`,
+			url: `/orders/available/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
