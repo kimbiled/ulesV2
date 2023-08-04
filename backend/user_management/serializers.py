@@ -17,10 +17,10 @@ class UserSignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["email", "password",'user_type','phone']
+        fields = ["email", "password",'user_type','phone','name']
 
     def create(self, validated_data):
-        user = User.objects.create(email=validated_data['email'], user_type = validated_data['user_type'])
+        user = User.objects.create(email=validated_data['email'], user_type = validated_data['user_type'], phone=validated_data['phone'], name=validated_data['name'])
         user.set_password(validated_data['password'])
         user.save()
         return user
@@ -33,3 +33,13 @@ class UserSignUpSerializer(serializers.ModelSerializer):
             raise ValidationError("Email has already been used")
 
         return super().validate(attrs)
+    
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(required = True)
+    user_type = serializers.IntegerField(required = True)
+    phone = serializers.CharField(required = True)
+    name = serializers.CharField(required = True)
+
+    class Meta:
+        model = User
+        fields = ['email', 'user_type', 'phone', 'name']

@@ -1,7 +1,9 @@
 from django.forms import ValidationError
 from rest_framework import serializers
 
-from service.models import Category, CustomerProfile, Product, ShopProfile, VolunteerProfile
+from service.models import Category, CustomerProfile, Product, ShopProfile, VolunteerProfile, Order, OrderDetail
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class ProductSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
@@ -16,27 +18,60 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields= ('category_name','description', 'product_set')
+        fields= ('category_name','description', 'unit_of_measurement', 'product_set')
 
+class OrderDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderDetail
+        fields = ('id', 'product', 'quantity')
+
+        depth = 2
+
+class OrderSerializer(serializers.ModelSerializer):
+    order_details = serializers.SerializerMethodField()
+    
+    def get_order_details(self, order):
+        order_details = order.orderdetail_set.all()
+        serializer = OrderDetailSerializer(order_details, many=True)
+        return serializer.data
+
+    class Meta:
+        model = Order
+        fields = ('id', 'customer', 'volunteer', 'order_date', 'order_details')
+
+        depth = 1
 
 class ShopProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
     company = serializers.CharField(required = True)
-    rank = serializers.IntegerField(required = True)
-    rating = serializers.IntegerField(required = True)
+    rating = serializers.IntegerField(default=0)
+    orders = OrderSerializer(many=True, read_only=True, source='order_set')
     class Meta:
         model = ShopProfile 
-        fields = ('address','company')
+        fields = ('address','company','rating','orders')
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
+    norm_id = serializers.IntegerField(source='norm', required = False)
     class Meta:
         model = CustomerProfile
-        fields = ('address')
+        fields = ('address','norm_id')
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
-    organization = serializers.CharField(required = True)
+    company = serializers.CharField(required = True)
+    rating = serializers.IntegerField(default=0)
+    
     class Meta:
         model = VolunteerProfile
-        fields = ('organization')
+        fields = ('company','rating')
+
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(required = True)
+    user_type = serializers.IntegerField(required = True)
+    phone = serializers.CharField(required = True)
+    name = serializers.CharField(required = True)
+
+    class Meta:
+        model = User
+        fields = ['email', 'user_type', 'phone', 'name']

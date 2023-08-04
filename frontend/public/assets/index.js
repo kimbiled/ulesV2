@@ -1,4 +1,3 @@
-import airbnb from './airbnb.png';
 import bill from './bill.png';
 import binance from './binance.png';
 import card from './card.png';
@@ -31,9 +30,26 @@ import budget from './budget.svg';
 import food from './food.svg';
 import experience from './experience.svg';
 import volunteers from './volunteers.svg';
-import magnum from './magnum.svg';
+
+import template from './template.jpg';
+import quote from './quote.svg';
+import time from './time.svg';
+import timer from './timer.svg';
+import map from './map.svg';
+import bin from './bin.svg';
+import exitForm from './exit_form.svg';
+import magnum from './magnum.jpg';
+import quote01 from './quote01.jpg';
+import quote02 from './quote02.jpg';
+import downarrow from './downarrow.svg';
+import userImg from './user.svg';
+import volunteerImg from './volunteerImg.svg';
+import profileImg from './profile.png';
+import heroBg from './hero-bg.png';
 export {
-  airbnb,
+  profileImg,
+  volunteerImg,
+  downarrow,
   bill,
   binance,
   card,
@@ -44,6 +60,7 @@ export {
   robot,
   send,
   shield,
+  exitForm,
   star,
   menu,
   close,
@@ -59,12 +76,22 @@ export {
   people02,
   people03,
   uleslogo,
-  volunteer,
+  magnum,
+  template,
+  quote,
+  time,
+  map,
+  bin,
+  timer,
   ulesphone,
+  volunteer,
   profilePhoto,
   budget,
   food,
   experience,
   volunteers,
-  magnum,
+  quote01,
+  quote02,
+  userImg,
+  heroBg,
 };
