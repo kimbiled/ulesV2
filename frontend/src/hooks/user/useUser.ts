@@ -14,7 +14,7 @@ export async function useUser(): Promise<useUserProps> {
 
 	async function getMe() {
 		return await Axios({
-			url: "/service/get-profile/",
+			url: "/profile/get/",
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},

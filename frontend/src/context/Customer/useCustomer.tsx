@@ -18,7 +18,7 @@ interface CustomerContextProps {
 const CustomerContext = createContext({} as CustomerContextProps);
 
 export function useCustomer(): CustomerContextProps {
-  return useContext(CustomerContext);
+	return useContext(CustomerContext);
 }
 export function CustomerProvider({ children }: { children: ReactNode }) {
 	const { cookie } = useCustomCookie();
@@ -27,7 +27,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "POST",
-			url: `/service/update-customer-profile/`,
+			url: `/profile/update-customer/`,
 			data: {
 				address,
 			},
@@ -42,7 +42,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "POST",
-			url: `/service/orders/confirm/${orderId}/`,
+			url: `/orders/confirm/${orderId}/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -53,7 +53,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 		if (!cookie.access) return null;
 		return await Axios({
 			method: "GET",
-			url: `/service/get-norm/${id}/`,
+			url: `/norm/get/${id}/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -67,7 +67,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
 
 		return await Axios({
 			method: "GET",
-			url: `/service/get-orders/`,
+			url: `/orders/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},

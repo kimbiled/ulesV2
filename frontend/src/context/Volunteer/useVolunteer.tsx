@@ -1,8 +1,8 @@
 "use client";
 import { createContext, ReactNode, useContext } from "react";
-import axios, { AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 
-import config from "@root/config";
+import { Axios } from "@lib/axios/axios";
 
 import { useCustomCookie } from "@context/CustomCookie/useCustomCookie";
 
@@ -29,9 +29,9 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	async function getOrders() {
 		if (!cookie.access) return [];
 
-		return await axios({
+		return await Axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-orders/`,
+			url: `/orders/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -47,9 +47,9 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	async function getAvailableOrders() {
 		if (!cookie.access) return [];
 
-		return await axios({
+		return await Axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-available-orders/`,
+			url: `/orders/available/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -65,9 +65,9 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	async function assignOrder(id: number) {
 		if (!cookie.access) return;
 
-		await axios({
+		await Axios({
 			method: "PUT",
-			url: `${config.BACKEND_HOST}/service/orders/${id}/assign/`,
+			url: `/orders/assign/${id}/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -78,9 +78,9 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	async function denyOrder(id: number) {
 		if (!cookie.access) return;
 
-		await axios({
+		await Axios({
 			method: "PUT",
-			url: `${config.BACKEND_HOST}/service/orders/${id}/deny/`,
+			url: `/orders/deny/${id}/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -91,9 +91,9 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 	async function updateProfile({ company, rating }: IUpdateProfile) {
 		if (!cookie.access) return;
 
-		await axios({
+		await Axios({
 			method: "POST",
-			url: `${config.BACKEND_HOST}/service/update-volunteer-profile/`,
+			url: `/profile/update-volunteer/`,
 			data: {
 				company,
 				rating,
@@ -104,9 +104,9 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 		});
 	}
 	async function getTop() {
-		return await axios({
+		return await Axios({
 			method: "GET",
-			url: `${config.BACKEND_HOST}/service/get-top/2/`,
+			url: `/profile/get-top/2/`,
 		}).then((response: AxiosResponse<TTop>) => {
 			return response.data;
 		});

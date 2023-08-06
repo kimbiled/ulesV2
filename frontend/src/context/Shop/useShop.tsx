@@ -30,7 +30,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
 		return await Axios({
 			method: "GET",
-			url: `/service/get-products/`,
+			url: `/products/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -55,7 +55,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "POST",
-			url: `/service/create-new-product/`,
+			url: `/products/create/`,
 			data: {
 				product_name,
 				category_name,
@@ -74,7 +74,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "POST",
-			url: `/service/update-shop-profile/`,
+			url: `/profile/update-shop/`,
 			data: {
 				address,
 				company,
@@ -97,7 +97,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
 		await Axios({
 			method: "POST",
-			url: `/service/update-product/`,
+			url: `/products/update/`,
 			data: {
 				id,
 				product_name,
@@ -117,7 +117,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
 		return await Axios({
 			method: "GET",
-			url: `/service/get-orders/`,
+			url: `/orders/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
@@ -131,7 +131,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
 		return await Axios({
 			method: "GET",
-			url: `/service/get-categories/`,
+			url: `/categories/get/`,
 			headers: {
 				Authorization: `Bearer ${cookie.access}`,
 			},
