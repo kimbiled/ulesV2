@@ -53,10 +53,10 @@ class ShopProfileSerializer(serializers.ModelSerializer):
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required = True)
-    norm_id = serializers.IntegerField(source='norm', required = False)
+    norm = serializers.CharField(   required = False)
     class Meta:
         model = CustomerProfile
-        fields = ('address','norm_id')
+        fields = ('address','norm')
 
 class VolunteerProfileSerializer(serializers.ModelSerializer):
     company = serializers.CharField(required = True)

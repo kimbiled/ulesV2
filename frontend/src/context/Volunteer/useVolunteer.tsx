@@ -46,7 +46,6 @@ export function VolunteerProvider({ children }: { children: ReactNode }) {
 
 	async function getAvailableOrders() {
 		if (!cookie.access) return [];
-
 		return await Axios({
 			method: "GET",
 			url: `/orders/available/get/`,
