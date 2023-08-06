@@ -1,7 +1,7 @@
-"use client";
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 import { useAuth } from "@context/Auth/useAuth";
 
@@ -12,7 +12,7 @@ import { close, menu, profilePhoto, uleslogo } from "public/assets/index";
 import NavLink from "@ui/NavLink/NavLink";
 
 export default function Header({ user }: { user: TUser | null }) {
-	const { logOut } = useAuth();
+  const { logOut } = useAuth();
 
 	const [toggle, setToggle] = useState<boolean>(false);
 	const [isOpen, setOpen] = useState<boolean>(false);
