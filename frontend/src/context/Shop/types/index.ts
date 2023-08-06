@@ -12,6 +12,23 @@ export type TCategory = {
 	category_name: string;
 	description: string;
 };
+
+export type TTop = {
+	data: {
+		user: {
+			email: string;
+			user_type: number;
+			phone: string;
+			name: string;
+		};
+		profile: {
+			company: string;
+			rating: number;
+		};
+		rank: number;
+	}[];
+};
+
 export interface ICreateProduct extends Omit<TProduct, "id"> {}
 
 export interface IUpdateProfile {

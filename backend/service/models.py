@@ -25,7 +25,7 @@ class Norm(models.Model):
 
     
     def __str__(self):
-        return str(self.norm_name)
+        return str(self.id)
 
 class CustomerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name="customer_profile")
@@ -37,7 +37,7 @@ class CustomerProfile(models.Model):
 class Category(models.Model):    
     category_name = models.CharField(max_length=255, unique=True)
     description = models.TextField(default='')
-    unit_of_measurement = models.CharField(max_length=255, default='kg')
+    unit_of_measurement = models.CharField(max_length=255, default='g')
 
 
     def __str__(self):
