@@ -3,6 +3,7 @@ import styles from '@root/style';
 import { discount, robot, volunteer, heroBg } from '@public/assets/index';
 import Image from 'next/image';
 import GetStarted from './GetStarted';
+import { redirect } from 'next/dist/server/api-utils';
 
 const Hero = () => {
   return (
@@ -22,14 +23,9 @@ const Hero = () => {
             алгоритмы для эффективного сбора и распределения прямой помощи.
           </p>
           <a
-            href="#"
+            href="/auth/register"
             className="hover:bg-ulsDark hover:text-white ease-in-out duration-300 inline-flex items-center justify-center px-3 py-2 md:px-5 md:py-3 mr-3 text-sm md:text-base font-medium text-center text-ulsDark rounded-lg bg-white  focus:ring-4  focus:ring-primary-900">
             Помочь
-          </a>
-          <a
-            href="#"
-            className="hover:bg-ulsDark hover:text-white ease-in-out duration-300 inline-flex items-center justify-center px-3 py-2 md:px-5 md:py-3 mr-3 text-sm md:text-base font-medium text-center text-ulsDark rounded-lg bg-white  focus:ring-4  focus:ring-primary-900">
-            Помощь
           </a>
         </div>
       </div>
