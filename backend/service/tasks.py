@@ -19,8 +19,8 @@ def create_order_daily():
                 details.append(OrderDetail.objects.create(product=product, order= order))
                 if overall <= product.quantity_per_unit*product.units_in_stock:
                     required_units = overall// product.quantity_per_unit
-                    if (required_units == 0):
-                        continue
+                    if required_units == 0:
+                        required_units = 1
                     product.units_in_stock -= required_units
                     product.units_on_order += required_units
                     details[len(details)-1].quantity += required_units

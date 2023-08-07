@@ -109,9 +109,6 @@ class UpdateShopProfile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO SHOP'})
 
         if serializer.is_valid():
-            if (request.user.shop_profile.address == serializer.data['address'] or request.user.shop_profile.company == serializer.data['company']):
-                return Response(data={'message': 'YOU CANNOT ENTER THE SAME DATA FOR YOUR SHOP PROFILE', 'data':serializer.data}, status=status.HTTP_406_NOT_ACCEPTABLE)
-
             request.user.shop_profile.address = serializer.data['address']
             request.user.shop_profile.company = serializer.data['company']
             request.user.shop_profile.save()
@@ -133,9 +130,6 @@ class UpdateCustomerProfile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
 
         if serializer.is_valid():
-            if (request.user.customer_profile.address == serializer.data['address']):
-                return Response(data={'message': 'YOU CANNOT ENTER THE SAME DATA FOR YOUR CUSTOMER PROFILE', 'data':serializer.data}, status=status.HTTP_406_NOT_ACCEPTABLE)
-
             request.user.customer_profile.address = serializer.data['address']
 
             
@@ -158,9 +152,6 @@ class UpdateVolunteerProfile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO VOLUNTEER'})
 
         if serializer.is_valid():
-            if (request.user.volunteer_profile.company == serializer.data['company']):
-                return Response(data={'message': 'YOU CANNOT ENTER THE SAME DATA FOR YOUR VOLUNTEER PROFILE', 'data':serializer.data}, status=status.HTTP_406_NOT_ACCEPTABLE)
-
             request.user.volunteer_profile.company = serializer.data['company']
             request.user.volunteer_profile.save()
             

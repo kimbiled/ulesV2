@@ -37,7 +37,7 @@ class CustomerProfile(models.Model):
 class Category(models.Model):    
     category_name = models.CharField(max_length=255, unique=True)
     description = models.TextField(default='')
-    unit_of_measurement = models.CharField(max_length=255, default='g')
+    unit_of_measurement = models.CharField(max_length=255, default='шт')
 
 
     def __str__(self):

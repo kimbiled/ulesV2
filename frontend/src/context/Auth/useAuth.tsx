@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				path: "/",
 			});
 
-			setCookie("refresh", response.data.access, {
+			setCookie("refresh", response.data.refresh, {
 				path: "/",
 			});
 
@@ -67,9 +67,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		});
 	}
 	async function refreshTokens(refresh: string) {
+		if (!cookie.access) return;
+
 		return await Axios({
 			method: "POST",
 			url: `/auth/login/refresh/`,
+			headers: {
+				Authorization: `Bearer ${cookie.access}`
+			},
 			data: {
 				refresh,
 			},
@@ -80,9 +85,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				path: "/",
 			});
 
-			setCookie("refresh", response.data.access, {
+			setCookie("refresh", response.data.refresh, {
 				path: "/",
-			});
+			})
 		});
 	}
 	function logOut() {

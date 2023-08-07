@@ -51,19 +51,17 @@ const Order = ({ isVisible, setIsVisible, order, denyOrder }: OrderProps) => {
 						<div className="flex flex-col gap-2">
 							<p>Адрес получения</p>
 							<div className="flex flex-row justify-between h-11 rounded-xl border-[1px] border-white bg-organisationInput">
-								<div className="flex flex-col justify-center p-4">
-									<p className="text-[10px]">Получатель</p>
-									<p className="text-xs">{order.customer.address}</p>
+								<div className="flex flex-col justify-center p-4 text-sm">
+									<p>{order.customer.address}</p>
 								</div>
 							</div>
 						</div>
 
 						<div className="flex flex-col gap-2">
 							<p>ФИО получателя</p>
-							<div className="flex flex-row justify-between h-11 rounded-xl border-[1px] border-white bg-organisationInput">
+							<div className="flex flex-row justify-between h-11 rounded-xl text-sm border-[1px] border-white bg-organisationInput">
 								<div className="flex flex-col justify-center p-4">
-									<p className="text-[10px]">ФИО</p>
-									<p className="text-xs">{order.customer.name}</p>
+									<p>{order.customer.name}</p>
 								</div>
 							</div>
 						</div>
@@ -79,7 +77,7 @@ const Order = ({ isVisible, setIsVisible, order, denyOrder }: OrderProps) => {
 						{/*</div>*/}
 
 						<div className="flex flex-col gap-2 relative">
-							<p>Продукты</p>
+							<p>Продукты и количество товаров</p>
 							<div className="flex flex-row justify-between rounded-xl border-[1px] border-white bg-organisationInput">
 								<div className="flex flex-col justify-center p-4 text-sm w-full">
 									{order.order_details.map((orderDetail) => {
@@ -97,9 +95,8 @@ const Order = ({ isVisible, setIsVisible, order, denyOrder }: OrderProps) => {
 						<div className="flex flex-col gap-2">
 							<p>Ules Поинты</p>
 							<div className="flex flex-row justify-between h-11 rounded-xl border-[1px] border-white bg-organisationInput">
-								<div className="flex flex-col justify-center p-4">
-									<p className="text-[10px]">Поинты</p>
-									<p className="text-xs">
+								<div className="flex flex-col justify-center p-4 text-sm">
+									<p>
 										{order.order_details.length}{" "}
 										{order.order_details.length === 1
 											? "пойнт"
@@ -138,7 +135,7 @@ const Order = ({ isVisible, setIsVisible, order, denyOrder }: OrderProps) => {
 								});
 							}}
 						>
-							Отменить заказ
+							Отказаться от заказа
 						</button>
 					</div>
 				</div>
