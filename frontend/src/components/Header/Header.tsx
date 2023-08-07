@@ -20,9 +20,9 @@ export default function Header({ user }: { user: TUser | null }) {
 	return (
 		<nav className="fontInter w-full bg-gradient-linear px-16 flex py-2 justify-between items-center navbar">
 			<div className="flex bg-gradientBlueBlack w-[100%] justify-between">
-				<Link href="/" className="flex justify-center space-x-4 items-center cursor-pointer ">
+				<Link href="/" className="flex justify-center space-x-4 items-center cursor-pointer">
 					<Image src={uleslogo} alt="ules" className=" h-[60px] " />
-					<p className=" font-poppins font-semibold text-[20px]  text-white ">Úles</p>
+					<p className=" font-poppins font-semibold text-[20px] cursor-pointer text-white">Úles</p>
 				</Link>
 
 				<ul

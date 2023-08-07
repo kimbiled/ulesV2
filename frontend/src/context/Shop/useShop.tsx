@@ -7,13 +7,15 @@ import { useCustomCookie } from "@context/CustomCookie/useCustomCookie";
 import { Axios } from "@lib/axios/axios";
 
 import type { ICreateProduct, IUpdateProduct, IUpdateProfile, TCategory, TProduct } from "@context/Shop/types";
+import type { TTop } from "@context/Volunteer/types"
 
 interface ShopContextProps {
-	getProducts: () => Promise<TProduct[] | void>;
+	getProducts: () => Promise<TProduct[]>;
 	createProduct: (createProduct: ICreateProduct) => Promise<void>;
 	updateProfile: (updateProfile: IUpdateProfile) => Promise<void>;
 	updateProduct: (updateProduct: IUpdateProduct) => Promise<void>;
 	getCategories: () => Promise<TCategory[]>;
+	getTop: () => Promise<TTop | null>;
 }
 
 const ShopContext = createContext({} as ShopContextProps);
@@ -40,6 +42,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 			})
 			.catch((error) => {
 				console.log(error);
+				return [];
 			});
 	}
 
@@ -140,12 +143,24 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 		});
 	}
 
+	async function getTop() {
+		return await Axios({
+			method: "GET",
+			url: `/profile/get-top/3/`,
+		}).then((response: AxiosResponse<TTop>) => {
+			return response.data;
+		}).catch(() => {
+			return null;
+		});
+	}
+
 	const values: ShopContextProps = {
 		getProducts,
 		createProduct,
 		updateProfile,
 		updateProduct,
 		getCategories,
+		getTop,
 	};
 
 	return <ShopContext.Provider value={values}>{children}</ShopContext.Provider>;

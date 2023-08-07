@@ -8,10 +8,10 @@ User = get_user_model()
 class ProductSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     category_name = serializers.CharField(source='category') 
-
+    unit_of_measurement = serializers.CharField(source='category.unit_of_measurement', required=False)
     class Meta:
         model = Product
-        fields= ('id','product_name','quantity_per_unit','units_in_stock','units_on_order','discontinued', 'category_name')
+        fields= ('id','product_name','quantity_per_unit','units_in_stock','units_on_order','discontinued', 'category_name', 'unit_of_measurement')
 
 class CategorySerializer(serializers.ModelSerializer):
     product_set = ProductSerializer

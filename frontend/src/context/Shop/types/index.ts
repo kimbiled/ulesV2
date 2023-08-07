@@ -6,6 +6,7 @@ export type TProduct = {
 	units_on_order: number;
 	discontinued: boolean;
 	category_name: string;
+	unit_of_measurement: "г" | "мл" | "шт";
 };
 
 export type TCategory = {
@@ -29,12 +30,28 @@ export type TTop = {
 	}[];
 };
 
-export interface ICreateProduct extends Omit<TProduct, "id"> {}
+export interface ICreateProduct {
+	category_name: string;
+	product_name: string;
+	quantity_per_unit: number;
+	units_in_stock: number;
+	units_on_order: number;
+	discontinued: boolean;
+}
 
 export interface IUpdateProfile {
 	address: string;
-	company: string;
+	company?: string;
 	rating?: number;
+	rank?: number;
 }
 
-export interface IUpdateProduct extends TProduct {}
+export interface IUpdateProduct {
+	id: number;
+	category_name: string;
+	product_name: string;
+	quantity_per_unit: number;
+	units_in_stock: number;
+	units_on_order: number;
+	discontinued: boolean;
+}

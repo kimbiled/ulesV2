@@ -61,13 +61,13 @@ export default function Customer({ user }: { user: TUser | null }) {
 			id: 9,
 			product: "Яблоко",
 		},
-	];
+	];	
 	return (
 		<div className="fontRaleway flex flex-row justify-around w-screen mt-16 mb-16 max-sm:flex max-sm:flex-col max-sm:gap-3 max-sm:items-center max-md:flex max-md:flex-col max-md:gap-3 max-md:items-center max-lg:flex max-lg:flex-col max-lg:gap-3 max-lg:items-center max-xl:flex max-xl:flex-row max-xl:gap-3 max-xl:items-center ">
 			<div className="max-sm:w-[380px] max-md:w-[450px] max-lg:w-[475px] max-xl:w-[390px] w-[505px] h-auto bg-gradient-linear3 rounded-3xl flex items-center gap-2 p-4 flex-col">
 				<div className="max-sm:w-[320px] max-md:w-[390px] max-lg:w-[415px] max-xl:w-[330px] bg-volunteerColor w-[465px] h-auto py-4 gap-4 rounded-3xl border-[1px] border-white flex flex-wrap items-center justify-evenly">
 					<div className="w-full text-center">
-						<p className="font-semibold text-xl text-white">Заказ создан 03.08.23</p>
+						{order?.order_date && <p className="font-semibold text-xl text-white">Заказ создан {order.order_date}</p>}
 					</div>
 					{order?.order_details.map((item) => (
 						<div
