@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <footer className=" fontInter bg-[#0D2435] w-full m-auto">
-      <div className="m-auto   lg:py-8 p-4">
-        <div className="md:flex md:justify-between space-y-10">
+    <footer className=" fontInter bg-[#0D2435] w-full m-auto ">
+      <div className="m-auto   lg:py-8 p-4 ">
+        <div className="md:flex md:justify-between space-y-10 md:px-20">
           <div className="flex flex-col gap-8">
             <div className="md:mb-0 flex flex-row gap-4 items-center">
               <Image src={uleslogo} height={70} width={60} alt="UlesLogo" />
@@ -92,7 +92,7 @@ const Footer = () => {
           </div>
         </div>
         <hr className="my-6 border-white sm:mx-auto md:my-8" />
-        <div className="sm:flex sm:items-center sm:justify-between">
+        <div className="sm:flex sm:items-center sm:justify-between md:px-20">
           <span className=" text-sm  lg:text-lg text-white sm:text-center ">
             Copyright © 2023{' '}
             <a href="https://flowbite.com/" className="hover:underline">

@@ -8,7 +8,7 @@ const Ranks = () => {
         <h2 className=" text-2xl md:text-4xl font-bold text-left  text-ulsDark">
           Лидеры рейтинга социальной помощи
         </h2>
-        <p className="text-xs lg:text-md font-medium ">
+        <p className="text-xs lg:text-lg font-medium ">
           Нет никого, кто любил бы боль саму по себе, кто искал бы её и кто
           хотел бы иметь её просто потому, что это боль..
         </p>
