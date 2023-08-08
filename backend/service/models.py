@@ -25,7 +25,7 @@ class Norm(models.Model):
 
     
     def __str__(self):
-        return str(self.id)
+        return str(self.norm_name)
 
 class CustomerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name="customer_profile")

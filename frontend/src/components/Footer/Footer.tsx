@@ -12,7 +12,7 @@ const Footer = () => {
               <span className="text-4xl font-bold text-white">Úles</span>
             </div>
             <div className="  text-lg text-white">
-              <p>Присоединяйся, меняй мир к лучшему</p>
+              <p>Úlesindi Qos!</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
@@ -69,22 +69,12 @@ const Footer = () => {
               <ul className="text-white flex flex-col gap-3">
                 <li>
                   <a href="#" className="hover:underline text-sm md:text-base">
-                    +7 (777) 777 77 77
+                    +7 (747) 837 90 97
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:underline text-sm md:text-base">
-                    +7 (777) 777 77 77
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline text-sm md:text-base">
-                    Ules@temirqazyq.kz
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline text-sm md:text-base">
-                    Ules@temirqazyq.kz
+                    info.ules.project@gmail.com
                   </a>
                 </li>
               </ul>
