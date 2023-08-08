@@ -220,11 +220,11 @@ export default function Volunteer({ user }: { user: TUser | null }) {
             </div>
             <hr className="my-4" />
             <div className="flex flex-col justify-between rounded-xl border-[1px] border-white p-2 w-full h-14">
-              <p className="text-[10px]">Ваш адрес</p>
+              <p className="text-[10px]">Ваша организация</p>
               <input
                 type="text"
                 className="bg-transparent outline-none"
-                placeholder="Адрес"
+                placeholder="Organization"
                 disabled={!isChange}
                 defaultValue={user?.company}
                 ref={companyRef}

@@ -140,22 +140,22 @@ export default function Shop({ user }: { user: TUser | null }) {
                 <div
                   key={product.id}
                   className="w-full h-18 rounded-xl border-[1px] border-white flex justify-between  text-white p-2">
-                  <div className="flex flex-col justify-between rounded-xl border-[1px] border-white p-2 w-1/4">
+                  <div className="flex flex-col rounded-xl border-[1px] border-white p-2 w-1/4">
                     <p className="text-[10px]">Название:</p>
                     <p className="text-sm">{product.product_name}</p>
                   </div>
-                  <div className="flex flex-col justify-between rounded-xl border-[1px] border-white p-2 w-1/5">
+                  <div className="flex flex-col rounded-xl border-[1px] border-white p-2 w-1/5">
                     <p className="text-[10px]">Количество товара:</p>
                     <p className="text-sm">{product.units_in_stock}</p>
                   </div>
-                  <div className="flex flex-col justify-between rounded-xl border-[1px] border-white p-2 w-1/5 te">
+                  <div className="flex flex-col rounded-xl border-[1px] border-white p-2 w-1/5 te">
                     <p className="text-[10px]">
                       {' '}
                       {product.unit_of_measurement} в товаре:
                     </p>
                     <p className="text-sm">{product.quantity_per_unit}</p>
                   </div>
-                  <div className="flex flex-col justify-between rounded-xl border-[1px] border-white p-2 w-1/4">
+                  <div className="flex flex-col rounded-xl border-[1px] border-white p-2 w-1/4">
                     <p className="text-[10px]">Категория товара:</p>
                     <p className="text-sm">{product.category_name}</p>
                   </div>
@@ -368,7 +368,7 @@ export default function Shop({ user }: { user: TUser | null }) {
                   </div>
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                      Количество товара
+                      Количество упаковок
                     </label>
                     <input
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -380,11 +380,11 @@ export default function Shop({ user }: { user: TUser | null }) {
                   </div>
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                      Количество товара в упаковке
+                      Количество товара в упаковке  &#40;мл, г, шт&#41;
                     </label>
                     <input
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      placeholder="5 г/мл/шт"
+                      placeholder="5"
                       required
                       type="number"
                       ref={quantityPerUnitRef}
