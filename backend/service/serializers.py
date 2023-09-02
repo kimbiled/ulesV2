@@ -1,7 +1,7 @@
 from django.forms import ValidationError
 from rest_framework import serializers
 
-from service.models import Category, CustomerProfile, Product, ShopProfile, VolunteerProfile, Order, OrderDetail
+from service.models import Category, CategoryNorm, CustomerProfile, Product, ShopProfile, VolunteerProfile, Order, OrderDetail
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -75,3 +75,13 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'user_type', 'phone', 'name']
+
+class CategoryNormSerializer(serializers.ModelSerializer):
+
+    category_name = serializers.CharField(source='category') 
+    overall_quantity = serializers.IntegerField()
+    norm_name = serializers.CharField(source='norm')
+    
+    class Meta:
+        model = CategoryNorm
+        fields= ('norm_name','overall_quantity','category_name')
