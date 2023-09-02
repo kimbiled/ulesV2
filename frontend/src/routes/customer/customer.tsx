@@ -123,12 +123,12 @@ export default function Customer({ user }: { user: TUser | null }) {
             </div>
           </div>
           <div className="w-auto h-auto rounded-xl border-[1px] border-white p-4">
-            <p className="text-xs">Список желаемых продуктов</p>
-            <div className="">
-              <ul className="flex flex-col text-sm font-medium list-disc list-inside  gap-1">
+            <p className="text-xs">Список желаемых продуктов:</p>
+            <div className="mt-2">
+              <ul className="flex flex-wrap text-sm font-medium list-disc list-inside  gap-1">
                 {normProducts.map(item => (
                   <Fragment key={item.id}>
-                    <div className="flex space-x-4">
+                    <div className="flex space-x-4  justify-center items-center">
                       <p className=" list-none">{item.category_name}</p>
                       <div className="px-5  border-white border-[1px] rounded-3xl bg-organisationInput flex  justify-center items-center">
                         <p className="font-semibold text-[10px]">
