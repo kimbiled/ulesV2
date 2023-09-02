@@ -95,7 +95,7 @@ export default function Customer({ user }: { user: TUser | null }) {
           </div>
           <div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">
             <p className="text-xs">Номер телефона:</p>
-            <p className="text-sm">{order?.volunteer.number}</p>
+            <p className="text-sm">{order?.volunteer.phone}</p>
           </div>
           <div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">
             <p className="text-xs">Почта:</p>
