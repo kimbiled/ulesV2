@@ -351,12 +351,15 @@ class GetNorm(APIView):
         try:
             if not hasattr(request.user, 'customer_profile'):
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
-            norm = Norm.objects.get(norm_name = norm_name)
-            category_norms = CategoryNorm.objects.filter(norm=norm)
-            serializer = CategoryNormSerializer(category_norms, many=True)
-            data = serializer.data
-            
-            return Response(status=status.HTTP_200_OK, data=data)
+              
+            norm = Norm.objects.get(norm_name=norm_name)
+            category_norms = CategoryNorm.objects.filter(norm=norm).all()
+            categories = [cn.category for cn in category_norms]
+            serializer = CategorySerializer(categories, many=True)
+            for data in serializer.data:
+                data.pop('product_set')
+            print(data)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
 
         except Norm.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO NORM'})
