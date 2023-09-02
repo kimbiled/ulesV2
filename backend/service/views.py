@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from service.models import Category, Product, ShopProfile, VolunteerProfile, Order, Norm, OrderDetail, CategoryNorm
 from rest_framework import status, permissions, viewsets
-from service.serializers import CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer, CategorySerializer
+from service.serializers import CategoryNormSerializer, CustomerProfileSerializer, ProductSerializer, ShopProfileSerializer, VolunteerProfileSerializer, UserSerializer, OrderSerializer, CategorySerializer
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 from django.contrib.auth import get_user_model
@@ -351,6 +351,7 @@ class GetNorm(APIView):
         try:
             if not hasattr(request.user, 'customer_profile'):
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'YOU ARE NO CUSTOMER'})
+              
             norm = Norm.objects.get(norm_name=norm_name)
             category_norms = CategoryNorm.objects.filter(norm=norm).all()
             categories = [cn.category for cn in category_norms]
@@ -362,9 +363,6 @@ class GetNorm(APIView):
 
         except Norm.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND, data={'message': 'NO NORM'})
-
-
-        return Response(status=status.HTTP_200_OK, data=response_data)
 
 class ConfirmOrder(APIView):
     permission_classes = [permissions.IsAuthenticated]
