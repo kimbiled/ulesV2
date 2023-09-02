@@ -125,33 +125,32 @@ export default function Customer({ user }: { user: TUser | null }) {
           <div className="w-auto h-auto rounded-xl border-[1px] border-white p-4">
             <p className="text-xs">Список желаемых продуктов</p>
             <div className="">
-              <ul className="flex flex-wrap text-sm font-medium list-disc list-inside items-center gap-1">
-                {/* {normProducts.map(item => (
+              <ul className="flex flex-col text-sm font-medium list-disc list-inside  gap-1">
+                {normProducts.map(item => (
                   <Fragment key={item.id}>
-                    <li className="w-20">{item.category_name}</li>
-                    <div className="w-7 h-2.5 border-white border-[1px] rounded-3xl bg-organisationInput flex justify-center items-center">
-                      <p className="font-semibold text-[8px]">
-                        item.unit_of_measurement
-                      </p>
+                    <div className="flex space-x-4">
+                      <p className=" list-none">{item.category_name}</p>
+                      <div className="px-5  border-white border-[1px] rounded-3xl bg-organisationInput flex  justify-center items-center">
+                        <p className="font-semibold text-[10px]">
+                          {item.overall_quantity} {item.unit_of_measurement}
+                        </p>
+                      </div>
                     </div>
                   </Fragment>
-                ))} */}
-                {normProducts.length}
+                ))}
+                {/* {normProducts} */}
               </ul>
             </div>
           </div>
           <div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
             <p className="text-[10px]">Ваше имя</p>
-            <p className="text-sm">{user?.norm}</p>
+            <p className="text-sm">{user?.name}</p>
           </div>
           <div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
             <p className="text-[10px]">Ваш номер телефона</p>
             <p className="text-sm">{user?.phone}</p>
           </div>
-          {/*<div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">*/}
-          {/*	<p className="text-[10px]">Возраст</p>*/}
-          {/*	<p className="text-sm">56 лет</p>*/}
-          {/*</div>*/}
+
           <div className="w-auto h-11 rounded-xl border-[1px] border-white flex flex-col justify-center text-white p-4">
             <p className="text-[10px]">Ваш адрес</p>
             <input
