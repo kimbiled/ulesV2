@@ -274,8 +274,12 @@ class GetOrders(APIView):
 
             if order.customer:
                 order_data['customer']['name'] = order.customer.user.name
+                order_data['customer']['phone'] = order.customer.user.phone
+                order_data['customer']['email'] = order.customer.user.email
             if order.volunteer:
                 order_data['volunteer']['name'] = order.volunteer.user.name
+                order_data['volunteer']['phone'] = order.volunteer.user.phone
+                order_data['volunteer']['email'] = order.volunteer.user.email
         return Response(status=status.HTTP_200_OK, data=data)
 
 class GetAvailableOrders(APIView):

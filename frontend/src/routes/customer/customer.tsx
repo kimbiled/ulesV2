@@ -119,7 +119,7 @@ export default function Customer({ user }: { user: TUser | null }) {
           <div className="flex flex-row gap-4 items-center w-[365px] max-sm:w-[280px] max-md:w-[340px] max-lg:w-[360px] max-xl:w-[320px]">
             <div className="w-[72px] h-[72px] rounded-full bg-gray-400"></div>
             <div>
-              <p className="text-lg">{order?.volunteer.name}</p>
+              <p className="text-lg">{order?.volunteer?.name}</p>
               <p className="text-xs">Данные волонтера</p>
             </div>
           </div>
@@ -128,15 +128,15 @@ export default function Customer({ user }: { user: TUser | null }) {
         <div className="flex flex-col gap-5">
           <div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">
             <p className="text-xs">Имя:</p>
-            <p className="text-sm">{order?.volunteer.name}</p>
+            <p className="text-sm">{order?.volunteer?.name}</p>
           </div>
           <div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">
             <p className="text-xs">Номер телефона:</p>
-            <p className="text-sm">{order?.volunteer.number}</p>
+            <p className="text-sm">{order?.volunteer?.phone}</p>
           </div>
           <div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">
             <p className="text-xs">Почта:</p>
-            <p className="text-sm">{order?.volunteer.email}</p>
+            <p className="text-sm">{order?.volunteer?.email}</p>
           </div>
           {/*<div className="h-12 w-[365px] font-medium flex flex-col p-4 justify-center m-auto border-[1px] rounded-xl border-white bg-organisationInput max-sm:w-[320px] max-md:w-[360px] max-lg:w-[400px] max-xl:w-[300px]">*/}
           {/*	<p className="text-xs">Организации</p>*/}
