@@ -18,6 +18,8 @@ type TCustomer = {
 	address: string;
 	norm: null;
 	name: string;
+	phone?: string;
+	email?: string;
 };
 type TVolunteer = {
 	user: number;
@@ -25,6 +27,8 @@ type TVolunteer = {
 	rating: number;
 	order_count: number;
 	name: string;
+	phone?: string;
+	email?: string;
 };
 type TShop = {
 	user: number;
