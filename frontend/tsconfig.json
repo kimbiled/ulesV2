@@ -21,7 +21,6 @@
 		],
 		"baseUrl": ".",
 		"paths": {
-			"@root/*": ["./src/*"],
 			"@config/*": ["./src/config/*"],
 			"@lib/*": ["./src/lib/*"],
 			"@context/*": ["./src/context/*"],
