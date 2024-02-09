@@ -59,10 +59,10 @@ const jailmen = () => {
             </div>
 
             <div className="flex items-end justify-end">
-              <button className=" border-[1px] border-gray-300  ease-in-out duration-300 inline-flex items-center justify-center px-3 py-2 md:px-5 md:py-3 mr-3 text-sm md:text-base font-medium text-center text-ulsDark rounded-lg bg-white  focus:ring-4  focus:ring-primary-900">
+              <button className=" border-[1px] border-gray-300 hover:bg-[#4F82B0] hover:border-[#4F82B0] hover:text-white   ease-in-out duration-300 inline-flex items-center justify-center px-3 py-2 md:px-5 md:py-3 mr-3 text-sm md:text-base font-medium text-center text-ulsDark rounded-lg bg-white  focus:ring-4  focus:ring-primary-900">
                 Отмена
               </button>
-              <button className="   ease-in-out duration-300 inline-flex items-center justify-center px-3 py-2 md:px-5 md:py-3 mr-3 text-sm md:text-base font-medium text-center text-white rounded-lg bg-[#4F82B0]  focus:ring-4  focus:ring-primary-900">
+              <button className=" border-[1px] border-gray-300 hover:bg-[#4F82B0] hover:border-[#4F82B0] hover:text-white ease-in-out duration-300 inline-flex items-center justify-center px-3 py-2 md:px-5 md:py-3 mr-3 text-sm md:text-base font-medium text-center text-ulsDark rounded-lg bg-white  focus:ring-4  focus:ring-primary-900">
                 Изменить
               </button>
             </div>
