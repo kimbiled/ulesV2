@@ -18,7 +18,7 @@ export default function Header({ user }: { user: TUser | null }) {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   return (
-    <nav className="fontInter w-full bg-gradient-linear px-16 flex py-2 justify-between items-center navbar">
+    <nav className="fontInter w-full bg-[#4F82B0] px-16 flex py-2 justify-between items-center navbar">
       <div className="flex bg-gradientBlueBlack w-[100%] justify-between">
         <Link
           href="/"
