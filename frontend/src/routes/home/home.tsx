@@ -5,7 +5,7 @@ import System from '@components/System/System';
 import Phone from '@components/Phone/Phone';
 import Community from '@components/Community/Community';
 
-import styles from '@root/style';
+import styles from '../../style';
 import Layout from '@components/Layout/Layout';
 
 export default function Home() {
