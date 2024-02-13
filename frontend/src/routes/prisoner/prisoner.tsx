@@ -64,386 +64,416 @@ export default function Prisoner() {
           <Tab title="Расписание">
             <div className="container mx-auto">
               <div className="wrapper bg-white rounded shadow w-full ">
-                <div className="header flex justify-between border-b p-2">
-                  <span className="text-lg font-bold">
-                    2024 Февраль
-                  </span>
-                  <div className="buttons">
-                    <button className="p-1">
-                      <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-arrow-left-circle" fill="gray" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z" />
-                        <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z" />
-                      </svg>
-                    </button>
-                    <button className="p-1">
-                      <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-arrow-right-circle" fill="gray" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path fill-rule="evenodd" d="M7.646 11.354a.5.5 0 0 1 0-.708L10.293 8 7.646 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0z" />
-                        <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z" />
-                      </svg>
-                    </button>
+                
+                <div className="lg:flex lg:h-full lg:flex-col">
+                  <header className="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
+                    <h1 className="text-base font-semibold leading-6 text-gray-900">
+                      <time dateTime="2022-01">Январь 2024</time>
+                    </h1>
+                  </header>
+                  <div className="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
+                    <div className="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
+                      <div className="flex justify-center bg-white py-2">
+                        <span>П</span>
+                        <span className="sr-only sm:not-sr-only">онедельник</span>
+                      </div>
+                      <div className="flex justify-center bg-white py-2">
+                        <span>В</span>
+                        <span className="sr-only sm:not-sr-only">торник</span>
+                      </div>
+                      <div className="flex justify-center bg-white py-2">
+                        <span>С</span>
+                        <span className="sr-only sm:not-sr-only">реда</span>
+                      </div>
+                      <div className="flex justify-center bg-white py-2">
+                        <span>Ч</span>
+                        <span className="sr-only sm:not-sr-only">етверг</span>
+                      </div>
+                      <div className="flex justify-center bg-white py-2">
+                        <span>П</span>
+                        <span className="sr-only sm:not-sr-only">ятница</span>
+                      </div>
+                      <div className="flex justify-center bg-white py-2">
+                        <span>С</span>
+                        <span className="sr-only sm:not-sr-only">уббота</span>
+                      </div>
+                      <div className="flex justify-center bg-white py-2">
+                        <span>В</span>
+                        <span className="sr-only sm:not-sr-only">оскресенье</span>
+                      </div>
+                    </div>
+                    <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
+                      <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2021-12-27">27</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2021-12-28">28</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2021-12-29">29</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2021-12-30">30</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2021-12-31">31</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-01">1</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-01">2</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-03">3</time>
+                          <ol className="mt-2">
+                            <li>
+                              <a href="#" className="group flex">
+                                <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Отметка</p>
+                                <time dateTime="2022-01-03T10:00" className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">10:00</time>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" className="group flex">
+                                <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Прием врача</p>
+                                <time dateTime="2022-01-03T14:00" className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">14:00</time>
+                              </a>
+                            </li>
+                          </ol>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-04">4</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-05">5</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-06">6</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-07">7</time>
+                          <ol className="mt-2">
+                            <li>
+                              <a href="#" className="group flex">
+                                <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Date night</p>
+                                <time dateTime="2022-01-08T18:00" className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">6PM</time>
+                              </a>
+                            </li>
+                          </ol>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-08">8</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-09">9</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-10">10</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-11">11</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-12" className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">12</time>
+                          <ol className="mt-2">
+                            <li>
+                              <a href="#" className="group flex">
+                                <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">В участок</p>
+                                <time dateTime="2022-01-25T14:00" className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">11:00</time>
+                              </a>
+                            </li>
+                          </ol>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-13">13</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-14">14</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-15">15</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-16">16</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-17">17</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-18">18</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-19">19</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-20">20</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-21">21</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-22">22</time>
+                          <ol className="mt-2">
+                            <li>
+                              <a href="#" className="group flex">
+                                <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600"></p>
+                                <time dateTime="2022-01-22T15:00" className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block"></time>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" className="group flex">
+                                <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600"></p>
+                                <time dateTime="2022-01-22T19:00" className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block"></time>
+                              </a>
+                            </li>
+                          </ol>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-23">23</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-24">24</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-25">25</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-26">26</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-27">27</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-28">28</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-29">29</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-30">30</time>
+                        </div>
+                        <div className="relative bg-white px-3 py-2">
+                          <time dateTime="2022-01-31">31</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2022-02-01">1</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2022-02-02">2</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2022-02-03">3</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2022-02-04">4</time>
+                          <ol className="mt-2">
+                            <li>
+                              <a href="#" className="group flex">
+                                <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600"></p>
+                                <time dateTime="2022-02-04T21:00" className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block"></time>
+                              </a>
+                            </li>
+                          </ol>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2022-02-05">5</time>
+                        </div>
+                        <div className="relative bg-gray-50 px-3 py-2 text-gray-500">
+                          <time dateTime="2022-02-06">6</time>
+                        </div>
+                      </div>
+                      <div className="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden">
+                
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2021-12-27" className="ml-auto">27</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2021-12-28" className="ml-auto">28</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2021-12-29" className="ml-auto">29</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2021-12-30" className="ml-auto">30</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2021-12-31" className="ml-auto">31</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-01" className="ml-auto">1</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-02" className="ml-auto">2</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-03" className="ml-auto">3</time>
+                          <span className="sr-only">2 events</span>
+                          <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
+                            <span className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
+                            <span className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
+                          </span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-04" className="ml-auto">4</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-05" className="ml-auto">5</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-06" className="ml-auto">6</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-07" className="ml-auto">7</time>
+                          <span className="sr-only">1 event</span>
+                          <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
+                            <span className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
+                          </span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-08" className="ml-auto">8</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-09" className="ml-auto">9</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-10" className="ml-auto">10</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-11" className="ml-auto">11</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 font-semibold text-indigo-600 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-12" className="ml-auto">12</time>
+                          <span className="sr-only">1 event</span>
+                          <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
+                            <span className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
+                          </span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-13" className="ml-auto">13</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-14" className="ml-auto">14</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-15" className="ml-auto">15</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-16" className="ml-auto">16</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-17" className="ml-auto">17</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-18" className="ml-auto">18</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-19" className="ml-auto">19</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-20" className="ml-auto">20</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-21" className="ml-auto">21</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 font-semibold text-white hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-22" className="ml-auto flex h-6 w-6 items-center justify-center rounded-full bg-gray-900">22</time>
+                          <span className="sr-only">2 events</span>
+                          <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
+                            <span className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
+                            <span className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
+                          </span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-23" className="ml-auto">23</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-24" className="ml-auto">24</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-25" className="ml-auto">25</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-26" className="ml-auto">26</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-27" className="ml-auto">27</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-28" className="ml-auto">28</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-29" className="ml-auto">29</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-30" className="ml-auto">30</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-01-31" className="ml-auto">31</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-02-01" className="ml-auto">1</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-02-02" className="ml-auto">2</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-02-03" className="ml-auto">3</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-02-04" className="ml-auto">4</time>
+                          <span className="sr-only">1 event</span>
+                          <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
+                            <span className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
+                          </span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-02-05" className="ml-auto">5</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                        <button type="button" className="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
+                          <time dateTime="2022-02-06" className="ml-auto">6</time>
+                          <span className="sr-only">0 events</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <table className="w-full">
-                  <thead>
-                    <tr>
-                      <th className="p-2 border-r h-10 xl:w-30 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                        <span className="xl:block lg:block md:block sm:block hidden">Воскресенье</span>
-                        <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Вс</span>
-                      </th>
-                      <th className="p-2 border-r h-10 xl:w-30 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                        <span className="xl:block lg:block md:block sm:block hidden">Понедельник</span>
-                        <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Пн</span>
-                      </th>
-                      <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                        <span className="xl:block lg:block md:block sm:block hidden">Вторник</span>
-                        <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Вт</span>
-                      </th>
-                      <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                        <span className="xl:block lg:block md:block sm:block hidden">Среда</span>
-                        <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Ср</span>
-                      </th>
-                      <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                        <span className="xl:block lg:block md:block sm:block hidden">Четверг</span>
-                        <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Чт</span>
-                      </th>
-                      <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                        <span className="xl:block lg:block md:block sm:block hidden">Пятница</span>
-                        <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Пт</span>
-                      </th>
-                      <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                        <span className="xl:block lg:block md:block sm:block hidden">Суббота</span>
-                        <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Сб</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="text-center h-20">
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300 ">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">1</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer">
-                            <div
-                              className="event bg-purple-400 text-white rounded p-1 text-sm mb-1"
-                            >
-                              <span className="event-name">
-                                Отметка
-                              </span>
-                              <span className="time ml-2">
-                                12:00 - 14:00
-                              </span>
-                            </div>
-                            <div
-                              className="event bg-purple-400 text-white rounded p-1 text-sm mb-1"
-                            >
-                              <span className="event-name">
-                                Проверка в клинике
-                              </span>
-                              <span className="time ml-2">
-                                18:00 - 20:00
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">2</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">3</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">4</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">6</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-hidden transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">7</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer">
-                            <div
-                              className="event bg-blue-400 text-white rounded p-1 text-sm mb-1"
-                            >
-                              <span className="event-name">
-                                Проверка статуса
-                              </span>
-                              <span className="time ml-2">
-                                12:30 - 14:00
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500 text-sm">8</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr className="text-center h-20">
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">9</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">10</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">12</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">13</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">14</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">15</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500 text-sm">16</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="text-center h-20">
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">16</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">17</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">18</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">19</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">20</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">21</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500 text-sm">22</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="text-center h-20">
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">23</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">24</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">25</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">26</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">27</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">28</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500 text-sm">29</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="text-center h-20">
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">30</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">31</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">1</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">2</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">3</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500">4</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                      <td className="border bg-gray-100 p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-                          <div className="top h-5 w-full">
-                            <span className="text-gray-500 text-sm">5</span>
-                          </div>
-                          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer"></div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
           </Tab>
