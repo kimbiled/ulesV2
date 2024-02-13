@@ -6,7 +6,7 @@ export default function Prisoner() {
 
   return (
     <div className="fontRaleway max-w-6xl flex-col justify-center w-screen mt-4 mb-16 max-sm:flex max-sm:flex-col max-sm:items-center max-md:flex max-md:flex-col max-md:items-center max-lg:flex max-lg:flex-col max-lg:gap-3 max-lg:items-center max-xl:flex max-xl:flex-row max-xl:gap-3 max-xl:items-center ">
-      <div className="max-sm:w-full h-auto  rounded-3xl flex  mx-auto gap-2 p-4 flex-col">
+      <div className="max-sm:w-full h-auto rounded-3xl flex  mx-auto gap-2 p-4 flex-col">
         <h2 className="font-bold text-4xl mb-5">Ваш кабинет</h2>
         <Tabs>
           <Tab title="Профиль">
