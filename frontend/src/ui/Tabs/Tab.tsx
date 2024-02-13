@@ -1,4 +1,4 @@
-"use cient"
+"use client"
 
 import React from 'react'
 import { ReactElement } from 'react'
