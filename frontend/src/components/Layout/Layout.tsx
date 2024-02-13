@@ -18,7 +18,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
           <Header user={user} />
         </AuthProvider>
       </CustomCookieProvider>
-      <main className={'flex flex-1 items-center justify-center '}>
+      <main className={'flex flex-1 items-center justify-center py-5'}>
         {children}
       </main>
       <Footer />
