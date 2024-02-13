@@ -423,7 +423,61 @@ export default function Watcher() {
               </div>
             </Tab>
             <Tab title="Отчеты подопечных" >
-              <></>
+              <div className="bg-[#4F82B0] w-full h-screen rounded-2xl flex flex-col gap-6">
+                  <div className="p-8 border-b">
+                    <h2 className="font-semibold text-[28px] text-white">Отчеты подопечных:</h2>
+                  </div>
+                  <div>
+                    <table className="min-w-full text-center text-white">
+                      <thead className="uppercase font-bold">
+                        <tr>
+                          <th scope="col" className=" py-4">Имена подопечных:</th>
+                          <th scope="col" className=" py-4">Категория услуг:</th>
+                          <th scope="col" className=" py-4">ФИО оказателя услуг:</th>
+                          <th scope="col" className=" py-4">Номер справки:</th>
+                          <th scope="col" className=" py-4">Дата оказания услуги:</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th className="py-6 font-medium">Арынулы Нурторе</th>
+                          <th className="py-6 font-medium">Отметка у участкового</th>
+                          <th className="py-6 font-medium">Мейрамбеков Нурсултан</th>
+                          <th className="py-6 font-medium">№178468 </th>
+                          <th className="py-6 font-medium">12.01.2023</th>
+                        </tr>
+                        <tr>
+                          <th className="py-6 font-medium">Арынулы Нурторе</th>
+                          <th className="py-6 font-medium">Отметка у участкового</th>
+                          <th className="py-6 font-medium">Мейрамбеков Нурсултан</th>
+                          <th className="py-6 font-medium">№178468 </th>
+                          <th className="py-6 font-medium">12.01.2023</th>
+                        </tr>
+                        <tr>
+                          <th className="py-6 font-medium">Арынулы Нурторе</th>
+                          <th className="py-6 font-medium">Отметка у участкового</th>
+                          <th className="py-6 font-medium">Мейрамбеков Нурсултан</th>
+                          <th className="py-6 font-medium">№178468 </th>
+                          <th className="py-6 font-medium">12.01.2023</th>
+                        </tr>
+                        <tr>
+                          <th className="py-6 font-medium">Арынулы Нурторе</th>
+                          <th className="py-6 font-medium">Отметка у участкового</th>
+                          <th className="py-6 font-medium">Мейрамбеков Нурсултан</th>
+                          <th className="py-6 font-medium">№178468 </th>
+                          <th className="py-6 font-medium">12.01.2023</th>
+                        </tr>
+                        <tr>
+                          <th className="py-6 font-medium">Арынулы Нурторе</th>
+                          <th className="py-6 font-medium">Отметка у участкового</th>
+                          <th className="py-6 font-medium">Мейрамбеков Нурсултан</th>
+                          <th className="py-6 font-medium">№178468 </th>
+                          <th className="py-6 font-medium">12.01.2023</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
             </Tab>
           </Tabs>
         </div>
