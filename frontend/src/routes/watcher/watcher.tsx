@@ -1,12 +1,8 @@
 "use client";
-
 import Tab from "@ui/Tabs/Tab";
 import Tabs from "@ui/Tabs/Tabs";
-
-
-
+import { useEffect, useRef, useState } from "react";
 export default function Watcher() {
-
   return (
     <>
       <div className="fontRaleway max-w-6xl flex-col justify-around w-[90%] mx-auto mt-16 mb-16 max-sm:flex max-sm:flex-col max-sm:items-center max-md:flex max-md:flex-col max-md:items-center max-lg:flex max-lg:flex-col max-lg:gap-3 max-lg:items-center max-xl:flex max-xl:flex-col max-xl:gap-3 max-xl:items-center ">
